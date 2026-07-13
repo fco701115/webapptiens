@@ -709,6 +709,18 @@ function isInWishlist(id) {
   return wishlist.some(item => item.id === id);
 }
 
+function toggleDetailWishlist(id) {
+  addToWishlist(id);
+  const link = document.getElementById('detailWishlistLink');
+  if (link) {
+    if (isInWishlist(id)) {
+      link.innerHTML = '<i class="fas fa-heart" style="color:#e74c3c"></i> En favoritos';
+    } else {
+      link.innerHTML = '<i class="far fa-heart"></i> Agregar a favoritos';
+    }
+  }
+}
+
 function updateWishlistUI() {
   const countEl = document.querySelector('.wishlist-count');
   if (countEl) countEl.textContent = wishlist.length;
@@ -888,7 +900,7 @@ function showDetail(id) {
         <button class="detail-buy-now" onclick="addToCart(${product.id}); openCheckout()">Comprar ahora</button>
 
         <div class="detail-links">
-          <a href="#"><i class="far fa-heart"></i> Add to Wishlist</a>
+          <a href="#" id="detailWishlistLink" onclick="event.preventDefault(); toggleDetailWishlist(${product.id})"><i class="far fa-heart"></i> Agregar a favoritos</a>
           <a href="#"><i class="fas fa-exchange-alt"></i> Add to Compare</a>
         </div>
 

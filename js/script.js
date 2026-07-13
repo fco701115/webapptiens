@@ -759,6 +759,7 @@ function toggleDetailCompare(id) {
       link.innerHTML = '<i class="fas fa-exchange-alt"></i> Agregar para comparar';
     }
   }
+  openCompareModal();
 }
 
 function updateCompareUI() {
@@ -804,9 +805,11 @@ function renderComparePanel() {
   ).join('');
 }
 
+let compareWin = null;
+
 function openCompareModal() {
-  if (compareList.length < 2) {
-    alert('Agrega al menos 2 productos para comparar');
+  if (compareList.length < 1) {
+    alert('Agrega productos para comparar');
     return;
   }
 
@@ -854,13 +857,16 @@ function openCompareModal() {
     '<div class="compare-container">' +
     '<div class="compare-header"><h1>Comparar Productos</h1></div>' +
     '<table><thead><tr><th></th>' + headerCells + '</tr></thead><tbody>' + tableRows + '</tbody></table>' +
-    '<button class="close-btn" onclick="window.close()">Cerrar ventana</button>' +
+    '<button class="close-btn" onclick="window.close()">Ver comparación</button>' +
     '</div></body></html>';
 
-  const win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
-  if (win) {
-    win.document.write(html);
-    win.document.close();
+  if (!compareWin || compareWin.closed) {
+    compareWin = window.open('', 'compararProductos', 'width=900,height=700,scrollbars=yes');
+  }
+  if (compareWin) {
+    compareWin.document.write(html);
+    compareWin.document.close();
+    compareWin.focus();
   } else {
     alert('Permití ventanas emergentes para ver la comparación');
   }

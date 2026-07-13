@@ -28,6 +28,10 @@
           <i class="fas fa-heart"></i>
           <span class="wishlist-count">0</span>
         </button>
+        <button class="icon-btn compare-btn" title="Comparar" onclick="toggleComparePanel()">
+          <i class="fas fa-exchange-alt"></i>
+          <span class="compare-count">0</span>
+        </button>
         <button class="icon-btn cart-btn" title="Carrito">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-count">0</span>
@@ -93,6 +97,29 @@
         <i class="fas fa-heart"></i>
         <p>Tu lista de favoritos está vacía</p>
       </div>
+    </div>
+  </div>
+
+  <!-- Compare Panel -->
+  <div class="compare-panel" id="comparePanel">
+    <div class="compare-panel-header">
+      <h3>Comparar Productos</h3>
+      <div>
+        <button class="compare-view-btn" onclick="openCompareModal()">Ver comparación</button>
+        <button class="compare-close" onclick="toggleComparePanel()"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="compare-items" id="compareItems">
+      <p class="empty-text" style="padding:20px;text-align:center;color:#999">No hay productos para comparar.</p>
+    </div>
+  </div>
+
+  <!-- Compare Modal -->
+  <div id="compareModal" class="modal-overlay" style="display:none">
+    <div class="modal-content compare-modal-content" style="max-width:900px">
+      <button class="modal-close" onclick="closeCompareModal()"><i class="fas fa-times"></i></button>
+      <h2>Comparación de productos</h2>
+      <div id="compareModalBody"></div>
     </div>
   </div>
 

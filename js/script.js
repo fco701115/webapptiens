@@ -445,6 +445,7 @@ const products = [
 // ========== STATE ==========
 let cart = [];
 let wishlist = [];
+let compareList = [];
 let activeCategory = 'Todas';
 let currentView = 'home'; // home, detail, checkout, loading, error
 
@@ -726,6 +727,115 @@ function updateWishlistUI() {
   if (countEl) countEl.textContent = wishlist.length;
 }
 
+function addToCompare(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+
+  const existing = compareList.find(item => item.id === id);
+  if (existing) {
+    compareList = compareList.filter(item => item.id !== id);
+  } else {
+    if (compareList.length >= 4) {
+      alert('Solo puedes comparar hasta 4 productos');
+      return;
+    }
+    compareList.push({ ...product });
+  }
+  localStorage.setItem('compareList', JSON.stringify(compareList));
+  updateCompareUI();
+}
+
+function isInCompare(id) {
+  return compareList.some(item => item.id === id);
+}
+
+function toggleDetailCompare(id) {
+  addToCompare(id);
+  const link = document.getElementById('detailCompareLink');
+  if (link) {
+    if (isInCompare(id)) {
+      link.innerHTML = '<i class="fas fa-exchange-alt" style="color:#cb354e"></i> En comparación';
+    } else {
+      link.innerHTML = '<i class="fas fa-exchange-alt"></i> Agregar para comparar';
+    }
+  }
+}
+
+function updateCompareUI() {
+  const countEl = document.querySelector('.compare-count');
+  if (countEl) countEl.textContent = compareList.length;
+}
+
+function toggleComparePanel() {
+  const panel = document.getElementById('comparePanel');
+  if (panel) panel.classList.toggle('open');
+  renderComparePanel();
+}
+
+function renderComparePanel() {
+  const container = document.getElementById('compareItems');
+  if (!container) return;
+
+  if (compareList.length === 0) {
+    container.innerHTML = '<p class="empty-text" style="padding:20px;text-align:center;color:#999">No hay productos para comparar.</p>';
+    return;
+  }
+
+  container.innerHTML = compareList.map(p =>
+    '<div class="compare-item">' +
+      '<button class="compare-remove" onclick="addToCompare(' + p.id + '); renderComparePanel()"><i class="fas fa-times"></i></button>' +
+      '<img src="' + p.image + '" alt="' + p.name + '" class="compare-item-img">' +
+      '<p class="compare-item-name">' + p.name + '</p>' +
+      '<p class="compare-item-price">$' + parseFloat(p.price).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</p>' +
+    '</div>'
+  ).join('');
+}
+
+function openCompareModal() {
+  const modal = document.getElementById('compareModal');
+  if (!modal) return;
+  const container = document.getElementById('compareModalBody');
+
+  if (compareList.length < 2) {
+    alert('Agrega al menos 2 productos para comparar');
+    return;
+  }
+
+  const fields = ['name', 'price', 'original_price', 'discount', 'rating', 'reviews', 'category', 'description'];
+
+  let html = '<table class="compare-table"><thead><tr><th></th>';
+  compareList.forEach(p => { html += '<th>' + p.name + '</th>'; });
+  html += '</tr></thead><tbody>';
+
+  const labels = {
+    name: 'Nombre', price: 'Precio', original_price: 'Precio original',
+    discount: 'Descuento', rating: 'Valoración', reviews: 'Reseñas',
+    category: 'Categoría', description: 'Descripción'
+  };
+
+  fields.forEach(field => {
+    html += '<tr><td class="compare-label">' + (labels[field] || field) + '</td>';
+    compareList.forEach(p => {
+      let val = p[field];
+      if (field === 'price' || field === 'original_price') val = val ? '$' + parseFloat(val).toLocaleString('es-AR', {minimumFractionDigits:2}) : '-';
+      if (field === 'discount') val = val ? val + '%' : '-';
+      if (field === 'rating') val = val ? '★ ' + val : '-';
+      if (field === 'description') val = val ? val.substring(0, 80) + '...' : '-';
+      html += '<td>' + (val || '-') + '</td>';
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
+  modal.style.display = 'flex';
+}
+
+function closeCompareModal() {
+  const modal = document.getElementById('compareModal');
+  if (modal) modal.style.display = 'none';
+}
+
 function renderWishlistPanel() {
   const items = document.getElementById('wishlistItems');
   if (!items) return;
@@ -901,7 +1011,7 @@ function showDetail(id) {
 
         <div class="detail-links">
           <a href="#" id="detailWishlistLink" onclick="event.preventDefault(); toggleDetailWishlist(${product.id})"><i class="far fa-heart"></i> Agregar a favoritos</a>
-          <a href="#"><i class="fas fa-exchange-alt"></i> Add to Compare</a>
+          <a href="#" id="detailCompareLink" onclick="event.preventDefault(); toggleDetailCompare(${product.id})"><i class="fas fa-exchange-alt"></i> Agregar para comparar</a>
         </div>
 
         <div class="detail-share">
@@ -2408,6 +2518,13 @@ async function initApp() {
   if (savedWishlist.length > 0) {
     wishlist = savedWishlist;
     updateWishlistUI();
+  }
+
+  // Load compare list from localStorage
+  const savedCompare = JSON.parse(localStorage.getItem('compareList') || '[]');
+  if (savedCompare.length > 0) {
+    compareList = savedCompare;
+    updateCompareUI();
   }
 
   document.querySelector('.cart-btn')?.addEventListener('click', toggleCart);

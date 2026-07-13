@@ -500,7 +500,7 @@ app.post('/api/users/login', async (req, res) => {
 
 // ========== SPA FALLBACK ==========
 // Serve index.html for client-side routes (product pages, etc.)
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'Ruta no encontrada' });
   }

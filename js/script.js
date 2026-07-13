@@ -805,10 +805,6 @@ function renderComparePanel() {
 }
 
 function openCompareModal() {
-  const modal = document.getElementById('compareModal');
-  if (!modal) return;
-  const container = document.getElementById('compareModalBody');
-
   if (compareList.length < 2) {
     alert('Agrega al menos 2 productos para comparar');
     return;
@@ -816,32 +812,58 @@ function openCompareModal() {
 
   const fields = ['name', 'price', 'original_price', 'discount', 'rating', 'reviews', 'category', 'description'];
 
-  let html = '<table class="compare-table"><thead><tr><th></th>';
-  compareList.forEach(p => { html += '<th>' + p.name + '</th>'; });
-  html += '</tr></thead><tbody>';
-
   const labels = {
     name: 'Nombre', price: 'Precio', original_price: 'Precio original',
     discount: 'Descuento', rating: 'Valoración', reviews: 'Reseñas',
     category: 'Categoría', description: 'Descripción'
   };
 
+  let tableRows = '';
   fields.forEach(field => {
-    html += '<tr><td class="compare-label">' + (labels[field] || field) + '</td>';
+    tableRows += '<tr><td class="compare-label">' + (labels[field] || field) + '</td>';
     compareList.forEach(p => {
       let val = p[field];
       if (field === 'price' || field === 'original_price') val = val ? '$' + parseFloat(val).toLocaleString('es-AR', {minimumFractionDigits:2}) : '-';
       if (field === 'discount') val = val ? val + '%' : '-';
       if (field === 'rating') val = val ? '★ ' + val : '-';
       if (field === 'description') val = val ? val.substring(0, 80) + '...' : '-';
-      html += '<td>' + (val || '-') + '</td>';
+      tableRows += '<td>' + (val || '-') + '</td>';
     });
-    html += '</tr>';
+    tableRows += '</tr>';
   });
 
-  html += '</tbody></table>';
-  container.innerHTML = html;
-  modal.style.display = 'flex';
+  const headerCells = compareList.map(p => '<th>' + p.name + '</th>').join('');
+
+  const html =
+    '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+    '<title>Comparar Productos</title>' +
+    '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">' +
+    '<style>' +
+    'body{font-family:sans-serif;margin:0;padding:20px;background:#f5f5f5}' +
+    '.compare-header{background:#cb354e;color:#fff;padding:16px 20px;margin:-20px -20px 20px}' +
+    '.compare-header h1{margin:0;font-size:1.4rem}' +
+    '.compare-container{background:#fff;border-radius:12px;padding:20px;max-width:1000px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,0.1)} +
+    'table{width:100%;border-collapse:collapse;font-size:0.9rem}' +
+    'th,td{border:1px solid #eee;padding:12px 14px;text-align:left;vertical-align:top}' +
+    'th{background:#f8f8f8;font-size:0.85rem}' +
+    '.compare-label{font-weight:700;background:#f8f8f8;width:130px}' +
+    'img{max-width:80px;border-radius:8px}' +
+    '.close-btn{display:block;margin:20px auto 0;padding:10px 24px;background:#cb354e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}' +
+    '</style></head><body>' +
+    '<div class="compare-container">' +
+    '<div class="compare-header"><h1>Comparar Productos</h1></div>' +
+    '<table><thead><tr><th></th>' + headerCells + '</tr></thead><tbody>' + tableRows + '</tbody></table>' +
+    '<button class="close-btn" onclick="window.close()">Cerrar ventana</button>' +
+    '</div></body></html>';
+
+  const win = window.open('', '_blank', 'width=900,height=700,scrollbars=yes');
+  if (win) {
+    win.document.write(html);
+    win.document.close();
+  } else {
+    alert('Permití ventanas emergentes para ver la comparación');
+  }
 }
 
 function closeCompareModal() {

@@ -817,31 +817,40 @@ function openCompareModal() {
     return;
   }
 
-  const cards = compareList.map(p => {
+  const data = compareList.map(p => {
     const price = p.price ? '$' + parseFloat(p.price).toLocaleString('es-AR', {minimumFractionDigits:2}) : '-';
     const orig = p.originalPrice ? '$' + parseFloat(p.originalPrice).toLocaleString('es-AR', {minimumFractionDigits:2}) : '';
     const disc = p.discount ? '-' + p.discount + '%' : '';
     const rating = p.rating ? '★ ' + p.rating : '-';
-    const reviews = p.reviews ? p.reviews + ' reseñas' : '';
-    const desc = p.description ? p.description.substring(0, 140) : 'Sin descripción';
-    return '<div class="compare-card">' +
-      '<img src="' + (p.image || '') + '" alt="' + (p.name || '') + '">' +
-      '<h3>' + (p.name || '') + '</h3>' +
-      '<div class="cmp-price">' + price +
-        (orig ? '<span class="cmp-orig">' + orig + '</span>' : '') +
-        (disc ? '<span class="cmp-disc">' + disc + '</span>' : '') +
-      '</div>' +
-      '<div class="cmp-meta">' + rating + (reviews ? ' (' + reviews + ')' : '') + '</div>' +
-      '<div class="cmp-meta"><strong>Categoría:</strong> ' + (p.category || '-') + '</div>' +
-      '<div class="cmp-desc">' + desc + '</div>' +
-      '<div class="cmp-btns">' +
-        '<button class="cmp-cart" onclick="addToCart(' + p.id + ')">Agregar al carrito</button>' +
-        '<button class="cmp-del" onclick="addToCompare(' + p.id + '); openCompareModal();">Eliminar</button>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+    const reviews = p.reviews ? ' (' + p.reviews + ' reseñas)' : '';
+    const desc = p.description ? p.description : 'Sin descripción';
+    return {
+      id: p.id,
+      image: '<img src="' + (p.image || '') + '" alt="' + (p.name || '') + '">',
+      name: p.name || '',
+      price: price + (orig ? '<span class="cmp-orig">' + orig + '</span>' : '') + (disc ? '<span class="cmp-disc">' + disc + '</span>' : ''),
+      rating: rating + reviews,
+      category: p.category || '-',
+      description: desc.length > 160 ? desc.substring(0, 160) + '...' : desc,
+      actions: '<button class="cmp-cart" onclick="addToCart(' + p.id + ')">Agregar al carrito</button>' +
+               '<button class="cmp-del" onclick="addToCompare(' + p.id + '); openCompareModal();">Eliminar</button>'
+    };
+  });
 
-  body.innerHTML = '<div class="cards">' + cards + '</div>';
+  const cell = key => data.map(d => '<td class="cmp-cell">' + d[key] + '</td>').join('');
+
+  const html =
+    '<table class="compare-table"><tbody>' +
+      '<tr><th class="row-label">Imagen</th>' + cell('image') + '</tr>' +
+      '<tr><th class="row-label">Nombre</th>' + cell('name') + '</tr>' +
+      '<tr><th class="row-label">Precio</th>' + cell('price') + '</tr>' +
+      '<tr><th class="row-label">Rating</th>' + cell('rating') + '</tr>' +
+      '<tr><th class="row-label">Categoría</th>' + cell('category') + '</tr>' +
+      '<tr><th class="row-label">Descripción</th>' + cell('description') + '</tr>' +
+      '<tr><th class="row-label">Acciones</th>' + cell('actions') + '</tr>' +
+    '</tbody></table>';
+
+  body.innerHTML = html;
   modal.style.display = 'flex';
 }
 

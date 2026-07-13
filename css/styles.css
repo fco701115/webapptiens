@@ -4992,7 +4992,10 @@ button {
   color: #555;
 }
 
-.compare-modal-body { padding: 4px 0; }
+.compare-modal-body {
+  padding: 4px 0;
+  overflow-x: auto;
+}
 
 .compare-modal-close-btn {
   display: block;
@@ -5006,43 +5009,38 @@ button {
   font-weight: 600;
 }
 
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.compare-card {
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 16px;
-  width: 230px;
-  display: flex;
-  flex-direction: column;
-}
-
-.compare-card img {
+.compare-table {
   width: 100%;
-  height: 210px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 520px;
+}
+
+.compare-table th.row-label {
+  text-align: left;
+  background: #f8f8f8;
+  font-weight: 700;
+  color: #333;
+  padding: 14px 16px;
+  width: 130px;
+  border: 1px solid #eee;
+  vertical-align: top;
+}
+
+.compare-table td.cmp-cell {
+  text-align: center;
+  padding: 14px 16px;
+  border: 1px solid #eee;
+  vertical-align: top;
+  min-width: 180px;
+}
+
+.compare-table img {
+  width: 120px;
+  height: 140px;
   object-fit: contain;
   border-radius: 8px;
   background: #f8f8f8;
-  margin-bottom: 10px;
-}
-
-.compare-card h3 {
-  font-size: 1rem;
-  margin: 0 0 8px;
-  line-height: 1.3;
-}
-
-.cmp-price {
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 1.15rem;
-  margin-bottom: 6px;
 }
 
 .cmp-orig {
@@ -5059,27 +5057,10 @@ button {
   margin-left: 8px;
 }
 
-.cmp-meta {
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 4px;
-}
-
-.cmp-desc {
-  font-size: 0.8rem;
-  color: #777;
-  margin: 8px 0;
-  flex: 1;
-}
-
-.cmp-btns {
-  display: flex;
-  gap: 8px;
-  margin-top: auto;
-}
-
-.cmp-cart {
-  flex: 1;
+.cmp-cell .cmp-cart {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
   background: var(--primary);
   color: #fff;
   border: none;
@@ -5090,12 +5071,14 @@ button {
   font-size: 0.85rem;
 }
 
-.cmp-del {
+.cmp-cell .cmp-del {
+  display: block;
+  width: 100%;
   background: #eee;
   color: #333;
   border: none;
   border-radius: 8px;
-  padding: 9px 12px;
+  padding: 9px;
   cursor: pointer;
   font-size: 0.85rem;
 }

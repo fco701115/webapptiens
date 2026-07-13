@@ -813,10 +813,10 @@ function openCompareModal() {
     return;
   }
 
-  const fields = ['name', 'price', 'original_price', 'discount', 'rating', 'reviews', 'category', 'description'];
+  const fields = ['image', 'name', 'price', 'original_price', 'discount', 'rating', 'reviews', 'category', 'description'];
 
   const labels = {
-    name: 'Nombre', price: 'Precio', original_price: 'Precio original',
+    image: 'Imagen', name: 'Nombre', price: 'Precio', original_price: 'Precio original',
     discount: 'Descuento', rating: 'Valoración', reviews: 'Reseñas',
     category: 'Categoría', description: 'Descripción'
   };
@@ -826,6 +826,7 @@ function openCompareModal() {
     tableRows += '<tr><td class="compare-label">' + (labels[field] || field) + '</td>';
     compareList.forEach(p => {
       let val = p[field];
+      if (field === 'image') val = p.image ? '<img src="' + p.image + '" alt="' + p.name + '" style="max-width:90px;border-radius:8px">' : '-';
       if (field === 'price' || field === 'original_price') val = val ? '$' + parseFloat(val).toLocaleString('es-AR', {minimumFractionDigits:2}) : '-';
       if (field === 'discount') val = val ? val + '%' : '-';
       if (field === 'rating') val = val ? '★ ' + val : '-';

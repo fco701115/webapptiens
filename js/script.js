@@ -481,7 +481,7 @@ function renderProducts(filter = 'Todas') {
 
     return `
       <div class="product-card">
-        <div class="product-img-wrapper" onclick="showDetail(${p.id})">
+        <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${mainImage}" alt="${p.name}" loading="lazy">
           ${discountHtml}
         </div>
@@ -887,7 +887,7 @@ function renderWishlistPanel() {
 
   items.innerHTML = wishlist.map(p => `
     <div class="wishlist-item">
-      <img src="${p.image}" alt="${p.name}" class="wishlist-item-img" onclick="showDetail(${p.id}); toggleWishlistPanel();">
+      <img src="${p.image}" alt="${p.name}" class="wishlist-item-img" onclick="navigateToProductId(${p.id}); toggleWishlistPanel();">
       <div class="wishlist-item-info">
         <div class="wishlist-item-name">${p.name}</div>
         <div class="wishlist-item-price">$${p.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</div>
@@ -953,7 +953,7 @@ function showDetail(id) {
 
     return `
       <div class="product-card">
-        <div class="product-img-wrapper" onclick="showDetail(${p.id})">
+        <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${mainImage}" alt="${p.name}" loading="lazy">
           ${discHtml}
           <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
@@ -980,7 +980,7 @@ function showDetail(id) {
 
   container.innerHTML = `
     <div class="detail-breadcrumb">
-      <a href="#" onclick="showView('home')">Home</a> / 
+      <a href="#" onclick="goHome()">Home</a> / 
       <a href="#">${product.category}</a> / 
       <span>${product.name}</span>
     </div>
@@ -1089,6 +1089,90 @@ function showDetail(id) {
   `;
 
   showView('detail');
+}
+
+// ========== URL PRODUCT ROUTING ==========
+function slugify(text) {
+  return String(text || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+
+function getProductUrl(product) {
+  const cat = slugify(product.category) || 'productos';
+  const name = slugify(product.name) || 'producto';
+  return '/' + cat + '/' + name + '-' + product.id;
+}
+
+function navigateToProductId(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) { openProductById(id); return; }
+  history.pushState({ productId: id }, '', getProductUrl(p));
+  showDetail(id);
+}
+
+function openProductById(id) {
+  apiGet('/products/' + id).then(p => {
+    if (!p) { window.location.href = '/'; return; }
+    const images = (p.images && Array.isArray(p.images) && p.images.length)
+      ? p.images
+      : (p.image ? [p.image] : []);
+    if (!products.find(x => x.id === p.id)) {
+      products.push({
+        id: p.id,
+        name: p.name,
+        price: parseFloat(p.price),
+        originalPrice: p.original_price ? parseFloat(p.original_price) : null,
+        discount: p.discount,
+        rating: parseFloat(p.rating) || 4.5,
+        reviews: p.reviews || 0,
+        category: p.category,
+        image: images[0] || '',
+        images: images,
+        features: ["Tejido de alta calidad", "Diseño moderno y cómodo", "Perfecto para el día a día"],
+        sizes: (p.sizes && typeof p.sizes === 'string' && p.sizes.trim()) ? p.sizes.split(',').map(s => s.trim()) : ["S", "M", "L", "XL"],
+        colors: (p.colors && typeof p.colors === 'string' && p.colors.trim()) ? p.colors.split(',').map(c => c.trim()) : ["Negro", "Blanco"],
+        description: p.description,
+        specs: { "Composición": "Textil", "Talla": p.sizes || '', "Peso": "0.3 kg", "Origen": "Argentina" }
+      });
+    }
+    history.pushState({ productId: p.id }, '', getProductUrl(p));
+    showDetail(p.id);
+  });
+}
+
+function handleRoute() {
+  const path = window.location.pathname;
+  if (path === '/' || path === '' || path === '/index.html' || path === '/index.html/') {
+    showView('home');
+    return true;
+  }
+  const m = path.match(/\/([^\/]+)\/([^\/]+)-(\d+)\/?$/);
+  if (m) {
+    const id = parseInt(m[3], 10);
+    if (products.length) {
+      const p = products.find(x => x.id === id);
+      if (p) { showDetail(id); return true; }
+    }
+    setTimeout(handleRoute, 200);
+  }
+  return false;
+}
+
+window.addEventListener('popstate', () => {
+  if (window.location.pathname === '/admin') return;
+  handleRoute();
+});
+
+function goHome() {
+  if (window.location.pathname !== '/') {
+    history.pushState({}, '', '/');
+  }
+  showView('home');
 }
 
 let detailQty = 1;
@@ -2176,7 +2260,7 @@ function renderUserPanelWishlist() {
 
   container.innerHTML = wishlist.map(p => `
     <div class="wishlist-item">
-      <img src="${p.image}" alt="${p.name}" class="wishlist-item-img" onclick="showDetail(${p.id})">
+      <img src="${p.image}" alt="${p.name}" class="wishlist-item-img" onclick="navigateToProductId(${p.id})">
       <div class="wishlist-item-info">
         <div class="wishlist-item-name">${p.name}</div>
         <div class="wishlist-item-price">$${p.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</div>
@@ -2238,7 +2322,7 @@ function initSearch() {
 
     return `
       <div class="product-card">
-        <div class="product-img-wrapper" onclick="showDetail(${p.id})">
+        <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${p.image}" alt="${p.name}" loading="lazy">
           ${discountHtml}
         </div>
@@ -2303,7 +2387,7 @@ function initSearch() {
 function selectSearchResult(id) {
   const dropdown = document.getElementById('searchDropdown');
   if (dropdown) dropdown.classList.remove('active');
-  showDetail(id);
+  navigateToProductId(id);
 }
 
 // ========== BANNER SLIDER ==========
@@ -2566,10 +2650,13 @@ async function initApp() {
   document.getElementById('cartOverlay')?.addEventListener('click', toggleCart);
   document.addEventListener('click', closeFilterDropdown);
 
-  // Restore previous view
-  const savedView = localStorage.getItem('currentView');
-  if (savedView && savedView !== 'home' && savedView !== 'loading' && savedView !== 'admin' && savedView !== 'adminLogin') {
-    showView(savedView);
+  // Handle URL routing (product pages, etc.)
+  const routed = handleRoute();
+  if (!routed) {
+    const savedView = localStorage.getItem('currentView');
+    if (savedView && savedView !== 'home' && savedView !== 'loading' && savedView !== 'admin' && savedView !== 'adminLogin') {
+      showView(savedView);
+    }
   }
 }
 

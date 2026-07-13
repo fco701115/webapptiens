@@ -498,6 +498,15 @@ app.post('/api/users/login', async (req, res) => {
   }
 });
 
+// ========== SPA FALLBACK ==========
+// Serve index.html for client-side routes (product pages, etc.)
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'Ruta no encontrada' });
+  }
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // ========== START SERVER ==========
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

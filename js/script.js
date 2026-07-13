@@ -883,9 +883,9 @@ function showDetail(id) {
         </div>
 
         <div class="detail-actions">
-          <button class="detail-add-cart" onclick="addToCart(${product.id})">ADD TO CART</button>
+          <button class="detail-add-cart" onclick="addToCart(${product.id})">Agregar al carrito</button>
         </div>
-        <button class="detail-buy-now" onclick="addToCart(${product.id}); openCheckout()">BUY NOW</button>
+        <button class="detail-buy-now" onclick="addToCart(${product.id}); openCheckout()">Comprar ahora</button>
 
         <div class="detail-links">
           <a href="#"><i class="far fa-heart"></i> Add to Wishlist</a>

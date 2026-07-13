@@ -4,7 +4,7 @@ const { Pool } = require('pg');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 // Middleware
 app.use(cors());
@@ -28,7 +28,7 @@ const pool = new Pool({
   host: 'localhost',
   database: 'weboutshop',
   password: '123456',
-  port: 5432,
+  port: 5433,
 });
 
 // ========== PRODUCTS ==========

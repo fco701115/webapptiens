@@ -5,7 +5,7 @@ const pool = new Pool({
   host: 'localhost',
   database: 'weboutshop',
   password: '123456',
-  port: 5432,
+  port: 5433,
 });
 
 async function migrate() {

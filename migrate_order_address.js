@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const p = new Pool({ user: 'postgres', password: '123456', host: 'localhost', port: 5432, database: 'weboutshop' });
+const p = new Pool({ user: 'postgres', password: '123456', host: 'localhost', port: 5433, database: 'weboutshop' });
 
 async function migrate() {
   try {

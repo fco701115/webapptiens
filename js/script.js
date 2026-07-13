@@ -809,34 +809,33 @@ let compareWin = null;
 
 function openCompareModal() {
   if (compareList.length < 1) {
-    alert('Agrega productos para comparar');
+    if (compareWin && !compareWin.closed) compareWin.close();
     return;
   }
 
-  const fields = ['image', 'name', 'price', 'original_price', 'discount', 'rating', 'reviews', 'category', 'description'];
-
-  const labels = {
-    image: 'Imagen', name: 'Nombre', price: 'Precio', original_price: 'Precio original',
-    discount: 'Descuento', rating: 'Valoración', reviews: 'Reseñas',
-    category: 'Categoría', description: 'Descripción'
-  };
-
-  let tableRows = '';
-  fields.forEach(field => {
-    tableRows += '<tr><td class="compare-label">' + (labels[field] || field) + '</td>';
-    compareList.forEach(p => {
-      let val = p[field];
-      if (field === 'image') val = p.image ? '<img src="' + p.image + '" alt="' + p.name + '" style="max-width:90px;border-radius:8px">' : '-';
-      if (field === 'price' || field === 'original_price') val = val ? '$' + parseFloat(val).toLocaleString('es-AR', {minimumFractionDigits:2}) : '-';
-      if (field === 'discount') val = val ? val + '%' : '-';
-      if (field === 'rating') val = val ? '★ ' + val : '-';
-      if (field === 'description') val = val ? val.substring(0, 80) + '...' : '-';
-      tableRows += '<td>' + (val || '-') + '</td>';
-    });
-    tableRows += '</tr>';
-  });
-
-  const headerCells = compareList.map(p => '<th>' + p.name + '</th>').join('');
+  const cards = compareList.map(p => {
+    const price = p.price ? '$' + parseFloat(p.price).toLocaleString('es-AR', {minimumFractionDigits:2}) : '-';
+    const orig = p.originalPrice ? '$' + parseFloat(p.originalPrice).toLocaleString('es-AR', {minimumFractionDigits:2}) : '';
+    const disc = p.discount ? '-' + p.discount + '%' : '';
+    const rating = p.rating ? '★ ' + p.rating : '-';
+    const reviews = p.reviews ? p.reviews + ' reseñas' : '';
+    const desc = p.description ? p.description.substring(0, 140) : 'Sin descripción';
+    return '<div class="compare-card">' +
+      '<img src="' + (p.image || '') + '" alt="' + (p.name || '') + '">' +
+      '<h3>' + (p.name || '') + '</h3>' +
+      '<div class="cmp-price">' + price +
+        (orig ? '<span class="cmp-orig">' + orig + '</span>' : '') +
+        (disc ? '<span class="cmp-disc">' + disc + '</span>' : '') +
+      '</div>' +
+      '<div class="cmp-meta">' + rating + (reviews ? ' (' + reviews + ')' : '') + '</div>' +
+      '<div class="cmp-meta"><strong>Categoría:</strong> ' + (p.category || '-') + '</div>' +
+      '<div class="cmp-desc">' + desc + '</div>' +
+      '<div class="cmp-btns">' +
+        '<button class="cmp-cart" onclick="window.opener.addToCart(' + p.id + ')">Agregar al carrito</button>' +
+        '<button class="cmp-del" onclick="window.opener.addToCompare(' + p.id + '); window.opener.openCompareModal();">Eliminar</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 
   const html =
     '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
@@ -847,22 +846,29 @@ function openCompareModal() {
     'body{font-family:sans-serif;margin:0;padding:20px;background:#f5f5f5}' +
     '.compare-header{background:#cb354e;color:#fff;padding:16px 20px;margin:-20px -20px 20px}' +
     '.compare-header h1{margin:0;font-size:1.4rem}' +
-    '.compare-container{background:#fff;border-radius:12px;padding:20px;max-width:1000px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,0.1)}' +
-    'table{width:100%;border-collapse:collapse;font-size:0.9rem}' +
-    'th,td{border:1px solid #eee;padding:12px 14px;text-align:left;vertical-align:top}' +
-    'th{background:#f8f8f8;font-size:0.85rem}' +
-    '.compare-label{font-weight:700;background:#f8f8f8;width:130px}' +
-    'img{max-width:80px;border-radius:8px}' +
-    '.close-btn{display:block;margin:20px auto 0;padding:10px 24px;background:#cb354e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}' +
+    '.compare-container{background:#fff;border-radius:12px;padding:24px;max-width:1100px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,0.1)}' +
+    '.cards{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}' +
+    '.compare-card{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px;width:230px;display:flex;flex-direction:column}' +
+    '.compare-card img{width:100%;height:210px;object-fit:contain;border-radius:8px;background:#f8f8f8;margin-bottom:10px}' +
+    '.compare-card h3{font-size:1rem;margin:0 0 8px;line-height:1.3}' +
+    '.cmp-price{color:#cb354e;font-weight:700;font-size:1.15rem;margin-bottom:6px}' +
+    '.cmp-orig{color:#999;text-decoration:line-through;font-size:0.85rem;font-weight:400;margin-left:8px}' +
+    '.cmp-disc{color:#cb354e;font-size:0.8rem;margin-left:8px}' +
+    '.cmp-meta{font-size:0.85rem;color:#555;margin-bottom:4px}' +
+    '.cmp-desc{font-size:0.8rem;color:#777;margin:8px 0;flex:1}' +
+    '.cmp-btns{display:flex;gap:8px;margin-top:auto}' +
+    '.cmp-cart{flex:1;background:#cb354e;color:#fff;border:none;border-radius:8px;padding:9px;cursor:pointer;font-weight:600;font-size:0.85rem}' +
+    '.cmp-del{background:#eee;color:#333;border:none;border-radius:8px;padding:9px 12px;cursor:pointer;font-size:0.85rem}' +
+    '.close-btn{display:block;margin:24px auto 0;padding:10px 28px;background:#cb354e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}' +
     '</style></head><body>' +
     '<div class="compare-container">' +
     '<div class="compare-header"><h1>Comparar Productos</h1></div>' +
-    '<table><thead><tr><th></th>' + headerCells + '</tr></thead><tbody>' + tableRows + '</tbody></table>' +
+    '<div class="cards">' + cards + '</div>' +
     '<button class="close-btn" onclick="window.close()">Ver comparación</button>' +
     '</div></body></html>';
 
   if (!compareWin || compareWin.closed) {
-    compareWin = window.open('', 'compararProductos', 'width=900,height=700,scrollbars=yes');
+    compareWin = window.open('', 'compararProductos', 'width=1000,height=700,scrollbars=yes');
   }
   if (compareWin) {
     compareWin.document.write(html);

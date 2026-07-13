@@ -104,13 +104,13 @@
   <div class="compare-panel" id="comparePanel">
     <div class="compare-panel-header">
       <h3>Comparar Productos</h3>
-      <div>
-        <button class="compare-view-btn" onclick="openCompareModal()">Ver comparación</button>
-        <button class="compare-close" onclick="toggleComparePanel()"><i class="fas fa-times"></i></button>
-      </div>
+      <button class="compare-close" onclick="toggleComparePanel()"><i class="fas fa-times"></i></button>
     </div>
     <div class="compare-items" id="compareItems">
       <p class="empty-text" style="padding:20px;text-align:center;color:#999">No hay productos para comparar.</p>
+    </div>
+    <div class="compare-panel-footer">
+      <button class="compare-view-btn" onclick="openCompareModal()" id="compareViewBtn">Ver comparación</button>
     </div>
   </div>
 

@@ -764,6 +764,19 @@ function toggleDetailCompare(id) {
 function updateCompareUI() {
   const countEl = document.querySelector('.compare-count');
   if (countEl) countEl.textContent = compareList.length;
+
+  const viewBtn = document.getElementById('compareViewBtn');
+  if (viewBtn) {
+    if (compareList.length < 2) {
+      viewBtn.disabled = true;
+      viewBtn.style.opacity = '0.5';
+      viewBtn.style.cursor = 'not-allowed';
+    } else {
+      viewBtn.disabled = false;
+      viewBtn.style.opacity = '1';
+      viewBtn.style.cursor = 'pointer';
+    }
+  }
 }
 
 function toggleComparePanel() {

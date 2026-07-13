@@ -743,6 +743,17 @@ function addToCompare(id) {
   }
   localStorage.setItem('compareList', JSON.stringify(compareList));
   updateCompareUI();
+  refreshDetailCompareLink();
+}
+
+function refreshDetailCompareLink() {
+  const link = document.getElementById('detailCompareLink');
+  if (!link || !currentDetailProduct) return;
+  if (isInCompare(currentDetailProduct.id)) {
+    link.innerHTML = '<i class="fas fa-exchange-alt" style="color:#cb354e"></i> En comparación';
+  } else {
+    link.innerHTML = '<i class="fas fa-exchange-alt"></i> Agregar para comparar';
+  }
 }
 
 function isInCompare(id) {

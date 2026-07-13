@@ -4945,3 +4945,157 @@ button {
   border-radius: 6px;
   border: 1px solid var(--border);
 }
+
+/* ========== COMPARE MODAL (in-page) ========== */
+.compare-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.compare-modal-box {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 1100px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  padding: 24px;
+}
+
+.compare-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+}
+
+.compare-modal-head h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+
+.compare-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.compare-modal-body { padding: 4px 0; }
+
+.compare-modal-close-btn {
+  display: block;
+  margin: 22px auto 0;
+  padding: 10px 28px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.compare-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+}
+
+.compare-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f8f8f8;
+  margin-bottom: 10px;
+}
+
+.compare-card h3 {
+  font-size: 1rem;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.cmp-price {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.cmp-orig {
+  color: #999;
+  text-decoration: line-through;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.cmp-disc {
+  color: var(--primary);
+  font-size: 0.8rem;
+  margin-left: 8px;
+}
+
+.cmp-meta {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.cmp-desc {
+  font-size: 0.8rem;
+  color: #777;
+  margin: 8px 0;
+  flex: 1;
+}
+
+.cmp-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.cmp-cart {
+  flex: 1;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.cmp-del {
+  background: #eee;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}

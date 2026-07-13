@@ -807,11 +807,13 @@ function renderComparePanel() {
   ).join('');
 }
 
-let compareWin = null;
-
 function openCompareModal() {
+  const modal = document.getElementById('compareModal');
+  const body = document.getElementById('compareModalBody');
+  if (!modal || !body) return;
+
   if (compareList.length < 1) {
-    if (compareWin && !compareWin.closed) compareWin.close();
+    modal.style.display = 'none';
     return;
   }
 
@@ -833,52 +835,14 @@ function openCompareModal() {
       '<div class="cmp-meta"><strong>Categoría:</strong> ' + (p.category || '-') + '</div>' +
       '<div class="cmp-desc">' + desc + '</div>' +
       '<div class="cmp-btns">' +
-        '<button class="cmp-cart" onclick="window.opener.addToCart(' + p.id + ')">Agregar al carrito</button>' +
-        '<button class="cmp-del" onclick="window.opener.addToCompare(' + p.id + '); window.opener.openCompareModal();">Eliminar</button>' +
+        '<button class="cmp-cart" onclick="addToCart(' + p.id + ')">Agregar al carrito</button>' +
+        '<button class="cmp-del" onclick="addToCompare(' + p.id + '); openCompareModal();">Eliminar</button>' +
       '</div>' +
     '</div>';
   }).join('');
 
-  const html =
-    '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
-    '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-    '<title>Comparar Productos</title>' +
-    '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">' +
-    '<style>' +
-    'body{font-family:sans-serif;margin:0;padding:20px;background:#f5f5f5}' +
-    '.compare-header{background:#cb354e;color:#fff;padding:16px 20px;margin:-20px -20px 20px}' +
-    '.compare-header h1{margin:0;font-size:1.4rem}' +
-    '.compare-container{background:#fff;border-radius:12px;padding:24px;max-width:1100px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,0.1)}' +
-    '.cards{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}' +
-    '.compare-card{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px;width:230px;display:flex;flex-direction:column}' +
-    '.compare-card img{width:100%;height:210px;object-fit:contain;border-radius:8px;background:#f8f8f8;margin-bottom:10px}' +
-    '.compare-card h3{font-size:1rem;margin:0 0 8px;line-height:1.3}' +
-    '.cmp-price{color:#cb354e;font-weight:700;font-size:1.15rem;margin-bottom:6px}' +
-    '.cmp-orig{color:#999;text-decoration:line-through;font-size:0.85rem;font-weight:400;margin-left:8px}' +
-    '.cmp-disc{color:#cb354e;font-size:0.8rem;margin-left:8px}' +
-    '.cmp-meta{font-size:0.85rem;color:#555;margin-bottom:4px}' +
-    '.cmp-desc{font-size:0.8rem;color:#777;margin:8px 0;flex:1}' +
-    '.cmp-btns{display:flex;gap:8px;margin-top:auto}' +
-    '.cmp-cart{flex:1;background:#cb354e;color:#fff;border:none;border-radius:8px;padding:9px;cursor:pointer;font-weight:600;font-size:0.85rem}' +
-    '.cmp-del{background:#eee;color:#333;border:none;border-radius:8px;padding:9px 12px;cursor:pointer;font-size:0.85rem}' +
-    '.close-btn{display:block;margin:24px auto 0;padding:10px 28px;background:#cb354e;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}' +
-    '</style></head><body>' +
-    '<div class="compare-container">' +
-    '<div class="compare-header"><h1>Comparar Productos</h1></div>' +
-    '<div class="cards">' + cards + '</div>' +
-    '<button class="close-btn" onclick="window.close()">Ver comparación</button>' +
-    '</div></body></html>';
-
-  if (!compareWin || compareWin.closed) {
-    compareWin = window.open('', 'compararProductos', 'width=1000,height=700,scrollbars=yes');
-  }
-  if (compareWin) {
-    compareWin.document.write(html);
-    compareWin.document.close();
-    compareWin.focus();
-  } else {
-    alert('Permití ventanas emergentes para ver la comparación');
-  }
+  body.innerHTML = '<div class="cards">' + cards + '</div>';
+  modal.style.display = 'flex';
 }
 
 function closeCompareModal() {

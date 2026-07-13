@@ -750,7 +750,9 @@ function isInCompare(id) {
 }
 
 function toggleDetailCompare(id) {
-  addToCompare(id);
+  if (!isInCompare(id)) {
+    addToCompare(id);
+  }
   const link = document.getElementById('detailCompareLink');
   if (link) {
     if (isInCompare(id)) {

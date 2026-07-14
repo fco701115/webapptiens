@@ -2578,10 +2578,94 @@ async function loadSplitBanners() {
   }
 }
 
+// ========== CACHE ==========
+function normalizeProduct(p) {
+  let images = [];
+  if (p.images && Array.isArray(p.images) && p.images.length > 0) {
+    images = p.images;
+  } else if (p.image) {
+    images = [p.image];
+  }
+
+  let sizes = [];
+  if (p.sizes && typeof p.sizes === 'string' && p.sizes.trim()) {
+    sizes = p.sizes.split(',').map(s => s.trim());
+  } else {
+    sizes = ["S", "M", "L", "XL"];
+  }
+
+  let colors = [];
+  if (p.colors && typeof p.colors === 'string' && p.colors.trim()) {
+    colors = p.colors.split(',').map(c => c.trim());
+  } else {
+    colors = ["Negro", "Blanco"];
+  }
+
+  return {
+    id: p.id,
+    name: p.name,
+    price: parseFloat(p.price),
+    originalPrice: p.original_price ? parseFloat(p.original_price) : null,
+    discount: p.discount,
+    rating: parseFloat(p.rating) || 4.5,
+    reviews: p.reviews || 0,
+    category: p.category,
+    image: images[0] || p.image,
+    images: images,
+    features: [
+      "Tejido de alta calidad",
+      "Diseño moderno y cómodo",
+      "Perfecto para el día a día"
+    ],
+    sizes: sizes,
+    colors: colors,
+    description: p.description,
+    specs: {
+      "Composición": "Textil",
+      "Talla": sizes.join(', '),
+      "Peso": "0.3 kg",
+      "Origen": "Argentina"
+    }
+  };
+}
+
+function hydrateFromCache() {
+  try {
+    const cachedProducts = JSON.parse(localStorage.getItem('cachedProducts') || 'null');
+    const cachedCategories = JSON.parse(localStorage.getItem('cachedCategories') || 'null');
+    if (!cachedProducts || !cachedProducts.length) return false;
+
+    products.length = 0;
+    cachedProducts.forEach(p => products.push(p));
+
+    categories.length = 0;
+    categories.push('Todas');
+    if (cachedCategories && cachedCategories.length) {
+      allCategoriesData = cachedCategories;
+      cachedCategories.forEach(c => categories.push(c.name));
+    }
+    if (categories.length <= 1) {
+      const unique = [...new Set(products.map(p => p.category).filter(Boolean))];
+      unique.forEach(cat => { if (!categories.includes(cat)) categories.push(cat); });
+    }
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 // ========== INIT ==========
 async function initApp() {
   const loadingEl = document.getElementById('loadingView');
   if (loadingEl) loadingEl.style.display = 'flex';
+
+  // Hydrate instantly from cache so refreshes render without "Cargando"
+  if (hydrateFromCache()) {
+    renderFilters();
+    renderProducts();
+    renderCategoriesCarousel();
+    if (loadingEl) loadingEl.style.display = 'none';
+  }
 
   // Check if admin route
   if (window.location.pathname === '/admin') {
@@ -2600,55 +2684,8 @@ async function initApp() {
   const apiProducts = await apiGet('/products');
   if (apiProducts && apiProducts.length > 0) {
     products.length = 0;
-    apiProducts.forEach(p => {
-      let images = [];
-      if (p.images && Array.isArray(p.images) && p.images.length > 0) {
-        images = p.images;
-      } else if (p.image) {
-        images = [p.image];
-      }
-      
-      let sizes = [];
-      if (p.sizes && typeof p.sizes === 'string' && p.sizes.trim()) {
-        sizes = p.sizes.split(',').map(s => s.trim());
-      } else {
-        sizes = ["S", "M", "L", "XL"];
-      }
-      
-      let colors = [];
-      if (p.colors && typeof p.colors === 'string' && p.colors.trim()) {
-        colors = p.colors.split(',').map(c => c.trim());
-      } else {
-        colors = ["Negro", "Blanco"];
-      }
-
-      products.push({
-        id: p.id,
-        name: p.name,
-        price: parseFloat(p.price),
-        originalPrice: p.original_price ? parseFloat(p.original_price) : null,
-        discount: p.discount,
-        rating: parseFloat(p.rating) || 4.5,
-        reviews: p.reviews || 0,
-        category: p.category,
-        image: images[0] || p.image,
-        images: images,
-        features: [
-          "Tejido de alta calidad",
-          "Diseño moderno y cómodo",
-          "Perfecto para el día a día"
-        ],
-        sizes: sizes,
-        colors: colors,
-        description: p.description,
-        specs: {
-          "Composición": "Textil",
-          "Talla": sizes.join(', '),
-          "Peso": "0.3 kg",
-          "Origen": "Argentina"
-        }
-      });
-    });
+    apiProducts.forEach(p => products.push(normalizeProduct(p)));
+    localStorage.setItem('cachedProducts', JSON.stringify(products));
   }
 
   const apiCategories = await apiGet('/categories');
@@ -2657,15 +2694,13 @@ async function initApp() {
     categories.length = 0;
     categories.push('Todas');
     apiCategories.forEach(c => categories.push(c.name));
+    localStorage.setItem('cachedCategories', JSON.stringify(apiCategories));
   } else {
     allCategoriesData = [];
     categories.length = 0;
     categories.push('Todas');
-    const apiProducts = await apiGet('/products');
-    if (apiProducts) {
-      const unique = [...new Set(apiProducts.map(p => p.category).filter(Boolean))];
-      unique.forEach(cat => categories.push(cat));
-    }
+    const unique = [...new Set(products.map(p => p.category).filter(Boolean))];
+    unique.forEach(cat => categories.push(cat));
   }
 
   if (loadingEl) loadingEl.style.display = 'none';

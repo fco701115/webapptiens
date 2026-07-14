@@ -5013,6 +5013,7 @@ button {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
+  table-layout: fixed;
   min-width: 520px;
 }
 
@@ -5032,10 +5033,12 @@ button {
   padding: 14px 16px;
   border: 1px solid #eee;
   vertical-align: top;
-  min-width: 180px;
+  width: 22%;
 }
 
 .compare-table img {
+  display: block;
+  margin: 0 auto;
   width: 120px;
   height: 140px;
   object-fit: contain;

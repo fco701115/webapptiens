@@ -452,6 +452,42 @@ let currentView = 'home'; // home, detail, checkout, loading, error
 const categories = ['Todas', ...new Set(products.map(p => p.category))];
 
 // ========== RENDER PRODUCTS ==========
+function productCardHtml(p) {
+  const starsHtml = renderStars(p.rating);
+  const originalPriceHtml = p.originalPrice
+    ? `<span class="price-original">$${p.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>`
+    : '';
+  const discountHtml = p.discount > 0
+    ? `<div class="discount-badge">-${p.discount}%</div>`
+    : '';
+  const mainImage = Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : p.image;
+
+  return `
+    <div class="product-card">
+      <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
+        <img src="${mainImage}" alt="${p.name}" loading="lazy">
+        ${discountHtml}
+      </div>
+      <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
+        <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
+      </button>
+      <div class="product-info">
+        <div class="product-info-content">
+          <h3 class="product-name">${p.name}</h3>
+          <div class="product-rating">
+            <span class="stars">${starsHtml}</span>
+            <span class="rating-count">(${p.reviews})</span>
+          </div>
+          <div class="product-price">
+            <span class="price-current">$${p.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>
+            ${originalPriceHtml}
+          </div>
+        </div>
+        <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Agregar al carrito</button>
+      </div>
+    </div>`;
+}
+
 function renderProducts(filter = 'Todas') {
   const grid = document.getElementById('productsGrid');
   if (!grid) return;
@@ -469,41 +505,41 @@ function renderProducts(filter = 'Todas') {
     return;
   }
 
-  grid.innerHTML = filtered.map(p => {
-    const starsHtml = renderStars(p.rating);
-    const originalPriceHtml = p.originalPrice
-      ? `<span class="price-original">$${p.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>`
-      : '';
-  const discountHtml = p.discount > 0
-      ? `<div class="discount-badge">-${p.discount}%</div>`
-      : '';
-    const mainImage = Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : p.image;
+  grid.innerHTML = filtered.map(p => productCardHtml(p)).join('');
+}
 
-    return `
-      <div class="product-card">
-        <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
-          <img src="${mainImage}" alt="${p.name}" loading="lazy">
-          ${discountHtml}
-        </div>
-        <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
-          <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
-        </button>
-        <div class="product-info">
-          <div class="product-info-content">
-            <h3 class="product-name">${p.name}</h3>
-            <div class="product-rating">
-              <span class="stars">${starsHtml}</span>
-              <span class="rating-count">(${p.reviews})</span>
-            </div>
-            <div class="product-price">
-              <span class="price-current">$${p.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>
-              ${originalPriceHtml}
-            </div>
-          </div>
-          <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Agregar al carrito</button>
-        </div>
-      </div>`;
-  }).join('');
+function renderCategoryProducts(category) {
+  const grid = document.getElementById('categoryProductsGrid');
+  if (!grid) return;
+
+  const filtered = products.filter(p => p.category === category);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-box-open"></i>
+        <h3>No se encontraron productos</h3>
+        <p>No hay productos en esta categoría</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => productCardHtml(p)).join('');
+}
+
+function showCategoryPage(category) {
+  activeCategory = category;
+  const title = document.getElementById('categoryTitle');
+  if (title) title.textContent = category;
+  renderCategoryProducts(category);
+  renderFilters();
+  showView('category');
+}
+
+function navigateToCategory(category) {
+  history.pushState({ category: category }, '', '/' + slugify(category));
+  showCategoryPage(category);
 }
 
 // ========== RENDER STARS ==========
@@ -524,7 +560,7 @@ function renderFilters() {
   if (!container) return;
 
   container.innerHTML = categories.map(cat => `
-    <button class="filter-accordion-item ${cat === activeCategory ? 'active' : ''}" onclick="filterByCategory('${cat}')">
+    <button class="filter-accordion-item ${cat === activeCategory ? 'active' : ''}" onclick="navigateToCategory('${cat}')">
       <span>${cat}</span>
       ${cat === activeCategory ? '<i class="fas fa-check"></i>' : ''}
     </button>
@@ -1158,6 +1194,19 @@ function handleRoute() {
       if (p) { showDetail(id); return true; }
     }
     setTimeout(handleRoute, 200);
+    return true;
+  }
+  const seg = path.replace(/^\/|\/$/g, '');
+  if (seg && seg !== 'admin' && seg !== 'index.html') {
+    const cat = categories.find(c => slugify(c) === seg);
+    if (cat && cat !== 'Todas') {
+      if (products.length) {
+        showCategoryPage(cat);
+      } else {
+        setTimeout(handleRoute, 200);
+      }
+      return true;
+    }
   }
   return false;
 }
@@ -1232,7 +1281,7 @@ function changeDetailImg(index) {
 function showView(view) {
   currentView = view;
   localStorage.setItem('currentView', view);
-  const views = ['homeView', 'detailView', 'checkoutView', 'loadingView', 'errorView', 'loginView', 'userPanelView', 'adminView', 'adminLoginView'];
+  const views = ['homeView', 'detailView', 'checkoutView', 'loadingView', 'errorView', 'loginView', 'userPanelView', 'adminView', 'adminLoginView', 'categoryView'];
   views.forEach(v => {
     const el = document.getElementById(v);
     if (el) el.style.display = 'none';
@@ -1809,7 +1858,7 @@ function renderCategoriesCarousel() {
     const catData = allCategoriesData.find(c => c.name === cat);
     const img = (catData && catData.image) ? catData.image : (fallbackImages[cat] || 'https://placehold.co/135x135?text=' + encodeURIComponent(cat));
     return `
-      <div class="category-card" onclick="filterByCategory('${cat}')">
+      <div class="category-card" onclick="navigateToCategory('${cat}')">
         <div class="category-img-wrapper">
           <img src="${img}" alt="${cat}">
         </div>
@@ -1880,7 +1929,7 @@ function renderCategoriesAccordion() {
   if (!list) return;
 
   list.innerHTML = categories.map(cat => `
-    <div class="categories-accordion-item ${cat === activeCategory ? 'active' : ''}" onclick="selectCategoryFromAccordion('${cat}')">
+    <div class="categories-accordion-item ${cat === activeCategory ? 'active' : ''}" onclick="navigateToCategory('${cat}')">
       ${cat}
     </div>
   `).join('');

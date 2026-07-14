@@ -5082,3 +5082,16 @@ button {
   cursor: pointer;
   font-size: 0.85rem;
 }
+
+.category-back {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.category-back:hover {
+  text-decoration: underline;
+}

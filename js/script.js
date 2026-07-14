@@ -2665,6 +2665,10 @@ async function initApp() {
     renderProducts();
     renderCategoriesCarousel();
     if (loadingEl) loadingEl.style.display = 'none';
+    // Render the correct view immediately from cached data
+    if (window.location.pathname !== '/admin') {
+      handleRoute();
+    }
   }
 
   // Check if admin route

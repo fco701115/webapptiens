@@ -2581,7 +2581,7 @@ async function loadSplitBanners() {
 // ========== INIT ==========
 async function initApp() {
   const loadingEl = document.getElementById('loadingView');
-  if (loadingEl) loadingEl.style.display = '';
+  if (loadingEl) loadingEl.style.display = 'flex';
 
   // Check if admin route
   if (window.location.pathname === '/admin') {

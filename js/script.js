@@ -1077,7 +1077,7 @@ function showDetail(id) {
         <div class="detail-actions">
           <button class="detail-add-cart" onclick="addToCart(${product.id})">Agregar al carrito</button>
         </div>
-        <button class="detail-buy-now" onclick="addToCart(${product.id}); openCheckout()">Comprar ahora</button>
+        <button class="detail-buy-now" onclick="addToCart(${product.id}); openCheckout(false)">Comprar ahora</button>
 
         <div class="detail-links">
           <a href="#" id="detailWishlistLink" onclick="event.preventDefault(); toggleDetailWishlist(${product.id})"><i class="far fa-heart"></i> Agregar a favoritos</a>
@@ -1762,14 +1762,14 @@ function renderCheckoutSummary() {
 
 let checkoutFromCart = false;
 
-function openCheckout() {
+function openCheckout(openCart = true) {
   if (cart.length === 0) {
-    toggleCart();
+    if (openCart) toggleCart();
     return;
   }
   checkoutFromCart = true;
   showCheckout();
-  toggleCart();
+  if (openCart) toggleCart();
 }
 
 function updateCheckoutQty(id, delta) {

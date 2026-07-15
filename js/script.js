@@ -1337,6 +1337,11 @@ function showCheckout() {
   renderCheckoutSummary();
   loadFirstCheckoutAddress();
   showView('checkout');
+  if (!currentUser) {
+    document.getElementById('checkoutUserData').style.display = 'none';
+    document.getElementById('checkoutEditForm').style.display = 'block';
+    document.getElementById('checkoutAddressChangeBtn').style.display = 'none';
+  }
 }
 
 function loadFirstCheckoutAddress() {
@@ -1368,17 +1373,24 @@ function populateCheckoutUserData() {
 function toggleCheckoutEdit() {
   const data = document.getElementById('checkoutUserData');
   const form = document.getElementById('checkoutEditForm');
+  const changeBtn = document.getElementById('checkoutAddressChangeBtn');
   if (form.style.display === 'none') {
     if (currentUser) {
       document.getElementById('checkoutEditName').value = currentUser.name || '';
       document.getElementById('checkoutEditEmail').value = currentUser.email || '';
       document.getElementById('checkoutEditPhone').value = currentUser.phone || '';
+    } else {
+      document.getElementById('checkoutEditName').value = '';
+      document.getElementById('checkoutEditEmail').value = '';
+      document.getElementById('checkoutEditPhone').value = '';
     }
     data.style.display = 'none';
     form.style.display = 'block';
+    if (changeBtn) changeBtn.style.display = 'none';
   } else {
     data.style.display = 'block';
     form.style.display = 'none';
+    if (changeBtn) changeBtn.style.display = currentUser ? 'inline-flex' : 'none';
   }
 }
 
@@ -1395,6 +1407,8 @@ function saveCheckoutUserData() {
   populateCheckoutUserData();
   document.getElementById('checkoutUserData').style.display = 'block';
   document.getElementById('checkoutEditForm').style.display = 'none';
+  const changeBtn = document.getElementById('checkoutAddressChangeBtn');
+  if (changeBtn) changeBtn.style.display = 'inline-flex';
 }
 
 function showCheckoutAddressForm() {

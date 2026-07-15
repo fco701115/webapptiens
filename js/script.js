@@ -1525,12 +1525,9 @@ function cancelCheckoutAddress() {
   delete modal.dataset.editId;
   modal.style.display = 'none';
   const saved = document.getElementById('checkoutAddressSaved');
-  const savedList = document.getElementById('checkoutAddressSavedList');
   const empty = document.getElementById('checkoutAddressEmpty');
   if (saved && saved.dataset.hasAddress === 'true') {
     saved.style.display = 'block';
-  } else if (savedList.style.display === 'block') {
-    // Keep list visible
   } else {
     empty.style.display = 'block';
   }

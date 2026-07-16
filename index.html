@@ -139,8 +139,8 @@
           </div>
           <button class="auth-submit-btn" onclick="handleLogin()">Iniciar Sesión</button>
           <div class="auth-links">
-            <a href="#" onclick="showRegisterView()">Crear cuenta</a>
-            <a href="#">¿Olvidaste tu contraseña?</a>
+            <a href="#" onclick="showRegisterView(); return false">Crear cuenta</a>
+            <a href="#" onclick="return false">¿Olvidaste tu contraseña?</a>
           </div>
         </div>
       </div>
@@ -171,7 +171,7 @@
           </div>
           <button class="auth-submit-btn" onclick="handleRegister()">Crear Cuenta</button>
           <div class="auth-links">
-            <a href="#" onclick="showLoginView()">Ya tengo cuenta</a>
+            <a href="#" onclick="showLoginView(); return false">Ya tengo cuenta</a>
           </div>
         </div>
       </div>

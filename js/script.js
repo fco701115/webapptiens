@@ -528,10 +528,48 @@ function renderCategoryProducts(category) {
   grid.innerHTML = filtered.map(p => productCardHtml(p)).join('');
 }
 
+function showAllCategories() {
+  const title = document.getElementById('categoryTitle');
+  if (title) title.textContent = 'Todas las Categorías';
+  const grid = document.getElementById('allCategoriesGrid');
+  const productsGrid = document.getElementById('categoryProductsGrid');
+  if (grid) {
+    grid.style.display = 'grid';
+    const fallbackImages = {
+      'Blusas': 'https://images.unsplash.com/photo-1434389677669-e08b4cda3a23?w=300&h=300&fit=crop',
+      'Faldas': 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=300&h=300&fit=crop',
+      'Chaquetas': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300&h=300&fit=crop',
+      'Camisetas': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=300&fit=crop',
+      'Jeans': 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=300&h=300&fit=crop',
+      'Vestidos': 'https://images.unsplash.com/photo-1560243563-062bfc001d68?w=300&h=300&fit=crop',
+      'Accesorios': 'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=300&h=300&fit=crop',
+      'Zapatos': 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=300&h=300&fit=crop',
+    };
+    grid.innerHTML = categories.filter(c => c !== 'Todas').map(cat => {
+      const catData = allCategoriesData.find(c => c.name === cat);
+      const img = (catData && catData.image) ? catData.image : (fallbackImages[cat] || 'https://placehold.co/300x300?text=' + encodeURIComponent(cat));
+      return `
+        <div class="category-card" onclick="navigateToCategory('${cat}')">
+          <div class="category-img-wrapper">
+            <img src="${img}" alt="${cat}">
+          </div>
+          <span class="category-name">${cat}</span>
+        </div>
+      `;
+    }).join('');
+  }
+  if (productsGrid) productsGrid.style.display = 'none';
+  showView('category');
+}
+
 function showCategoryPage(category) {
   activeCategory = category;
   const title = document.getElementById('categoryTitle');
   if (title) title.textContent = category;
+  const allGrid = document.getElementById('allCategoriesGrid');
+  if (allGrid) allGrid.style.display = 'none';
+  const productsGrid = document.getElementById('categoryProductsGrid');
+  if (productsGrid) productsGrid.style.display = 'grid';
   renderCategoryProducts(category);
   renderFilters();
   showView('category');

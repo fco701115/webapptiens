@@ -42,7 +42,7 @@
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobileNav">
       <a href="#" class="nav-link active" onclick="goHome()">Inicio</a>
-      <a href="#catalogo" class="nav-link">Categorías</a>
+      <a href="#" class="nav-link" onclick="showAllCategories(); return false">Categorías</a>
       <a href="#" class="nav-link">Mi cuenta</a>
       <a href="#" class="nav-link">Contacto</a>
     </div>
@@ -52,7 +52,7 @@
   <nav class="navbar">
     <div class="navbar-inner">
       <a href="#" class="nav-link active" onclick="goHome()">Inicio</a>
-      <a href="#catalogo" class="nav-link">Categorías</a>
+      <a href="#" class="nav-link" onclick="showAllCategories(); return false">Categorías</a>
       <a href="#" class="nav-link">Mi cuenta</a>
       <a href="#" class="nav-link">Contacto</a>
     </div>
@@ -1071,6 +1071,7 @@
           <h2 class="section-title catalog-title" id="categoryTitle">Categoría</h2>
         </div>
       </div>
+      <div class="categories-grid" id="allCategoriesGrid" style="display:none"></div>
       <div class="products-grid" id="categoryProductsGrid"></div>
     </section>
   </div>
@@ -1276,7 +1277,7 @@
         <h4>Navegación</h4>
         <ul>
           <li><a href="#" onclick="showView('home')">Inicio</a></li>
-          <li><a href="#catalogo">Categorías</a></li>
+          <li><a href="#" onclick="showAllCategories(); return false">Categorías</a></li>
           <li><a href="#">Mi cuenta</a></li>
           <li><a href="#">Contacto</a></li>
         </ul>

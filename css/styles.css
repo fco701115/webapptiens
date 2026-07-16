@@ -2335,6 +2335,9 @@ button {
   margin: 0;
 }
 
+.checkout-summary-wrapper {
+}
+
 .checkout-summary {
   background: #fff;
   border: 1px solid var(--border);
@@ -3057,6 +3060,18 @@ button {
   .related-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
+  }
+
+  .checkout-summary-wrapper {
+    display: block;
+    position: sticky;
+    bottom: 55px;
+    z-index: 10;
+  }
+
+  .checkout-submit-btn {
+    margin-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
   }
 }
 

@@ -43,7 +43,7 @@
     <div class="mobile-nav" id="mobileNav">
       <a href="#" class="nav-link active" onclick="goHome()">Inicio</a>
       <a href="#" class="nav-link" onclick="showAllCategories(); return false">Categorías</a>
-      <a href="#" class="nav-link">Mi cuenta</a>
+      <a href="#" class="nav-link" onclick="toggleLoginPanel(); return false">Mi cuenta</a>
       <a href="#" class="nav-link">Contacto</a>
     </div>
   </header>
@@ -53,7 +53,7 @@
     <div class="navbar-inner">
       <a href="#" class="nav-link active" onclick="goHome()">Inicio</a>
       <a href="#" class="nav-link" onclick="showAllCategories(); return false">Categorías</a>
-      <a href="#" class="nav-link">Mi cuenta</a>
+      <a href="#" class="nav-link" onclick="toggleLoginPanel(); return false">Mi cuenta</a>
       <a href="#" class="nav-link">Contacto</a>
     </div>
   </nav>
@@ -1278,7 +1278,7 @@
         <ul>
           <li><a href="#" onclick="showView('home')">Inicio</a></li>
           <li><a href="#" onclick="showAllCategories(); return false">Categorías</a></li>
-          <li><a href="#">Mi cuenta</a></li>
+          <li><a href="#" onclick="toggleLoginPanel(); return false">Mi cuenta</a></li>
           <li><a href="#">Contacto</a></li>
         </ul>
       </div>

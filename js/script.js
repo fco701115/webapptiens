@@ -1393,7 +1393,8 @@ function showCheckout() {
   if (!currentUser) {
     document.getElementById('checkoutUserData').style.display = 'none';
     document.getElementById('checkoutEditForm').style.display = 'block';
-    document.getElementById('checkoutAddressChangeBtn').style.display = 'none';
+    const changeBtn = document.getElementById('checkoutChangeBtn');
+    if (changeBtn) changeBtn.style.display = 'none';
   }
 }
 

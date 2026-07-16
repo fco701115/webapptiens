@@ -15,6 +15,51 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Serve product pages with Open Graph meta tags for social sharing
+app.get(/^\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
+  const segments = req.path.split('-');
+  const id = parseInt(segments[segments.length - 1], 10);
+  if (isNaN(id)) {
+    return res.sendFile(path.join(__dirname, 'index.html'));
+  }
+  try {
+    const result = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+    if (result.rows.length === 0) {
+      return res.sendFile(path.join(__dirname, 'index.html'));
+    }
+    const p = result.rows[0];
+    let images = [];
+    if (p.images) {
+      images = typeof p.images === 'string' ? JSON.parse(p.images) : p.images;
+    }
+    if ((!images || images.length === 0) && p.image) {
+      images = [p.image];
+    }
+    const imageUrl = images.length > 0 ? images[0] : '';
+    const absoluteImageUrl = imageUrl.startsWith('http') ? imageUrl : `http://13.140.153.222:3002${imageUrl}`;
+    const description = p.description ? p.description.replace(/<[^>]*>/g, '').substring(0, 200) : '';
+    const ogTitle = p.name || 'WebOutShop';
+    const ogUrl = `http://13.140.153.222:3002${req.path}`;
+
+    const html = require('fs').readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+    const ogTags = `
+  <meta property="og:title" content="${ogTitle.replace(/"/g, '&quot;')}" />
+  <meta property="og:description" content="${description.replace(/"/g, '&quot;')}" />
+  <meta property="og:image" content="${absoluteImageUrl.replace(/"/g, '&quot;')}" />
+  <meta property="og:url" content="${ogUrl}" />
+  <meta property="og:type" content="product" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${ogTitle.replace(/"/g, '&quot;')}" />
+  <meta name="twitter:description" content="${description.replace(/"/g, '&quot;')}" />
+  <meta name="twitter:image" content="${absoluteImageUrl.replace(/"/g, '&quot;')}" />`;
+    const modified = html.replace('</head>', ogTags + '\n</head>');
+    res.send(modified);
+  } catch (err) {
+    console.error('Error serving product page with OG tags:', err);
+    res.sendFile(path.join(__dirname, 'index.html'));
+  }
+});
+
 app.use(express.static('.', { etag: false, lastModified: false }));
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');

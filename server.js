@@ -42,12 +42,17 @@ app.get(/^\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
     const ogUrl = `http://13.140.153.222:3002${req.path}`;
 
     const html = require('fs').readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+    const secureImageUrl = imageUrl.startsWith('https') ? imageUrl : absoluteImageUrl;
     const ogTags = `
   <meta property="og:title" content="${ogTitle.replace(/"/g, '&quot;')}" />
   <meta property="og:description" content="${description.replace(/"/g, '&quot;')}" />
   <meta property="og:image" content="${absoluteImageUrl.replace(/"/g, '&quot;')}" />
+  <meta property="og:image:secure_url" content="${secureImageUrl.replace(/"/g, '&quot;')}" />
+  <meta property="og:image:width" content="600" />
+  <meta property="og:image:height" content="750" />
   <meta property="og:url" content="${ogUrl}" />
   <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="WebOutShop" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${ogTitle.replace(/"/g, '&quot;')}" />
   <meta name="twitter:description" content="${description.replace(/"/g, '&quot;')}" />

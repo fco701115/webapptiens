@@ -455,7 +455,7 @@ const categories = ['Todas', ...new Set(products.map(p => p.category))];
 function productCardHtml(p) {
   const starsHtml = renderStars(p.rating);
   const originalPriceHtml = p.originalPrice
-    ? `<span class="price-original">$${p.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>`
+    ? `<span class="price-original">${p.originalPrice.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>`
     : '';
   const discountHtml = p.discount > 0
     ? `<div class="discount-badge">-${p.discount}%</div>`
@@ -953,7 +953,7 @@ function showDetail(id) {
 
   const starsHtml = renderStars(product.rating);
   const originalPriceHtml = product.originalPrice
-    ? `<span class="detail-price-original">$${product.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>`
+    ? `<sup class="detail-price-original">$${product.originalPrice.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>`
     : '';
   const discountHtml = product.discount > 0
     ? `<span class="detail-discount">Save ${product.discount}%</span>`
@@ -979,7 +979,7 @@ function showDetail(id) {
   const relatedHtml = related.map(p => {
     const starsHtml = renderStars(p.rating);
     const origPriceHtml = p.originalPrice
-      ? `<span class="price-original">$${p.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>`
+      ? `<span class="price-original">${p.originalPrice.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>`
       : '';
     const discHtml = p.discount > 0
       ? `<div class="discount-badge">-${p.discount}%</div>`
@@ -1042,7 +1042,7 @@ function showDetail(id) {
         <span class="detail-category">${product.category}</span>
         <h1 class="detail-name">${product.name}</h1>
         <div class="detail-price-row">
-          <span class="detail-price-current">$${product.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>
+          <span class="detail-price-current">$${product.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>
           ${originalPriceHtml}
           ${discountHtml}
         </div>
@@ -1086,11 +1086,11 @@ function showDetail(id) {
 
         <div class="detail-share">
           <span>Share:</span>
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-pinterest"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(product.name)}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+          <a href="https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener"><i class="fab fa-pinterest"></i></a>
+          <a href="#" onclick="event.preventDefault(); copyLink()"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/?text=${encodeURIComponent(product.name + ' - ' + window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
         </div>
 
         <div class="detail-info-items">
@@ -1124,6 +1124,21 @@ function showDetail(id) {
   `;
 
   showView('detail');
+}
+
+function copyLink() {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    alert('Enlace copiado al portapapeles');
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = url;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('Enlace copiado al portapapeles');
+  });
 }
 
 // ========== URL PRODUCT ROUTING ==========
@@ -1741,7 +1756,7 @@ function renderCheckoutSummary() {
       <div class="checkout-item-details">
         <span class="checkout-item-name">${item.name}</span>
         <div class="checkout-item-bottom">
-          <span class="checkout-item-unit-price">$${item.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>
+          <span class="checkout-item-unit-price">$${item.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>
           <div class="checkout-item-qty">
             <button onclick="event.stopPropagation(); updateCheckoutQty(${item.id}, -1)">−</button>
             <span>${item.qty}</span>
@@ -1750,7 +1765,7 @@ function renderCheckoutSummary() {
           <button class="checkout-item-remove" onclick="event.stopPropagation(); removeFromCart(${item.id}); renderCheckoutSummary()"><i class="fas fa-trash"></i></button>
         </div>
       </div>
-      <span class="checkout-item-total">$${(item.price * item.qty).toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>
+      <span class="checkout-item-total">$${(item.price * item.qty).toLocaleString('en-US', {minimumFractionDigits: 2})}</span>
     </div>
   `).join('');
 
@@ -2364,7 +2379,7 @@ function initSearch() {
         <img src="${p.image}" alt="${p.name}" class="search-row-img">
         <div class="search-row-info">
           <span class="search-row-name">${p.name}</span>
-          <span class="search-row-price">$${p.price.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>
+          <span class="search-row-price">$${p.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>
         </div>
       </div>
     `;
@@ -2373,7 +2388,7 @@ function initSearch() {
   function renderGridCard(p) {
     const starsHtml = renderStars(p.rating);
     const originalPriceHtml = p.originalPrice
-      ? `<span class="price-original">$${p.originalPrice.toLocaleString('es-AR', {minimumFractionDigits: 2})}</span>`
+      ? `<span class="price-original">${p.originalPrice.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>`
       : '';
     const discountHtml = p.discount > 0
       ? `<div class="discount-badge">-${p.discount}%</div>`

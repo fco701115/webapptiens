@@ -3144,6 +3144,17 @@ function showAddProductModal() {
   document.getElementById('productModal').style.display = 'flex';
 }
 
+function calcDiscount() {
+  const original = parseFloat(document.getElementById('productOriginalPrice').value);
+  const sale = parseFloat(document.getElementById('productPrice').value);
+  if (original > 0 && sale > 0 && sale < original) {
+    const discount = Math.round((1 - sale / original) * 100);
+    document.getElementById('productDiscount').value = discount;
+  } else {
+    document.getElementById('productDiscount').value = '';
+  }
+}
+
 async function editProduct(id) {
   const product = await apiGet('/products/' + id);
   if (!product) return;
@@ -3151,13 +3162,14 @@ async function editProduct(id) {
   document.getElementById('productModalTitle').textContent = 'Editar Producto';
   document.getElementById('productId').value = product.id;
   document.getElementById('productName').value = product.name;
-  document.getElementById('productPrice').value = product.price;
   document.getElementById('productOriginalPrice').value = product.original_price || '';
+  document.getElementById('productPrice').value = product.price;
   document.getElementById('productDiscount').value = product.discount || '';
   document.getElementById('productStock').value = product.stock || 0;
   document.getElementById('productSizes').value = product.sizes || '';
   document.getElementById('productColors').value = product.colors || '';
   document.getElementById('productDescription').value = product.description || '';
+  calcDiscount();
   
   const images = product.images || (product.image ? [product.image] : []);
   for (let i = 1; i <= 5; i++) {

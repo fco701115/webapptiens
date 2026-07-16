@@ -83,6 +83,34 @@ const pool = new Pool({
   port: 5433,
 });
 
+// Simple in-memory cache for GET responses
+const cache = {};
+const CACHE_TTL = 15000; // 15 seconds
+
+function cacheMiddleware(req, res, next) {
+  if (req.method === 'GET') {
+    const key = req.originalUrl;
+    const cached = cache[key];
+    if (cached && Date.now() - cached.time < CACHE_TTL) {
+      res.set('X-Cache', 'HIT');
+      return res.json(cached.data);
+    }
+    const originalSend = res.send.bind(res);
+    res.send = function (body) {
+      if (typeof body === 'string' || Buffer.isBuffer(body)) {
+        try { cache[key] = { data: JSON.parse(body), time: Date.now() }; } catch(e) {}
+      }
+      return originalSend(body);
+    };
+  } else {
+    // Invalidate cache on write operations
+    Object.keys(cache).forEach(k => delete cache[k]);
+  }
+  next();
+}
+
+app.use('/api', cacheMiddleware);
+
 // ========== PRODUCTS ==========
 
 // GET all products

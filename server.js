@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const cors = require('cors');
 const { Pool } = require('pg');
 const path = require('path');
@@ -7,6 +8,7 @@ const app = express();
 const PORT = 3002;
 
 // Middleware
+app.use(compression());
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 

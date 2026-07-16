@@ -2726,6 +2726,11 @@ async function initApp() {
 
   // Hydrate instantly from cache so refreshes render without "Cargando"
   if (hydrateFromCache()) {
+    const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (savedWishlist.length > 0) {
+      wishlist = savedWishlist;
+      updateWishlistUI();
+    }
     renderFilters();
     renderProducts();
     renderCategoriesCarousel();
@@ -2772,6 +2777,13 @@ async function initApp() {
     unique.forEach(cat => categories.push(cat));
   }
 
+  // Load wishlist from localStorage
+  const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+  if (savedWishlist.length > 0) {
+    wishlist = savedWishlist;
+    updateWishlistUI();
+  }
+
   if (loadingEl) loadingEl.style.display = 'none';
 
   renderFilters();
@@ -2783,13 +2795,6 @@ async function initApp() {
   initMobileMenu();
   initSearch();
   checkLoggedInUser();
-
-  // Load wishlist from localStorage
-  const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-  if (savedWishlist.length > 0) {
-    wishlist = savedWishlist;
-    updateWishlistUI();
-  }
 
   // Load compare list from localStorage
   const savedCompare = JSON.parse(localStorage.getItem('compareList') || '[]');

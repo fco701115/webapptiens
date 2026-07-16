@@ -2206,6 +2206,12 @@ function renderUserOrders() {
     return;
   }
 
+  const statusLabels = {
+    'Pendiente': 'En preparación',
+    'Enviado': 'Enviado',
+    'Completado': 'Completado',
+    'Cancelado': 'Cancelado'
+  };
   const statusColors = {
     'Pendiente': '#e67e22',
     'Enviado': '#3498db',
@@ -2219,6 +2225,7 @@ function renderUserOrders() {
     try { items = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []); } catch(e) {}
     const firstItem = items[0];
     const status = order.status || 'Pendiente';
+    const displayStatus = statusLabels[status] || status;
     const statusColor = statusColors[status] || '#999';
     const date = new Date(order.created_at).toLocaleDateString('es-AR', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
     const productLine = firstItem ? firstItem.name + (firstItem.qty > 1 ? ' x' + firstItem.qty : '') : 'Producto';
@@ -2227,7 +2234,7 @@ function renderUserOrders() {
       '<div class="user-order-top-row">' +
         '<span class="user-order-id">#ORD-' + String(order.id).padStart(3, '0') + '</span>' +
         '<span class="user-order-date">' + date + '</span>' +
-        '<span class="user-order-status" style="background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40">' + status + '</span>' +
+        '<span class="user-order-status" style="background:' + statusColor + '20;color:' + statusColor + ';border:1px solid ' + statusColor + '40">' + displayStatus + '</span>' +
       '</div>' +
       '<div class="user-order-middle-row">' +
         '<span class="user-order-product-line">' + productLine + '</span>' +
@@ -2250,6 +2257,12 @@ function showUserOrderDetail(orderId) {
   let items = [];
   try { items = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []); } catch(e) {}
 
+  const statusLabels = {
+    'Pendiente': 'En preparación',
+    'Enviado': 'Enviado',
+    'Completado': 'Completado',
+    'Cancelado': 'Cancelado'
+  };
   const statusColors = {
     'Pendiente': '#e67e22',
     'Enviado': '#3498db',
@@ -2257,6 +2270,7 @@ function showUserOrderDetail(orderId) {
     'Cancelado': '#e74c3c'
   };
   const status = order.status || 'Pendiente';
+  const displayStatus = statusLabels[status] || status;
 
   const addrType = order.address_type || 'Casa';
   const addrIcon = addrType === 'Casa' ? 'fa-home' : addrType === 'Trabajo' ? 'fa-briefcase' : 'fa-map-marker-alt';
@@ -2276,7 +2290,7 @@ function showUserOrderDetail(orderId) {
   document.getElementById('userOrderDetailContent').innerHTML =
     '<div class="user-order-detail-header">' +
       '<h3>Pedido #ORD-' + String(order.id).padStart(3, '0') + '</h3>' +
-      '<span class="user-order-status" style="background:' + (statusColors[status] || '#999') + '20;color:' + (statusColors[status] || '#999') + ';border:1px solid ' + (statusColors[status] || '#999') + '40">' + status + '</span>' +
+      '<span class="user-order-status" style="background:' + (statusColors[status] || '#999') + '20;color:' + (statusColors[status] || '#999') + ';border:1px solid ' + (statusColors[status] || '#999') + '40">' + displayStatus + '</span>' +
     '</div>' +
     '<p style="color:var(--text-light);font-size:0.85rem;margin-bottom:16px">' + new Date(order.created_at).toLocaleDateString('es-AR') + '</p>' +
     '<h4 style="margin-bottom:8px">Dirección de envío</h4>' +

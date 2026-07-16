@@ -197,12 +197,12 @@
           </button>
         </div>
         <nav class="user-panel-nav">
-          <a href="#" class="user-panel-nav-item panel-control-item active" onclick="showUserSection('panelControl', this)"><i class="fas fa-th-large"></i> Panel de control</a>
-          <a href="#" class="user-panel-nav-item" onclick="showUserSection('misDatos', this)"><i class="fas fa-user"></i> Mis datos</a>
-          <a href="#" class="user-panel-nav-item" onclick="showUserSection('misPedidos', this)"><i class="fas fa-box"></i> Mis pedidos</a>
-          <a href="#" class="user-panel-nav-item" onclick="showUserSection('direcciones', this)"><i class="fas fa-map-marker-alt"></i> Direcciones</a>
-          <a href="#" class="user-panel-nav-item" onclick="showUserSection('favoritos', this)"><i class="fas fa-heart"></i> Favoritos</a>
-          <a href="#" class="user-panel-nav-item logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+          <a href="#" class="user-panel-nav-item panel-control-item active" onclick="showUserSection('panelControl', this); return false"><i class="fas fa-th-large"></i> Panel de control</a>
+          <a href="#" class="user-panel-nav-item" onclick="showUserSection('misDatos', this); return false"><i class="fas fa-user"></i> Mis datos</a>
+          <a href="#" class="user-panel-nav-item" onclick="showUserSection('misPedidos', this); return false"><i class="fas fa-box"></i> Mis pedidos</a>
+          <a href="#" class="user-panel-nav-item" onclick="showUserSection('direcciones', this); return false"><i class="fas fa-map-marker-alt"></i> Direcciones</a>
+          <a href="#" class="user-panel-nav-item" onclick="showUserSection('favoritos', this); return false"><i class="fas fa-heart"></i> Favoritos</a>
+          <a href="#" class="user-panel-nav-item logout" onclick="handleLogout(); return false"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
         </nav>
       </div>
 

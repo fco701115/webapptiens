@@ -331,7 +331,7 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: left;
   color: #fff;
   position: absolute;
@@ -341,7 +341,6 @@ button {
   transition: opacity 0.5s ease;
   background-size: cover;
   background-position: center;
-  padding-left: 10%;
 }
 
 .banner-slide.active {
@@ -412,6 +411,9 @@ button {
 .banner-content {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: 0 20px;
 }
 

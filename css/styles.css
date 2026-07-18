@@ -435,6 +435,7 @@ button {
   font-weight: 800;
   margin-bottom: 16px;
   line-height: 1.1;
+  width: 400px;
 }
 
 .banner-subtitle {
@@ -2828,6 +2829,7 @@ button {
 
   .banner-title {
     font-size: 1.8rem;
+    width: 180px;
   }
 
   .banner-subtitle {

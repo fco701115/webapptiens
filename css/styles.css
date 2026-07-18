@@ -3097,6 +3097,10 @@ button {
   .checkout-summary {
     position: static;
   }
+
+  .cart-panel-footer {
+    padding-bottom: 55px;
+  }
 }
 .categories-accordion {
   display: flex;

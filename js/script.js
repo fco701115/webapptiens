@@ -2545,6 +2545,7 @@ function renderBanner() {
     document.querySelector('.banner-prev').style.display = 'none';
     document.querySelector('.banner-next').style.display = 'none';
     dotsContainer.style.display = 'none';
+    container.classList.add('loaded');
     return;
   }
 
@@ -2563,6 +2564,7 @@ function renderBanner() {
   `).join('');
 
   startSlideInterval();
+  container.classList.add('loaded');
 }
 
 function startSlideInterval() {

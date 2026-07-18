@@ -2813,6 +2813,10 @@ button {
     height: 200px;
   }
 
+  .banner-slide {
+    background-position: calc(50% - 150px) center;
+  }
+
   .banner-arrow {
     width: 35px;
     height: 35px;

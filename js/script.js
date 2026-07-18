@@ -1364,6 +1364,10 @@ function showView(view) {
   }
 
   window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Close mobile menu on navigation
+  const mobileNav = document.getElementById('mobileNav');
+  if (mobileNav) mobileNav.classList.remove('open');
 }
 
 function showLoading() {

@@ -3813,6 +3813,17 @@ button {
   top: 0;
   z-index: 1000;
 }
+.admin-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0 10px 0 0;
+  align-items: center;
+}
+
 .admin-header-logo {
   display: flex;
   align-items: center;
@@ -4303,22 +4314,48 @@ button {
   font-size: 12px;
 }
 
+.admin-sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 998;
+}
+
+.admin-sidebar-overlay.open {
+  display: block;
+}
+
 /* Mobile Responsive */
 @media (max-width: 1024px) {
+  .admin-menu-toggle {
+    display: flex;
+  }
+
   .admin-container {
     flex-direction: column;
   }
 
   .admin-sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    top: 0;
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 60px;
+    left: -260px;
+    z-index: 999;
+    transition: left 0.3s ease;
+  }
+
+  .admin-sidebar.open {
+    left: 0;
   }
 
   .admin-sidebar-nav {
-    display: flex;
-    overflow-x: auto;
+    flex-direction: column;
+    overflow-x: visible;
     padding: 0;
   }
 

@@ -343,6 +343,9 @@
   <div id="adminView" style="display: none;">
     <!-- Admin Top Header -->
     <header class="admin-top-header">
+      <button class="admin-menu-toggle" onclick="toggleAdminMenu()" title="Menú">
+        <i class="fas fa-bars"></i>
+      </button>
       <div class="admin-header-logo">
         <span class="logo-text">WebOut<span class="logo-accent">Shop</span></span>
         <span class="admin-badge">Admin</span>
@@ -360,6 +363,8 @@
         </button>
       </div>
     </header>
+
+    <div class="admin-sidebar-overlay" onclick="closeAdminMenu()"></div>
 
     <div class="admin-container">
       <!-- Admin Sidebar -->

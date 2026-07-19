@@ -2866,12 +2866,23 @@ function handleAdminLogout() {
   window.location.href = 'index.html';
 }
 
+function toggleAdminMenu() {
+  document.querySelector('.admin-sidebar').classList.toggle('open');
+  document.querySelector('.admin-sidebar-overlay').classList.toggle('open');
+}
+
+function closeAdminMenu() {
+  document.querySelector('.admin-sidebar').classList.remove('open');
+  document.querySelector('.admin-sidebar-overlay').classList.remove('open');
+}
+
 function showAdminSection(section, el) {
   document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
   document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
 
   document.getElementById('admin' + section.charAt(0).toUpperCase() + section.slice(1)).style.display = 'block';
   el?.classList.add('active');
+  closeAdminMenu();
 
   if (section === 'products') loadAdminProducts();
   else if (section === 'categories') loadAdminCategories();

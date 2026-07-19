@@ -4331,11 +4331,11 @@ button {
 
 /* Mobile Responsive */
 @media (max-width: 1024px) {
-#adminView {
-  width: 100%;
-}
+  #adminView {
+    width: 100%;
+  }
 
-.admin-menu-toggle {
+  .admin-menu-toggle {
     display: flex;
   }
 
@@ -4409,6 +4409,78 @@ button {
   .admin-add-btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .admin-images-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .admin-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .order-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .admin-table .product-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .order-detail-products-table th,
+  .order-detail-products-table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .admin-header-right .admin-user-info span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-images-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 6px 6px;
+    font-size: 11px;
+  }
+
+  .admin-table .action-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .admin-modal-content {
+    padding: 0 10px;
+  }
+
+  .admin-modal-body {
+    padding: 15px;
+  }
+
+  .admin-top-header {
+    padding: 0 10px;
+  }
+
+  .admin-header-right {
+    gap: 10px;
+  }
+
+  .admin-logout-btn {
+    padding: 4px 8px;
+    font-size: 11px;
   }
 }
 

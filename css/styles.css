@@ -4331,12 +4331,17 @@ button {
 
 /* Mobile Responsive */
 @media (max-width: 1024px) {
-  .admin-menu-toggle {
+#adminView {
+  width: 100%;
+}
+
+.admin-menu-toggle {
     display: flex;
   }
 
   .admin-container {
     flex-direction: column;
+    width: 100%;
   }
 
   .admin-sidebar {
@@ -4382,6 +4387,7 @@ button {
 
   .admin-main {
     padding: 20px 15px;
+    width: 100%;
   }
 }
 

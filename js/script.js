@@ -1147,9 +1147,9 @@ function showDetail(id) {
 
     <div class="detail-tabs">
       <div class="tabs-header">
-        <button class="tab-btn active" onclick="switchTab('desc', this)">Description</button>
-        <button class="tab-btn" onclick="switchTab('specs', this)">Product Details</button>
-        <button class="tab-btn" onclick="switchTab('reviews', this); loadProductReviews(${product.id})">Reviews (${product.reviews})</button>
+        <button class="tab-btn active" onclick="switchTab('desc', this)">Descripción</button>
+        <button class="tab-btn" onclick="switchTab('specs', this)">Detalles del producto</button>
+        <button class="tab-btn" onclick="switchTab('reviews', this); loadProductReviews(${product.id})">Valoraciones (${product.reviews})</button>
       </div>
       <div class="tab-content active" id="tab-desc">
         <h3>Iconic</h3>

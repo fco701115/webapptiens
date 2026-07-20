@@ -2272,9 +2272,18 @@ function updateUserPanelStats() {
       try { items = typeof last.items === 'string' ? JSON.parse(last.items) : (last.items || []); } catch(e) {}
       const productName = items[0] ? items[0].name : 'Producto';
       const date = new Date(last.created_at).toLocaleDateString('es-AR');
-      lastOrderEl.innerHTML = '<strong>#ORD-' + String(last.id).padStart(3, '0') + '</strong> - ' + date +
-        '<br><span style="color:var(--text-light);font-size:0.82rem">' + productName + '</span>' +
-        '<br><strong style="color:var(--primary)">$' + parseFloat(last.total).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</strong>';
+      const status = last.status || 'Pendiente';
+      const statusClass = status === 'Pendiente' || status === 'En preparación' ? 'pending' : status === 'Enviado' ? 'shipped' : status === 'Entregado' ? 'delivered' : 'pending';
+      lastOrderEl.innerHTML =
+        '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+          '<div><strong>#ORD-' + String(last.id).padStart(3, '0') + '</strong> - ' + date + '</div>' +
+          '<span class="status-badge ' + statusClass + '">' + status + '</span>' +
+        '</div>' +
+        '<div style="font-size:0.82rem;color:var(--text-light);margin-top:4px">' + productName + '</div>' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">' +
+          '<strong style="color:var(--primary);font-size:1rem">$' + parseFloat(last.total).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</strong>' +
+          '<button class="action-btn" title="Ver pedido" onclick="showUserOrderDetail(' + last.id + ')" style="background:var(--primary);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:0.82rem;cursor:pointer"><i class="fas fa-eye"></i> Ver</button>' +
+        '</div>';
     } else {
       lastOrderEl.textContent = 'No realizaste pedidos aún.';
     }
@@ -2358,13 +2367,15 @@ function showUserOrderDetail(orderId) {
   try { items = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []); } catch(e) {}
 
   const statusLabels = {
-    'Pendiente': 'En preparación',
+    'Pendiente': 'Pendiente',
+    'En preparación': 'En preparación',
     'Enviado': 'Enviado',
     'Completado': 'Completado',
     'Cancelado': 'Cancelado'
   };
   const statusColors = {
     'Pendiente': '#e67e22',
+    'En preparación': '#e67e22',
     'Enviado': '#3498db',
     'Completado': '#27ae60',
     'Cancelado': '#e74c3c'

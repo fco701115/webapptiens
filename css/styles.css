@@ -4277,18 +4277,28 @@ button {
   color: #e74c3c;
 }
 
-.admin-table .status-badge {
+.admin-table .status-badge,
+.status-badge {
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 500;
 }
 
-.admin-table .status-badge.pending { background: #fff3cd; color: #856404; }
-.admin-table .status-badge.confirmed { background: #cce5ff; color: #004085; }
-.admin-table .status-badge.shipped { background: #d4edda; color: #155724; }
-.admin-table .status-badge.delivered { background: #d1ecf1; color: #0c5460; }
-.admin-table .status-badge.cancelled { background: #f8d7da; color: #721c24; }
+.admin-table .status-badge.pending,
+.status-badge.pending { background: #fff3cd; color: #856404; }
+
+.admin-table .status-badge.confirmed,
+.status-badge.confirmed { background: #cce5ff; color: #004085; }
+
+.admin-table .status-badge.shipped,
+.status-badge.shipped { background: #d4edda; color: #155724; }
+
+.admin-table .status-badge.delivered,
+.status-badge.delivered { background: #d1ecf1; color: #0c5460; }
+
+.admin-table .status-badge.cancelled,
+.status-badge.cancelled { background: #f8d7da; color: #721c24; }
 
 /* Admin Modal */
 .admin-modal {

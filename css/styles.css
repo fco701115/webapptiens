@@ -2122,6 +2122,19 @@ button {
   background: var(--primary-dark);
 }
 
+.reviews-login-msg {
+  text-align: center;
+  padding: 30px 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.reviews-login-msg a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 /* ========== RELATED PRODUCTS ========== */
 .detail-related {
   margin-bottom: 40px;

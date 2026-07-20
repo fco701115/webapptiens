@@ -1225,19 +1225,24 @@ async function loadProductReviews(productId) {
 
     html += '<div class="review-form-wrapper">';
     html += '<h3>Escribir una valoración</h3>';
-    html += '<form class="review-form" onsubmit="return submitReview(event)">';
-    html += '<input type="hidden" id="reviewProductId" value="' + productId + '">';
-    html += '<div class="review-form-row"><label>Nombre *</label><input type="text" id="reviewName" required></div>';
-    html += '<div class="review-form-row"><label>Email</label><input type="email" id="reviewEmail"></div>';
-    html += '<div class="review-form-row"><label>Valoración *</label><div class="review-star-input">';
-    for (let i = 5; i >= 1; i--) {
-      html += `<input type="radio" name="reviewRating" id="star${i}" value="${i}" ${i === 5 ? '' : ''}><label for="star${i}" class="star-label">★</label>`;
+    if (currentUser) {
+      html += '<form class="review-form" onsubmit="return submitReview(event)">';
+      html += '<input type="hidden" id="reviewProductId" value="' + productId + '">';
+      html += '<div class="review-form-row"><label>Nombre *</label><input type="text" id="reviewName" value="' + escapeHtml(currentUser.name || '') + '" readonly style="background:#f0f0f0"></div>';
+      html += '<div class="review-form-row"><label>Email</label><input type="email" id="reviewEmail" value="' + escapeHtml(currentUser.email || '') + '" readonly style="background:#f0f0f0"></div>';
+      html += '<div class="review-form-row"><label>Valoración *</label><div class="review-star-input">';
+      for (let i = 5; i >= 1; i--) {
+        html += `<input type="radio" name="reviewRating" id="star${i}" value="${i}"><label for="star${i}" class="star-label">★</label>`;
+      }
+      html += '</div></div>';
+      html += '<div class="review-form-row"><label>Título</label><input type="text" id="reviewTitle"></div>';
+      html += '<div class="review-form-row"><label>Comentario</label><textarea id="reviewComment" rows="4"></textarea></div>';
+      html += '<button type="submit" class="review-submit-btn">Enviar valoración</button>';
+      html += '</form>';
+    } else {
+      html += '<p class="reviews-login-msg">Debes <a href="#" onclick="toggleLoginPanel(); return false">iniciar sesión</a> para escribir una valoración.</p>';
     }
-    html += '</div></div>';
-    html += '<div class="review-form-row"><label>Título</label><input type="text" id="reviewTitle"></div>';
-    html += '<div class="review-form-row"><label>Comentario</label><textarea id="reviewComment" rows="4"></textarea></div>';
-    html += '<button type="submit" class="review-submit-btn">Enviar valoración</button>';
-    html += '</form></div>';
+    html += '</div>';
 
     container.innerHTML = html;
   } catch (e) {

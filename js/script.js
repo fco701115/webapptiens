@@ -2125,8 +2125,6 @@ function toggleLoginFromBottom() {
   toggleLoginPanel();
 }
 
-}
-
 let currentUser = null;
 
 function toggleLoginPanel() {

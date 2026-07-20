@@ -1099,7 +1099,7 @@ function showDetail(id) {
 
         <div class="detail-options">
           <div class="detail-option-group">
-            <label>Size:</label>
+            <label>Talla:</label>
             <div class="size-options">${sizesHtml}</div>
           </div>
           <div class="detail-option-group">
@@ -1129,7 +1129,7 @@ function showDetail(id) {
         </div>
 
         <div class="detail-share">
-          <span>Share:</span>
+          <span>Compartir:</span>
           <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
           <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(product.name)}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
           <a href="https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener"><i class="fab fa-pinterest"></i></a>
@@ -1138,9 +1138,9 @@ function showDetail(id) {
         </div>
 
         <div class="detail-info-items">
-          <div class="info-item"><i class="fas fa-truck"></i> Free Shipping & Returns - Available on all orders over $99</div>
-          <div class="info-item"><i class="fas fa-clock"></i> Estimated Delivery - Orders are typically dispatched within 24 hours</div>
-          <div class="info-item"><i class="fas fa-shield-alt"></i> Security Policy - Ensuring top-level security for your data and transactions</div>
+          <div class="info-item"><i class="fas fa-truck"></i> Envío gratis y devoluciones - Disponible en pedidos superiores a $99</div>
+          <div class="info-item"><i class="fas fa-clock"></i> Entrega estimada - Los pedidos se despachan normalmente en 24 horas</div>
+          <div class="info-item"><i class="fas fa-shield-alt"></i> Política de seguridad - Protección de primer nivel para tus datos y transacciones</div>
         </div>
       </div>
     </div>

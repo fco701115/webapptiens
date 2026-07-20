@@ -2125,7 +2125,12 @@ function toggleLoginFromBottom() {
   toggleLoginPanel();
 }
 
-// ========== LOGIN ==========
+function toggleUserPanelNav() {
+  const nav = document.querySelector('.user-panel-nav');
+  if (nav) {
+    nav.classList.toggle('collapsed');
+  }
+}
 let currentUser = null;
 
 function toggleLoginPanel() {

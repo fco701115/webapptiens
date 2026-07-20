@@ -3768,6 +3768,15 @@ button {
     justify-content: space-between;
     padding: 15px 10px;
     border-top: 1px solid #eee;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    max-height: 300px;
+    overflow: hidden;
+  }
+
+  .user-panel-nav.collapsed {
+    max-height: 0;
+    padding: 0 10px;
+    border-top: none;
   }
 
   .user-panel-nav-item {

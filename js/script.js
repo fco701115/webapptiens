@@ -1307,7 +1307,7 @@ function openProductById(id) {
         price: parseFloat(p.price),
         originalPrice: p.original_price ? parseFloat(p.original_price) : null,
         discount: p.discount,
-        rating: parseFloat(p.rating) || 4.5,
+    rating: p.rating != null ? parseFloat(p.rating) : 0,
         reviews: p.reviews || 0,
         category: p.category,
         image: images[0] || '',

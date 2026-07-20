@@ -54,6 +54,12 @@ async function apiDelete(endpoint) {
   }
 }
 
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 // ========== PRODUCT DATA (fallback local) ==========
 const products = [
   {
@@ -1143,6 +1149,7 @@ function showDetail(id) {
       <div class="tabs-header">
         <button class="tab-btn active" onclick="switchTab('desc', this)">Description</button>
         <button class="tab-btn" onclick="switchTab('specs', this)">Product Details</button>
+        <button class="tab-btn" onclick="switchTab('reviews', this); loadProductReviews(${product.id})">Reviews (${product.reviews})</button>
       </div>
       <div class="tab-content active" id="tab-desc">
         <h3>Iconic</h3>
@@ -1152,6 +1159,9 @@ function showDetail(id) {
         <table class="specs-table">
           <tbody>${specsHtml}</tbody>
         </table>
+      </div>
+      <div class="tab-content" id="tab-reviews">
+        <div id="reviewsContainer">Cargando valoraciones...</div>
       </div>
     </div>
 
@@ -1177,6 +1187,87 @@ function copyLink() {
     document.body.removeChild(textarea);
     alert('Enlace copiado al portapapeles');
   });
+}
+
+// ========== REVIEWS ==========
+let currentReviewProductId = null;
+
+async function loadProductReviews(productId) {
+  currentReviewProductId = productId;
+  const container = document.getElementById('reviewsContainer');
+  if (!container) return;
+  container.innerHTML = 'Cargando valoraciones...';
+  try {
+    const data = await apiGet('/products/' + productId + '/reviews');
+    let html = '<div class="reviews-summary">';
+    html += `<div class="reviews-avg"><span class="reviews-avg-number">${data.avg_rating.toFixed(1)}</span>`;
+    html += `<div class="reviews-avg-stars">${renderStars(data.avg_rating)}</div>`;
+    html += `<span class="reviews-avg-count">${data.review_count} valoración(es)</span></div>`;
+    html += '</div>';
+
+    if (data.reviews.length === 0) {
+      html += '<p class="reviews-empty">No hay valoraciones todavía. Sé el primero en valorar.</p>';
+    } else {
+      html += '<div class="reviews-list">';
+      data.reviews.forEach(r => {
+        html += '<div class="review-item">';
+        html += '<div class="review-header">';
+        html += `<span class="review-stars">${renderStars(r.rating)}</span>`;
+        html += `<span class="review-author">${escapeHtml(r.user_name)}</span>`;
+        html += `<span class="review-date">${new Date(r.created_at).toLocaleDateString('es-ES')}</span>`;
+        html += '</div>';
+        if (r.title) html += `<strong class="review-title">${escapeHtml(r.title)}</strong>`;
+        if (r.comment) html += `<p class="review-comment">${escapeHtml(r.comment)}</p>`;
+        html += '</div>';
+      });
+      html += '</div>';
+    }
+
+    html += '<div class="review-form-wrapper">';
+    html += '<h3>Escribir una valoración</h3>';
+    html += '<form class="review-form" onsubmit="return submitReview(event)">';
+    html += '<input type="hidden" id="reviewProductId" value="' + productId + '">';
+    html += '<div class="review-form-row"><label>Nombre *</label><input type="text" id="reviewName" required></div>';
+    html += '<div class="review-form-row"><label>Email</label><input type="email" id="reviewEmail"></div>';
+    html += '<div class="review-form-row"><label>Valoración *</label><div class="review-star-input">';
+    for (let i = 5; i >= 1; i--) {
+      html += `<input type="radio" name="reviewRating" id="star${i}" value="${i}" ${i === 5 ? '' : ''}><label for="star${i}" class="star-label">★</label>`;
+    }
+    html += '</div></div>';
+    html += '<div class="review-form-row"><label>Título</label><input type="text" id="reviewTitle"></div>';
+    html += '<div class="review-form-row"><label>Comentario</label><textarea id="reviewComment" rows="4"></textarea></div>';
+    html += '<button type="submit" class="review-submit-btn">Enviar valoración</button>';
+    html += '</form></div>';
+
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = '<p class="reviews-empty">Error al cargar valoraciones.</p>';
+  }
+}
+
+async function submitReview(e) {
+  e.preventDefault();
+  const productId = document.getElementById('reviewProductId').value;
+  const user_name = document.getElementById('reviewName').value.trim();
+  const email = document.getElementById('reviewEmail').value.trim();
+  const ratingEl = document.querySelector('input[name="reviewRating"]:checked');
+  const rating = ratingEl ? parseInt(ratingEl.value) : 0;
+  const title = document.getElementById('reviewTitle').value.trim();
+  const comment = document.getElementById('reviewComment').value.trim();
+
+  if (!user_name) { alert('Por favor ingresa tu nombre'); return false; }
+  if (!rating) { alert('Por favor selecciona una valoración'); return false; }
+
+  try {
+    const result = await apiPost('/products/' + productId + '/reviews', { user_name, email, rating, title, comment });
+    if (result) {
+      alert('¡Gracias por tu valoración!');
+      loadProductReviews(productId);
+    }
+  } catch (e) {
+    alert('Error al enviar la valoración');
+  }
+  return false;
 }
 
 // ========== URL PRODUCT ROUTING ==========
@@ -2890,6 +2981,7 @@ function showAdminSection(section, el) {
   else if (section === 'splitBanners') loadAdminSplitBanners();
   else if (section === 'orders') loadAdminOrders();
   else if (section === 'users') loadAdminUsers();
+  else if (section === 'reviews') loadAdminReviews();
 }
 
 async function loadAdminDashboard() {
@@ -3110,6 +3202,35 @@ function showUserDetail(user) {
 
 function closeUserDetailModal() {
   document.getElementById('userDetailModal').style.display = 'none';
+}
+
+async function loadAdminReviews() {
+  const reviews = await apiGet('/reviews');
+  const tbody = document.getElementById('adminReviewsTable');
+  if (!reviews || reviews.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="admin-empty-text">No hay valoraciones.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = reviews.map(r => `
+    <tr>
+      <td>${r.id}</td>
+      <td>${r.product_name || 'Producto #' + r.product_id}</td>
+      <td>${escapeHtml(r.user_name)}</td>
+      <td><span class="stars" style="color:#f5a623">${renderStars(r.rating)}</span></td>
+      <td>${r.title ? escapeHtml(r.title) : '-'}</td>
+      <td>${r.comment ? escapeHtml(r.comment.substring(0, 60)) + (r.comment.length > 60 ? '...' : '') : '-'}</td>
+      <td>${new Date(r.created_at).toLocaleDateString('es-ES')}</td>
+      <td>
+        <button class="action-btn delete" title="Eliminar" onclick="deleteAdminReview(${r.id})"><i class="fas fa-trash"></i></button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function deleteAdminReview(id) {
+  if (!confirm('¿Eliminar esta valoración?')) return;
+  await apiDelete('/reviews/' + id);
+  loadAdminReviews();
 }
 
 // ========== PRODUCTS MANAGEMENT ==========

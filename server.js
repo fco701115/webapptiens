@@ -522,6 +522,78 @@ app.delete('/api/split-banners/:id', async (req, res) => {
   }
 });
 
+// ========== REVIEWS ==========
+
+// GET reviews for a product
+app.get('/api/products/:id/reviews', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT * FROM reviews WHERE product_id = $1 ORDER BY created_at DESC', [id]);
+    // Calculate aggregate
+    const stats = await pool.query('SELECT COALESCE(AVG(rating), 0)::numeric(10,2) as avg_rating, COUNT(*) as review_count FROM reviews WHERE product_id = $1', [id]);
+    res.json({ reviews: result.rows, avg_rating: parseFloat(stats.rows[0].avg_rating), review_count: parseInt(stats.rows[0].review_count) });
+  } catch (err) {
+    console.error('Error fetching reviews:', err);
+    res.status(500).json({ error: 'Error al obtener valoraciones' });
+  }
+});
+
+// POST a new review
+app.post('/api/products/:id/reviews', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user_name, email, rating, title, comment } = req.body;
+    if (!user_name || !rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ error: 'Nombre y valoración (1-5) son requeridos' });
+    }
+    const result = await pool.query(
+      'INSERT INTO reviews (product_id, user_name, email, rating, title, comment) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [id, user_name, email || '', rating, title || '', comment || '']
+    );
+    // Update product rating and reviews count
+    const stats = await pool.query('SELECT COALESCE(AVG(rating), 0)::numeric(10,2) as avg_rating, COUNT(*) as review_count FROM reviews WHERE product_id = $1', [id]);
+    await pool.query('UPDATE products SET rating = $1, reviews = $2 WHERE id = $3', [parseFloat(stats.rows[0].avg_rating), parseInt(stats.rows[0].review_count), id]);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error creating review:', err);
+    res.status(500).json({ error: 'Error al crear valoración' });
+  }
+});
+
+// GET all reviews (admin)
+app.get('/api/reviews', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT r.*, p.name as product_name 
+      FROM reviews r 
+      LEFT JOIN products p ON r.product_id = p.id 
+      ORDER BY r.created_at DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching all reviews:', err);
+    res.status(500).json({ error: 'Error al obtener valoraciones' });
+  }
+});
+
+// DELETE a review (admin)
+app.delete('/api/reviews/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const review = await pool.query('SELECT product_id FROM reviews WHERE id = $1', [id]);
+    if (review.rows.length === 0) return res.status(404).json({ error: 'Valoración no encontrada' });
+    const productId = review.rows[0].product_id;
+    await pool.query('DELETE FROM reviews WHERE id = $1', [id]);
+    // Update product stats
+    const stats = await pool.query('SELECT COALESCE(AVG(rating), 0)::numeric(10,2) as avg_rating, COUNT(*) as review_count FROM reviews WHERE product_id = $1', [productId]);
+    await pool.query('UPDATE products SET rating = $1, reviews = $2 WHERE id = $3', [parseFloat(stats.rows[0].avg_rating), parseInt(stats.rows[0].review_count), productId]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Error deleting review:', err);
+    res.status(500).json({ error: 'Error al eliminar valoración' });
+  }
+});
+
 // ========== USERS ==========
 
 // GET all users

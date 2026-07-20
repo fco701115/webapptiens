@@ -395,6 +395,9 @@
           <a href="#" class="admin-nav-item" onclick="showAdminSection('users', this)">
             <i class="fas fa-users"></i> Usuarios
           </a>
+          <a href="#" class="admin-nav-item" onclick="showAdminSection('reviews', this)">
+            <i class="fas fa-star"></i> Valoraciones
+          </a>
           <a href="#" class="admin-nav-item logout" onclick="handleAdminLogout()">
             <i class="fas fa-sign-out-alt"></i> Cerrar sesión
           </a>
@@ -584,6 +587,30 @@
                 </tr>
               </thead>
               <tbody id="adminUsersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <div class="admin-section" id="adminReviews" style="display: none;">
+          <div class="admin-section-header">
+            <h2>Valoraciones</h2>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Producto</th>
+                  <th>Usuario</th>
+                  <th>Valoración</th>
+                  <th>Título</th>
+                  <th>Comentario</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="adminReviewsTable"></tbody>
             </table>
           </div>
         </div>

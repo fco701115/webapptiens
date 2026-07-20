@@ -1128,7 +1128,7 @@ function showDetail(id) {
           <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(product.name)}&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
           <a href="https://pinterest.com/pin/create/button/?url=${encodeURIComponent(window.location.href)}&description=${encodeURIComponent(product.name)}" target="_blank" rel="noopener"><i class="fab fa-pinterest"></i></a>
           <a href="#" onclick="event.preventDefault(); copyLink()"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/2381505103?text=${encodeURIComponent(product.name + ' - ' + window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://wa.me/2381505103?text=${encodeURIComponent('Favor de enviarme información del producto: ' + product.name + ' - ' + window.location.href)}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
         </div>
 
         <div class="detail-info-items">

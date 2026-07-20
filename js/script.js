@@ -2066,7 +2066,12 @@ function initMobileMenu() {
 // ========== MOBILE SEARCH ==========
 function toggleMobileSearch() {
   const bar = document.getElementById('mobileSearchBar');
-  if (bar) bar.classList.toggle('active');
+  if (!bar) return;
+  const isActive = bar.classList.toggle('active');
+  if (isActive) {
+    const input = bar.querySelector('.mobile-search-input');
+    if (input) setTimeout(() => input.focus(), 100);
+  }
 }
 
 // ========== BOTTOM NAV ==========
@@ -2533,10 +2538,11 @@ function initSearch() {
   const mobileInput = document.querySelector('.mobile-search-input');
   const dropdowns = document.querySelectorAll('.search-dropdown');
 
-  function getDropdown() {
-    return window.innerWidth <= 1024
-      ? document.getElementById('searchDropdown')
-      : document.querySelector('.search-bar .search-dropdown');
+  function getDropdown(forMobile) {
+    if (forMobile || window.innerWidth <= 1024) {
+      return document.getElementById('mobileSearchDropdown') || document.getElementById('searchDropdown');
+    }
+    return document.querySelector('.search-bar .search-dropdown');
   }
 
   function renderSearchRow(p) {
@@ -2589,7 +2595,8 @@ function initSearch() {
 
   function handleSearch(e) {
     const query = e.target.value.toLowerCase().trim();
-    const dropdown = getDropdown();
+    const isMobile = e.target.classList.contains('mobile-search-input');
+    const dropdown = getDropdown(isMobile);
 
     if (!query) {
       if (dropdown) {
@@ -2625,8 +2632,7 @@ function initSearch() {
 }
 
 function selectSearchResult(id) {
-  const dropdown = document.getElementById('searchDropdown');
-  if (dropdown) dropdown.classList.remove('active');
+  document.querySelectorAll('.search-dropdown').forEach(d => d.classList.remove('active'));
   navigateToProductId(id);
 }
 

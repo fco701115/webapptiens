@@ -2224,6 +2224,9 @@ async function handleRegister() {
 function handleLogout() {
   currentUser = null;
   localStorage.removeItem('currentUser');
+  wishlist = [];
+  localStorage.setItem('wishlist', '[]');
+  updateWishlistUI();
   showView('home');
 }
 

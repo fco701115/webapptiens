@@ -2282,7 +2282,7 @@ function updateUserPanelStats() {
         '<div style="font-size:0.82rem;color:var(--text-light);margin-top:4px">' + productName + '</div>' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">' +
           '<strong style="color:var(--primary);font-size:1rem">$' + parseFloat(last.total).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</strong>' +
-          '<button class="action-btn" title="Ver pedido" onclick="showUserOrderDetail(' + last.id + ')" style="background:var(--primary);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:0.82rem;cursor:pointer"><i class="fas fa-eye"></i> Ver</button>' +
+          '<button class="action-btn" title="Ver pedido" onclick="showUserOrderDetail(' + last.id + ')" style="background:#444;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:0.82rem;cursor:pointer;transition:background 0.3s" onmouseover="this.style.background=\'#cb354e\'" onmouseout="this.style.background=\'#444\'"><i class="fas fa-eye"></i> Ver</button>' +
         '</div>';
     } else {
       lastOrderEl.textContent = 'No realizaste pedidos aún.';

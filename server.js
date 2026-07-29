@@ -5,7 +5,7 @@ const { Pool } = require('pg');
 const path = require('path');
 
 const app = express();
-const PORT = 3002;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(compression());

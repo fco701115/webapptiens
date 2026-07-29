@@ -76,11 +76,11 @@ app.use((req, res, next) => {
 
 // PostgreSQL connection
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'weboutshop',
-  password: '123456',
-  port: 5433,
+  user: process.env.DB_USER || 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'weboutshop',
+  password: process.env.DB_PASSWORD || '123456',
+  port: parseInt(process.env.DB_PORT || '5432'),
 });
 
 // Simple in-memory cache for GET responses

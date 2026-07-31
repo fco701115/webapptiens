@@ -650,6 +650,44 @@ app.post('/api/users/login', async (req, res) => {
   }
 });
 
+// ========== DEBUG ==========
+
+// GET all tables (debug)
+app.get('/api/debug/tables', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT table_name, 
+             (SELECT COUNT(*) FROM information_schema.columns WHERE table_name = t.table_name) as column_count,
+             (SELECT reltuples::bigint FROM pg_class WHERE relname = t.table_name) as row_count
+      FROM information_schema.tables t
+      WHERE table_schema = 'public'
+      ORDER BY table_name
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error fetching tables:', err);
+    res.status(500).json({ error: 'Error al obtener tablas' });
+  }
+});
+
+// GET table structure
+app.get('/api/debug/tables/:name', async (req, res) => {
+  try {
+    const { name } = req.params;
+    const columns = await pool.query(`
+      SELECT column_name, data_type, is_nullable, column_default
+      FROM information_schema.columns
+      WHERE table_name = $1 AND table_schema = 'public'
+      ORDER BY ordinal_position
+    `, [name]);
+    const count = await pool.query(`SELECT COUNT(*) FROM ${name}`);
+    res.json({ table: name, columns: columns.rows, row_count: parseInt(count.rows[0].count) });
+  } catch (err) {
+    console.error('Error fetching table:', err);
+    res.status(500).json({ error: 'Error al obtener estructura de tabla' });
+  }
+});
+
 // ========== SPA FALLBACK ==========
 // Serve index.html for client-side routes (product pages, etc.)
 app.use((req, res, next) => {

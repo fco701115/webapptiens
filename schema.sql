@@ -13,10 +13,14 @@ CREATE TABLE products (
   price DECIMAL(10,2) NOT NULL,
   original_price DECIMAL(10,2),
   discount INTEGER DEFAULT 0,
+  stock INTEGER DEFAULT 0,
   rating DECIMAL(2,1) DEFAULT 0,
   reviews INTEGER DEFAULT 0,
   category VARCHAR(100) NOT NULL,
+  sizes TEXT DEFAULT '',
+  colors TEXT DEFAULT '',
   image TEXT,
+  images JSONB DEFAULT '[]',
   description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -34,6 +38,60 @@ CREATE TABLE orders (
   items JSONB,
   total DECIMAL(10,2),
   status VARCHAR(50) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Categories table
+CREATE TABLE categories (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  image TEXT
+);
+
+-- Slides table
+CREATE TABLE slides (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  subtitle TEXT DEFAULT '',
+  link TEXT DEFAULT '#',
+  image TEXT,
+  button_text VARCHAR(100) DEFAULT 'Ver más',
+  sort_order INTEGER DEFAULT 0,
+  active BOOLEAN DEFAULT true
+);
+
+-- Split Banners table
+CREATE TABLE split_banners (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  subtitle TEXT DEFAULT '',
+  link TEXT DEFAULT '#',
+  image TEXT,
+  button_text VARCHAR(100) DEFAULT 'Ver más',
+  position INTEGER DEFAULT 1,
+  active BOOLEAN DEFAULT true
+);
+
+-- Reviews table
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+  user_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255),
+  rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  title VARCHAR(255) DEFAULT '',
+  comment TEXT DEFAULT '',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Users table
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  phone VARCHAR(50) DEFAULT '',
+  password VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

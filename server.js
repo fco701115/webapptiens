@@ -3,6 +3,30 @@ const compression = require('compression');
 const cors = require('cors');
 const { Pool } = require('pg');
 const path = require('path');
+const fs = require('fs');
+
+// Load .env file if present (does not override existing env vars)
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  for (const line of envContent.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eq = trimmed.indexOf('=');
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (key && !(key in process.env)) {
+      process.env[key] = value;
+    }
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -75,13 +99,17 @@ app.use((req, res, next) => {
 });
 
 // PostgreSQL connection
-const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'weboutshop',
-  password: process.env.DB_PASSWORD || '123456',
-  port: parseInt(process.env.DB_PORT || '5432'),
-});
+const pool = new Pool(
+  process.env.DATABASE_URL
+    ? { connectionString: process.env.DATABASE_URL }
+    : {
+        user: process.env.DB_USER || 'postgres',
+        host: process.env.DB_HOST || 'localhost',
+        database: process.env.DB_NAME || 'weboutshop',
+        password: process.env.DB_PASSWORD || '123456',
+        port: parseInt(process.env.DB_PORT || '5432'),
+      }
+);
 
 // Simple in-memory cache for GET responses
 const cache = {};

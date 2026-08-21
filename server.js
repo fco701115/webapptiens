@@ -50,6 +50,10 @@ app.get('/micuenta', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/contacto', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Serve product pages with Open Graph meta tags for social sharing
 app.get(/^\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
   const segments = req.path.split('-');

@@ -1356,6 +1356,10 @@ function handleRoute() {
     toggleLoginPanel();
     return true;
   }
+  if (path === '/contacto') {
+    showContact();
+    return true;
+  }
   const seg = path.replace(/^\/|\/$/g, '');
   if (seg && seg !== 'admin' && seg !== 'index.html') {
     const cat = categories.find(c => slugify(c) === seg);
@@ -1381,6 +1385,21 @@ function goHome() {
     history.pushState({}, '', '/');
   }
   showView('home');
+}
+
+function showContact() {
+  if (window.location.pathname !== '/contacto') {
+    history.pushState({}, '', '/contacto');
+  }
+  showView('contact');
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  const msg = document.getElementById('contactSuccessMsg');
+  if (msg) msg.style.display = 'block';
+  e.target.reset();
+  setTimeout(() => { if (msg) msg.style.display = 'none'; }, 4000);
 }
 
 let detailQty = 1;
@@ -1441,7 +1460,7 @@ function changeDetailImg(index) {
 function showView(view) {
   currentView = view;
   localStorage.setItem('currentView', view);
-  const views = ['homeView', 'detailView', 'checkoutView', 'loadingView', 'errorView', 'loginView', 'userPanelView', 'adminView', 'adminLoginView', 'categoryView'];
+  const views = ['homeView', 'detailView', 'checkoutView', 'loadingView', 'errorView', 'loginView', 'userPanelView', 'adminView', 'adminLoginView', 'categoryView', 'contactView'];
   views.forEach(v => {
     const el = document.getElementById(v);
     if (el) el.style.display = 'none';

@@ -3022,7 +3022,7 @@ button {
   .banner-slide {
     width: 360px;
     height: 180px;
-    background-size: contain;
+    background-size: 100% 100%;
     background-position: right center;
     background-repeat: no-repeat;
   }
@@ -3268,7 +3268,9 @@ button {
   }
 
   .banner-slide {
-    background-size: contain;
+    width: 360px;
+    height: 180px;
+    background-size: 100% 100%;
     background-position: right center;
     background-repeat: no-repeat;
   }

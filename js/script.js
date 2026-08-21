@@ -585,7 +585,7 @@ function showCategoryPage(category) {
 }
 
 function navigateToCategory(category) {
-  history.pushState({ category: category }, '', '/' + slugify(category));
+  history.pushState({ category: category }, '', '/categoria/' + slugify(category));
   showCategoryPage(category);
 }
 
@@ -1292,7 +1292,7 @@ function slugify(text) {
 function getProductUrl(product) {
   const cat = slugify(product.category) || 'productos';
   const name = slugify(product.name) || 'producto';
-  return '/' + cat + '/' + name + '-' + product.id;
+  return '/categoria/' + cat + '/' + name + '-' + product.id;
 }
 
 function navigateToProductId(id) {
@@ -1338,16 +1338,6 @@ function handleRoute() {
     showView('home');
     return true;
   }
-  const m = path.match(/\/([^\/]+)\/([^\/]+)-(\d+)\/?$/);
-  if (m) {
-    const id = parseInt(m[3], 10);
-    if (products.length) {
-      const p = products.find(x => x.id === id);
-      if (p) { showDetail(id); return true; }
-    }
-    setTimeout(handleRoute, 200);
-    return true;
-  }
   if (path === '/categorias') {
     showAllCategories();
     return true;
@@ -1360,9 +1350,20 @@ function handleRoute() {
     showContact();
     return true;
   }
-  const seg = path.replace(/^\/|\/$/g, '');
-  if (seg && seg !== 'admin' && seg !== 'index.html') {
-    const cat = categories.find(c => slugify(c) === seg);
+  const catMatch = path.match(/^\/categoria\/([^\/]+)\/([^\/]+)-(\d+)\/?$/);
+  if (catMatch) {
+    const id = parseInt(catMatch[3], 10);
+    if (products.length) {
+      const p = products.find(x => x.id === id);
+      if (p) { showDetail(id); return true; }
+    }
+    setTimeout(handleRoute, 200);
+    return true;
+  }
+  const catOnly = path.match(/^\/categoria\/([^\/]+)\/?$/);
+  if (catOnly) {
+    const slug = catOnly[1];
+    const cat = categories.find(c => slugify(c) === slug);
     if (cat && cat !== 'Todas') {
       if (products.length) {
         showCategoryPage(cat);

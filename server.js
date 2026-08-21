@@ -54,8 +54,12 @@ app.get('/contacto', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/categoria/:slug', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Serve product pages with Open Graph meta tags for social sharing
-app.get(/^\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
+app.get(/^\/categoria\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
   const segments = req.path.split('-');
   const id = parseInt(segments[segments.length - 1], 10);
   if (isNaN(id)) {

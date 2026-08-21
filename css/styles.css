@@ -3041,6 +3041,11 @@ button {
     right: 10px;
   }
 
+  .banner-tag {
+    font-size: 0.68rem;
+    color: #1f1b1b;
+  }
+
   .banner-title {
     font-size: 1.8rem;
     width: 180px;
@@ -3261,6 +3266,11 @@ button {
     background-size: contain;
     background-position: right center;
     background-repeat: no-repeat;
+  }
+
+  .banner-tag {
+    font-size: 0.68rem;
+    color: #1f1b1b;
   }
 
   .banner-title {

@@ -5813,8 +5813,8 @@ button {
 
 /* ========== CONTACT PAGE ========== */
 .contact-hero {
-  background: var(--primary);
-  color: #fff;
+  background: #f5f5f5;
+  color: var(--text);
   text-align: center;
   padding: 60px 20px 40px;
 }
@@ -5825,10 +5825,10 @@ button {
 }
 .contact-breadcrumb {
   font-size: 0.9rem;
-  opacity: 0.85;
+  color: var(--text-light);
 }
 .contact-breadcrumb a {
-  color: #fff;
+  color: var(--primary);
   text-decoration: underline;
 }
 .contact-container {

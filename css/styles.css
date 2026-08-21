@@ -3014,6 +3014,11 @@ button {
     margin: 0 auto;
   }
 
+  .banner-slides.loaded {
+    width: 360px;
+    height: 180px;
+  }
+
   .banner-slide {
     width: 360px;
     height: 180px;

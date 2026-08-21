@@ -3404,14 +3404,11 @@ function closeProductModal() {
 function previewProductImage(event, slot) {
   const file = event.target.files[0];
   if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      productImages[slot] = e.target.result;
-      document.getElementById('productImagePreview' + slot).src = e.target.result;
-      document.getElementById('productImagePreview' + slot).style.display = 'block';
-      document.getElementById('productImagePlaceholder' + slot).style.display = 'none';
-    };
-    reader.readAsDataURL(file);
+    productImages[slot] = file;
+    const url = URL.createObjectURL(file);
+    document.getElementById('productImagePreview' + slot).src = url;
+    document.getElementById('productImagePreview' + slot).style.display = 'block';
+    document.getElementById('productImagePlaceholder' + slot).style.display = 'none';
   }
 }
 
@@ -3430,7 +3427,15 @@ async function saveProduct() {
   const images = [];
   for (let i = 1; i <= 5; i++) {
     if (productImages[i]) {
-      images.push(productImages[i]);
+      if (productImages[i] instanceof File) {
+        const fd = new FormData();
+        fd.append('file', productImages[i]);
+        const res = await fetch('/api/upload', { method: 'POST', body: fd });
+        const data = await res.json();
+        images.push(data.url);
+      } else {
+        images.push(productImages[i]);
+      }
     }
   }
   
@@ -3539,25 +3544,30 @@ let categoryImageData = null;
 function previewCategoryImage(event) {
   const file = event.target.files[0];
   if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      categoryImageData = e.target.result;
-      document.getElementById('categoryImagePreview').src = e.target.result;
-      document.getElementById('categoryImagePreview').style.display = 'block';
-      document.getElementById('categoryImagePlaceholder').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
+    categoryImageData = file;
+    const url = URL.createObjectURL(file);
+    document.getElementById('categoryImagePreview').src = url;
+    document.getElementById('categoryImagePreview').style.display = 'block';
+    document.getElementById('categoryImagePlaceholder').style.display = 'none';
   }
 }
 
 async function saveCategory() {
   const id = document.getElementById('categoryId').value;
   const name = document.getElementById('categoryName').value.trim();
-  const image = categoryImageData;
   
   if (!name) {
     alert('El nombre es requerido');
     return;
+  }
+
+  let image = '';
+  if (categoryImageData && categoryImageData instanceof File) {
+    const fd = new FormData();
+    fd.append('file', categoryImageData);
+    const res = await fetch('/api/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    image = data.url;
   }
 
   if (id) {
@@ -3661,14 +3671,11 @@ function closeSlideModal() {
 function previewSlideImage(event) {
   const file = event.target.files[0];
   if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      slideImageData = e.target.result;
-      document.getElementById('slideImagePreview').src = e.target.result;
-      document.getElementById('slideImagePreview').style.display = 'block';
-      document.getElementById('slideImagePlaceholder').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
+    slideImageData = file;
+    const url = URL.createObjectURL(file);
+    document.getElementById('slideImagePreview').src = url;
+    document.getElementById('slideImagePreview').style.display = 'block';
+    document.getElementById('slideImagePlaceholder').style.display = 'none';
   }
 }
 
@@ -3680,19 +3687,27 @@ async function saveSlide() {
   const button_text = document.getElementById('slideButtonText').value.trim();
   const sort_order = parseInt(document.getElementById('slideOrder').value) || 0;
   const active = document.getElementById('slideActive').value === 'true';
-  const image = slideImageData;
   
   if (!title) {
     alert('El título es requerido');
     return;
   }
 
-  const data = { title, subtitle, link, image, button_text, sort_order, active };
+  let image = '';
+  if (slideImageData && slideImageData instanceof File) {
+    const fd = new FormData();
+    fd.append('file', slideImageData);
+    const res = await fetch('/api/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    image = data.url;
+  }
+
+  const payload = { title, subtitle, link, image, button_text, sort_order, active };
   
   if (id) {
-    await apiPut('/slides/' + id, data);
+    await apiPut('/slides/' + id, payload);
   } else {
-    await apiPost('/slides', data);
+    await apiPost('/slides', payload);
   }
   
   closeSlideModal();
@@ -3787,14 +3802,11 @@ function closeSplitBannerModal() {
 function previewSplitBannerImage(event) {
   const file = event.target.files[0];
   if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      splitBannerImageData = e.target.result;
-      document.getElementById('splitBannerImagePreview').src = e.target.result;
-      document.getElementById('splitBannerImagePreview').style.display = 'block';
-      document.getElementById('splitBannerImagePlaceholder').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
+    splitBannerImageData = file;
+    const url = URL.createObjectURL(file);
+    document.getElementById('splitBannerImagePreview').src = url;
+    document.getElementById('splitBannerImagePreview').style.display = 'block';
+    document.getElementById('splitBannerImagePlaceholder').style.display = 'none';
   }
 }
 
@@ -3806,19 +3818,27 @@ async function saveSplitBanner() {
   const button_text = document.getElementById('splitBannerButtonText').value.trim();
   const position = parseInt(document.getElementById('splitBannerPosition').value) || 1;
   const active = document.getElementById('splitBannerActive').value === 'true';
-  const image = splitBannerImageData;
   
   if (!title) {
     alert('El título es requerido');
     return;
   }
 
-  const data = { title, subtitle, link, image, button_text, position, active };
+  let image = '';
+  if (splitBannerImageData && splitBannerImageData instanceof File) {
+    const fd = new FormData();
+    fd.append('file', splitBannerImageData);
+    const res = await fetch('/api/upload', { method: 'POST', body: fd });
+    const data = await res.json();
+    image = data.url;
+  }
+
+  const payload = { title, subtitle, link, image, button_text, position, active };
   
   if (id) {
-    await apiPut('/split-banners/' + id, data);
+    await apiPut('/split-banners/' + id, payload);
   } else {
-    await apiPost('/split-banners', data);
+    await apiPost('/split-banners', payload);
   }
   
   closeSplitBannerModal();

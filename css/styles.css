@@ -3022,7 +3022,9 @@ button {
   .banner-slide {
     width: 360px;
     height: 180px;
-    background-position: center right;
+    background-size: auto 100%;
+    background-position: right center;
+    background-repeat: no-repeat;
   }
 
   .banner-arrow {
@@ -3256,7 +3258,9 @@ button {
   }
 
   .banner-slide {
-    background-position: center right;
+    background-size: auto 100%;
+    background-position: right center;
+    background-repeat: no-repeat;
   }
 
   .banner-title {

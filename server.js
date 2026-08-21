@@ -4,6 +4,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const path = require('path');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
 // Load .env file if present (does not override existing env vars)
 const envPath = path.join(__dirname, '.env');
@@ -115,28 +116,30 @@ app.use((req, res, next) => {
   next();
 });
 
-// File upload with multer
-const multer = require('multer');
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname) || '.jpg';
-    cb(null, Date.now() + '-' + Math.random().toString(36).slice(2, 8) + ext);
-  }
+// Cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+// File upload with multer (temp storage before Cloudinary)
+const multer = require('multer');
+const storage = multer.memoryStorage();
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 app.post('/api/upload', upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No se envió archivo' });
-  const url = '/uploads/' + req.file.filename;
-  res.json({ url });
+  const b64 = req.file.buffer.toString('base64');
+  const dataURI = `data:${req.file.mimetype};base64,${b64}`;
+  cloudinary.uploader.upload(dataURI, { folder: 'weboutshop' }, (err, result) => {
+    if (err) {
+      console.error('Cloudinary upload error:', err);
+      return res.status(500).json({ error: 'Error al subir imagen' });
+    }
+    res.json({ url: result.secure_url });
+  });
 });
-
-// Serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // PostgreSQL connection
 const pool = new Pool(

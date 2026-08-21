@@ -1,9 +1,31 @@
 const { Pool } = require('pg');
+const cloudinary = require('cloudinary').v2;
+
+// Load .env file if present
 const fs = require('fs');
 const path = require('path');
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  for (const line of envContent.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eq = trimmed.indexOf('=');
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = value;
+  }
+}
 
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const pool = new Pool(
   process.env.DATABASE_URL
@@ -17,14 +39,13 @@ const pool = new Pool(
       }
 );
 
-function saveBase64Image(base64Str, prefix) {
-  const match = base64Str.match(/^data:image\/(\w+);base64,(.+)$/);
-  if (!match) return null;
-  const ext = match[1] === 'jpeg' ? 'jpg' : match[1];
-  const buffer = Buffer.from(match[2], 'base64');
-  const filename = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  fs.writeFileSync(path.join(uploadsDir, filename), buffer);
-  return '/uploads/' + filename;
+function uploadToCloudinary(base64Str, folder) {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.upload(base64Str, { folder }, (err, result) => {
+      if (err) reject(err);
+      else resolve(result.secure_url);
+    });
+  });
 }
 
 async function migrateTable(tableName, imageColumn) {
@@ -33,11 +54,13 @@ async function migrateTable(tableName, imageColumn) {
   for (const row of result.rows) {
     const val = row[imageColumn];
     if (typeof val === 'string' && val.startsWith('data:image')) {
-      const url = saveBase64Image(val, tableName);
-      if (url) {
+      try {
+        const url = await uploadToCloudinary(val, 'weboutshop');
         await pool.query(`UPDATE ${tableName} SET ${imageColumn} = $1 WHERE id = $2`, [url, row.id]);
         migrated++;
         console.log(`  ${tableName}#${row.id}: base64 → ${url}`);
+      } catch (e) {
+        console.error(`  ${tableName}#${row.id}: ERROR - ${e.message}`);
       }
     }
   }
@@ -56,8 +79,12 @@ async function migrateArrayTable(tableName, imageColumn) {
     let changed = false;
     for (let i = 0; i < images.length; i++) {
       if (typeof images[i] === 'string' && images[i].startsWith('data:image')) {
-        const url = saveBase64Image(images[i], tableName);
-        if (url) { images[i] = url; changed = true; }
+        try {
+          images[i] = await uploadToCloudinary(images[i], 'weboutshop');
+          changed = true;
+        } catch (e) {
+          console.error(`  ${tableName}#${row.id}[${i}]: ERROR - ${e.message}`);
+        }
       }
     }
     if (changed) {
@@ -70,7 +97,7 @@ async function migrateArrayTable(tableName, imageColumn) {
 }
 
 async function main() {
-  console.log('Migrating base64 images to files...\n');
+  console.log('Migrating base64 images to Cloudinary...\n');
   let total = 0;
   total += await migrateTable('slides', 'image');
   total += await migrateTable('split_banners', 'image');

@@ -3009,10 +3009,14 @@ button {
   }
 
   .banner {
-    height: 200px;
+    height: 180px;
+    width: 360px;
+    margin: 0 auto;
   }
 
   .banner-slide {
+    width: 360px;
+    height: 180px;
     background-position: calc(50% - 150px) center;
   }
 

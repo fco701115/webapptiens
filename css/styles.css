@@ -3255,6 +3255,10 @@ button {
     width: 360px;
   }
 
+  .banner-slide {
+    background-position: center right;
+  }
+
   .banner-title {
     font-size: 1.5rem;
   }

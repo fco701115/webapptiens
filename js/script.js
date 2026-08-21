@@ -535,6 +535,9 @@ function renderCategoryProducts(category) {
 }
 
 function showAllCategories() {
+  if (window.location.pathname !== '/categorias') {
+    history.pushState({}, '', '/categorias');
+  }
   const title = document.getElementById('categoryTitle');
   if (title) title.textContent = 'Todas las Categorías';
   const grid = document.getElementById('allCategoriesGrid');
@@ -1345,6 +1348,14 @@ function handleRoute() {
     setTimeout(handleRoute, 200);
     return true;
   }
+  if (path === '/categorias') {
+    showAllCategories();
+    return true;
+  }
+  if (path === '/micuenta') {
+    toggleLoginPanel();
+    return true;
+  }
   const seg = path.replace(/^\/|\/$/g, '');
   if (seg && seg !== 'admin' && seg !== 'index.html') {
     const cat = categories.find(c => slugify(c) === seg);
@@ -2133,6 +2144,9 @@ function toggleLoginFromBottom() {
 let currentUser = null;
 
 function toggleLoginPanel() {
+  if (window.location.pathname !== '/micuenta') {
+    history.pushState({}, '', '/micuenta');
+  }
   if (currentUser) {
     showView('userPanel');
   } else {

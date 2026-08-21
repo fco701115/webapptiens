@@ -41,6 +41,15 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Routes for client-side SPA views
+app.get('/categorias', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/micuenta', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Serve product pages with Open Graph meta tags for social sharing
 app.get(/^\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
   const segments = req.path.split('-');

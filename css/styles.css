@@ -3289,6 +3289,12 @@ button {
     font-size: 1.125rem;
   }
 
+  .banner-btn {
+    font-size: 0.75rem;
+    color: #ffffff;
+    background: #cb354e;
+  }
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;

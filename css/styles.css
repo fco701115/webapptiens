@@ -711,7 +711,7 @@ button {
 /* ========== CATALOG ========== */
 .catalog-section {
   max-width: var(--max-width);
-  margin: 50px auto;
+  margin: 0 auto;
   padding: 0 20px;
 }
 

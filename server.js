@@ -146,7 +146,7 @@ const pool = new Pool(
   process.env.DATABASE_URL
     ? { connectionString: process.env.DATABASE_URL }
     : {
-        user: process.env.DB_USER || 'postgres',
+        user: process.env.DB_USER || 'webapptiens',
         host: process.env.DB_HOST || 'localhost',
         database: process.env.DB_NAME || 'webapptiens',
         password: process.env.DB_PASSWORD || '123456',

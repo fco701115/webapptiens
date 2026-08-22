@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       - POSTGRES_DB=db-webapptiens
-      - POSTGRES_USER=postgres
+      - POSTGRES_USER=webapptiens
       - POSTGRES_PASSWORD=Rg9svf6GK22MJY5aLwsf
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -26,7 +26,7 @@ services:
       - PORT=3001
       - DB_HOST=webapptiens-db
       - DB_NAME=db-webapptiens
-      - DB_USER=postgres
+      - DB_USER=webapptiens
       - DB_PASSWORD=Rg9svf6GK22MJY5aLwsf
       - DB_PORT=5432
     depends_on:

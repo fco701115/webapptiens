@@ -82,7 +82,7 @@ app.get(/^\/categoria\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
     const imageUrl = images.length > 0 ? images[0] : '';
     const absoluteImageUrl = imageUrl.startsWith('http') ? imageUrl : `http://13.140.153.222:3002${imageUrl}`;
     const description = p.description ? p.description.replace(/<[^>]*>/g, '').substring(0, 200) : '';
-    const ogTitle = p.name || 'WebOutShop';
+    const ogTitle = p.name || 'WebApptiens';
     const ogUrl = `http://13.140.153.222:3002${req.path}`;
 
     const html = require('fs').readFileSync(path.join(__dirname, 'index.html'), 'utf8');
@@ -96,7 +96,7 @@ app.get(/^\/categoria\/[^/]+\/[^/]+-\d+$/, async (req, res) => {
   <meta property="og:image:height" content="750" />
   <meta property="og:url" content="${ogUrl}" />
   <meta property="og:type" content="product" />
-  <meta property="og:site_name" content="WebOutShop" />
+  <meta property="og:site_name" content="WebApptiens" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${ogTitle.replace(/"/g, '&quot;')}" />
   <meta name="twitter:description" content="${description.replace(/"/g, '&quot;')}" />
@@ -132,7 +132,7 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No se envió archivo' });
   const b64 = req.file.buffer.toString('base64');
   const dataURI = `data:${req.file.mimetype};base64,${b64}`;
-  cloudinary.uploader.upload(dataURI, { folder: 'weboutshop' }, (err, result) => {
+  cloudinary.uploader.upload(dataURI, { folder: 'webapptiens' }, (err, result) => {
     if (err) {
       console.error('Cloudinary upload error:', err);
       return res.status(500).json({ error: 'Error al subir imagen' });
@@ -148,7 +148,7 @@ const pool = new Pool(
     : {
         user: process.env.DB_USER || 'postgres',
         host: process.env.DB_HOST || 'localhost',
-        database: process.env.DB_NAME || 'weboutshop',
+        database: process.env.DB_NAME || 'webapptiens',
         password: process.env.DB_PASSWORD || '123456',
         port: parseInt(process.env.DB_PORT || '5432'),
       }

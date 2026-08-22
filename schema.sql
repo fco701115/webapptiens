@@ -1,10 +1,10 @@
--- ========== WEBOUTSHOP DATABASE SCHEMA ==========
+-- ========== WEBAPPTIENS DATABASE SCHEMA ==========
 
 -- Create database
-CREATE DATABASE weboutshop;
+CREATE DATABASE webapptiens;
 
 -- Connect to database
-\c weboutshop;
+\c webapptiens;
 
 -- Products table
 CREATE TABLE products (

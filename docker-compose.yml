@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     build: .
-    container_name: weboutshop
+    container_name: webapptiens
     restart: always
     ports:
       - "3002:3002"
@@ -11,31 +11,31 @@ services:
       - NODE_ENV=production
       - PORT=3002
       - DB_HOST=postgres
-      - DB_NAME=db-weboutshop
+      - DB_NAME=db-webapptiens
       - DB_USER=postgres
       - DB_PASSWORD=${DB_PASSWORD:-123456}
       - DB_PORT=5432
     depends_on:
       - postgres
     networks:
-      - weboutshop-net
+      - webapptiens-net
 
   postgres:
     image: postgres:16-alpine
-    container_name: weboutshop-db
+    container_name: webapptiens-db
     restart: always
     environment:
-      - POSTGRES_DB=weboutshop
+      - POSTGRES_DB=webapptiens
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=${DB_PASSWORD:-123456}
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - weboutshop-net
+      - webapptiens-net
 
 networks:
-  weboutshop-net:
+  webapptiens-net:
     driver: bridge
 
 volumes:

@@ -1,22 +1,41 @@
 version: '3.8'
 
 services:
+  db:
+    image: postgres:15-alpine
+    container_name: webapptiens-db
+    restart: always
+    environment:
+      - POSTGRES_DB=db-webapptiens
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Rg9svf6GK22MJY5aLwsf
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./schema-init.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    networks:
+      - webapptiens-net
+
   app:
     build: .
     container_name: webapptiens
     restart: always
     ports:
-      - "3002:3002"
+      - "3001:3001"
     environment:
       - NODE_ENV=production
-      - PORT=3002
-      - DB_HOST=webapptiens-app-napiu2
+      - PORT=3001
+      - DB_HOST=webapptiens-db
       - DB_NAME=db-webapptiens
       - DB_USER=postgres
       - DB_PASSWORD=Rg9svf6GK22MJY5aLwsf
       - DB_PORT=5432
+    depends_on:
+      - db
     networks:
       - webapptiens-net
+
+volumes:
+  pgdata:
 
 networks:
   webapptiens-net:

@@ -3278,6 +3278,8 @@ button {
   .banner-tag {
     font-size: 0.68rem;
     color: #1f1b1b;
+    margin-top: 20px;
+    margin-bottom: 15px;
   }
 
   .banner-content {

@@ -453,8 +453,8 @@ button {
 
 .banner-btn {
   display: inline-block;
-  background: #fff;
-  color: var(--primary);
+  background: #cb354e;
+  color: #ffffff;
   padding: 14px 40px;
   font-weight: 700;
   font-size: 1rem;

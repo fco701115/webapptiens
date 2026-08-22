@@ -6,9 +6,9 @@ services:
     container_name: webapptiens-db
     restart: always
     environment:
-      - POSTGRES_DB=db-webapptiens
-      - POSTGRES_USER=webapptiens
-      - POSTGRES_PASSWORD=Rg9svf6GK22MJY5aLwsf
+      - POSTGRES_DB=bd-webapptiens
+      - POSTGRES_USER=fco-webapptiens
+      - POSTGRES_PASSWORD=t9AWyMXGauynSI4B58I6
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./schema-init.sql:/docker-entrypoint-initdb.d/01-schema.sql
@@ -24,10 +24,10 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - DB_HOST=webapptiens-db
-      - DB_NAME=db-webapptiens
-      - DB_USER=webapptiens
-      - DB_PASSWORD=Rg9svf6GK22MJY5aLwsf
+      - DB_HOST=app-webapptiens-e8oo6m
+      - DB_NAME=bd-webapptiens
+      - DB_USER=fco-webapptiens
+      - DB_PASSWORD=t9AWyMXGauynSI4B58I6
       - DB_PORT=5432
     depends_on:
       - db

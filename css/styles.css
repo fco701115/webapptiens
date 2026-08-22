@@ -3290,6 +3290,8 @@ button {
   }
 
   .banner-btn {
+    width: 82px;
+    height: 25px;
     font-size: 0.75rem;
     color: #ffffff;
     background: #cb354e;

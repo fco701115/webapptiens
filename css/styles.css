@@ -986,6 +986,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   padding: 4px 8px;
   z-index: 3;
   opacity: 0;
@@ -3112,16 +3113,21 @@ button {
 
   .product-buy-btn {
     opacity: 1;
-    width: calc(100% - 26px);
+    width: 40px;
+    height: 40px;
     position: absolute;
-    bottom: 13px;
-    left: 13px;
-    right: 13px;
-    border-radius: 6px;
+    bottom: 8px;
+    right: 8px;
+    left: auto;
+    border-radius: 50%;
     justify-content: center;
-    padding: 4px 8px;
+    padding: 0;
     transform: none;
-    font-size: 12px;
+    font-size: 14px;
+  }
+
+  .product-buy-btn .buy-btn-text {
+    display: none;
   }
 
   .product-info {

@@ -903,6 +903,14 @@ button {
   color: #fff;
 }
 
+.product-action-btn.wishlist-active {
+  color: #cb354e;
+}
+
+.product-action-btn.wishlist-active i {
+  color: #cb354e;
+}
+
 /* Parallax slide-in effect for each icon */
 .product-action-btn:nth-child(1) {
   transform: translateX(40px);

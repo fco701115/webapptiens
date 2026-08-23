@@ -3075,8 +3075,9 @@ button {
 @media (max-width: 768px) {
   .header-inner {
     flex-wrap: wrap;
-    height: 60px;
-    padding: 10px 10px 10px 5px;
+    height: auto;
+    padding: 8px 10px;
+    gap: 8px;
   }
 
   .header {
@@ -3089,6 +3090,10 @@ button {
 
   .mobile-menu-btn {
     display: block;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
   }
 
   .search-bar {
@@ -3105,6 +3110,12 @@ button {
 
   .header-icons {
     margin-left: auto;
+    gap: 4px;
+  }
+
+  .icon-btn {
+    font-size: 1rem;
+    padding: 6px;
   }
 
   .navbar {
@@ -3358,6 +3369,19 @@ button {
 
   .gallery-arrow {
     display: none;
+  }
+
+  .header-inner {
+    padding: 6px 8px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .icon-btn {
+    font-size: 0.9rem;
+    padding: 5px;
   }
 
   .mobile-img-arrow {

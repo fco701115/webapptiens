@@ -475,7 +475,7 @@ function productCardHtml(p) {
         ${discountHtml}
         <div class="product-actions">
           <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
-          <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
+          <button class="product-action-btn ${isInWishlist(p.id) ? 'wishlist-active' : ''}" data-tooltip="Favoritos" onclick="event.stopPropagation(); toggleWishlistBtn(this, ${p.id})"><i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i></button>
           <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); addToCompare(${p.id}); openCompareModal()"><i class="fas fa-arrows-rotate"></i></button>
         </div>
         <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Agregar al carrito</button>

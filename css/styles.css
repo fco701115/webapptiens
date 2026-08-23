@@ -308,8 +308,8 @@ button {
 /* ========== HERO SECTION (SLIDE + SIDEBANNERS) ========== */
 .hero-section {
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 20px;
+  margin: 10px auto 0;
+  padding: 0;
 }
 
 .hero-layout {

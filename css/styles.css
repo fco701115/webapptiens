@@ -804,7 +804,7 @@ button {
 .product-img-wrapper {
   width: 100%;
   max-width: 224px;
-  height: 240px;
+  height: 288px;
   overflow: hidden;
   position: relative;
   cursor: pointer;

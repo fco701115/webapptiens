@@ -780,7 +780,7 @@ button {
 .products-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
+  gap: 12px;
 }
 
 /* ========== PRODUCT CARD ========== */

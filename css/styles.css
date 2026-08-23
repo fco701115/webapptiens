@@ -3175,16 +3175,16 @@ button {
   }
 
   .hero-slide {
-    width: 100%;
-    height: 300px;
+    width: 360px;
+    height: 210px;
   }
 
   .banner-slides {
-    height: 300px;
+    height: 210px;
   }
 
   .banner-slide {
-    height: 300px;
+    height: 210px;
   }
 
   .banner-arrow {
@@ -3406,15 +3406,16 @@ button {
   }
 
   .hero-slide {
-    height: 250px;
+    width: 360px;
+    height: 210px;
   }
 
   .banner-slides {
-    height: 250px;
+    height: 210px;
   }
 
   .banner-slide {
-    height: 250px;
+    height: 210px;
     background-position: 40% center;
   }
 

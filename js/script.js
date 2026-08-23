@@ -473,11 +473,13 @@ function productCardHtml(p) {
       <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
         <img src="${mainImage}" alt="${p.name}" loading="lazy">
         ${discountHtml}
+        <div class="product-actions">
+          <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
+          <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
+          <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); compareProduct(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
+        </div>
         <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
       </div>
-      <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
-        <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
-      </button>
       <div class="product-info">
         <div class="product-info-content">
           <h3 class="product-name">${p.name}</h3>
@@ -793,6 +795,18 @@ function isInWishlist(id) {
   return wishlist.some(item => item.id === id);
 }
 
+function quickView(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+  showDetail(id);
+}
+
+function compareProduct(id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+  alert(`Comparar: ${product.name}`);
+}
+
 function toggleDetailWishlist(id) {
   addToWishlist(id);
   const link = document.getElementById('detailWishlistLink');
@@ -1038,11 +1052,13 @@ function showDetail(id) {
         <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${mainImage}" alt="${p.name}" loading="lazy">
           ${discHtml}
+          <div class="product-actions">
+            <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
+            <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
+            <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); compareProduct(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
+          </div>
           <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
         </div>
-        <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
-          <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
-        </button>
         <div class="product-info">
           <div class="product-info-content">
             <h3 class="product-name">${p.name}</h3>
@@ -2605,11 +2621,13 @@ function initSearch() {
         <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${p.image}" alt="${p.name}" loading="lazy">
           ${discountHtml}
+          <div class="product-actions">
+            <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
+            <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
+            <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); compareProduct(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
+          </div>
           <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
         </div>
-        <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
-          <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
-        </button>
         <div class="product-info">
           <div class="product-info-content">
             <h3 class="product-name">${p.name}</h3>

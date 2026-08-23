@@ -865,6 +865,94 @@ button {
   color: #cb354e;
 }
 
+/* Product action buttons (Quick View, Wishlist, Compare) */
+.product-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 6;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-actions {
+  opacity: 1;
+}
+
+.product-action-btn {
+  width: 35px;
+  height: 35px;
+  background: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.product-action-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Parallax slide-in effect for each icon */
+.product-action-btn:nth-child(1) {
+  transform: translateX(40px);
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.product-action-btn:nth-child(2) {
+  transform: translateX(40px);
+  transition: transform 0.3s ease 0.05s, opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.product-action-btn:nth-child(3) {
+  transform: translateX(40px);
+  transition: transform 0.3s ease 0.1s, opacity 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.product-card:hover .product-action-btn:nth-child(1) {
+  transform: translateX(0);
+}
+
+.product-card:hover .product-action-btn:nth-child(2) {
+  transform: translateX(0);
+}
+
+.product-card:hover .product-action-btn:nth-child(3) {
+  transform: translateX(0);
+}
+
+/* Tooltip on action buttons */
+.product-action-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: 42px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.product-action-btn:hover::after {
+  opacity: 1;
+}
+
 /* Buy button (hidden by default, inside image wrapper) */
 .product-buy-btn {
   position: absolute;

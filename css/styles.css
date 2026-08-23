@@ -3425,11 +3425,11 @@ button {
   }
 
   .hero-side-banners {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .side-banner {
-    height: 180px;
+    height: 140px;
   }
 
   .products-grid {

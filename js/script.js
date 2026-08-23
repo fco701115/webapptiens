@@ -476,7 +476,7 @@ function productCardHtml(p) {
         <div class="product-actions">
           <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
           <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
-          <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); compareProduct(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
+          <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); addToCompare(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
         </div>
         <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
       </div>
@@ -801,12 +801,6 @@ function quickView(id) {
   showDetail(id);
 }
 
-function compareProduct(id) {
-  const product = products.find(p => p.id === id);
-  if (!product) return;
-  alert(`Comparar: ${product.name}`);
-}
-
 function toggleDetailWishlist(id) {
   addToWishlist(id);
   const link = document.getElementById('detailWishlistLink');
@@ -1055,7 +1049,7 @@ function showDetail(id) {
           <div class="product-actions">
             <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
             <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
-            <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); compareProduct(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
+            <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); addToCompare(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
           </div>
           <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
         </div>
@@ -2624,7 +2618,7 @@ function initSearch() {
           <div class="product-actions">
             <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
             <button class="product-action-btn" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="fas fa-heart"></i></button>
-            <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); compareProduct(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
+            <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); addToCompare(${p.id})"><i class="fas fa-arrows-rotate"></i></button>
           </div>
           <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
         </div>

@@ -966,10 +966,6 @@ button {
 }
 
 /* Hover parallax effect */
-.product-card:hover .product-info-content {
-  transform: translateY(-35px);
-}
-
 .product-card:hover .product-buy-btn {
   opacity: 1;
   transform: translateY(0);

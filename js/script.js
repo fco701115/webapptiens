@@ -780,7 +780,6 @@ function addToWishlist(id) {
   localStorage.setItem('wishlist', JSON.stringify(wishlist));
   updateWishlistUI();
   renderWishlistPanel();
-  renderProducts(activeCategory);
 }
 
 function removeFromWishlist(id) {
@@ -788,11 +787,33 @@ function removeFromWishlist(id) {
   localStorage.setItem('wishlist', JSON.stringify(wishlist));
   updateWishlistUI();
   renderWishlistPanel();
-  renderProducts(activeCategory);
 }
 
 function isInWishlist(id) {
   return wishlist.some(item => item.id === id);
+}
+
+function toggleWishlistBtn(btn, id) {
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+
+  const existing = wishlist.find(item => item.id === id);
+  const icon = btn.querySelector('i');
+
+  if (existing) {
+    wishlist = wishlist.filter(item => item.id !== id);
+    btn.classList.remove('wishlist-active');
+    icon.classList.remove('fas');
+    icon.classList.add('far');
+  } else {
+    wishlist.push({ ...product });
+    btn.classList.add('wishlist-active');
+    icon.classList.remove('far');
+    icon.classList.add('fas');
+  }
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  updateWishlistUI();
+  renderWishlistPanel();
 }
 
 function quickView(id) {
@@ -1048,7 +1069,7 @@ function showDetail(id) {
           ${discHtml}
           <div class="product-actions">
             <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
-            <button class="product-action-btn ${isInWishlist(p.id) ? 'wishlist-active' : ''}" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i></button>
+            <button class="product-action-btn ${isInWishlist(p.id) ? 'wishlist-active' : ''}" data-tooltip="Favoritos" onclick="event.stopPropagation(); toggleWishlistBtn(this, ${p.id})"><i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i></button>
             <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); addToCompare(${p.id}); openCompareModal()"><i class="fas fa-arrows-rotate"></i></button>
           </div>
           <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
@@ -2617,7 +2638,7 @@ function initSearch() {
           ${discountHtml}
           <div class="product-actions">
             <button class="product-action-btn" data-tooltip="Vista Rápida" onclick="event.stopPropagation(); quickView(${p.id})"><i class="fas fa-eye"></i></button>
-            <button class="product-action-btn ${isInWishlist(p.id) ? 'wishlist-active' : ''}" data-tooltip="Favoritos" onclick="event.stopPropagation(); addToWishlist(${p.id})"><i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i></button>
+            <button class="product-action-btn ${isInWishlist(p.id) ? 'wishlist-active' : ''}" data-tooltip="Favoritos" onclick="event.stopPropagation(); toggleWishlistBtn(this, ${p.id})"><i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i></button>
             <button class="product-action-btn" data-tooltip="Comparar" onclick="event.stopPropagation(); addToCompare(${p.id}); openCompareModal()"><i class="fas fa-arrows-rotate"></i></button>
           </div>
           <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>

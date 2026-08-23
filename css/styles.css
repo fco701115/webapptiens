@@ -787,7 +787,7 @@ button {
 .product-card {
   width: 248px;
   max-width: 100%;
-  height: 380px;
+  height: 400px;
   background: var(--card-bg);
   overflow: hidden;
   position: relative;

@@ -1051,7 +1051,7 @@ function showDetail(id) {
     ? Object.entries(product.specs).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')
     : '';
 
-  const related = products.filter(p => p.id !== product.id).slice(0, 4);
+  const related = products.filter(p => p.id !== product.id).slice(0, 5);
   const relatedHtml = related.map(p => {
     const starsHtml = renderStars(p.rating);
     const origPriceHtml = p.originalPrice

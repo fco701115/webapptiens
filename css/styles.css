@@ -314,14 +314,14 @@ button {
 
 .hero-layout {
   display: grid;
-  grid-template-columns: 840px 1fr;
+  grid-template-columns: 870px 1fr;
   gap: 10px;
   height: 550px;
 }
 
 /* Slide principal */
 .hero-slide {
-  width: 840px;
+  width: 870px;
   height: 550px;
   position: relative;
   overflow: hidden;

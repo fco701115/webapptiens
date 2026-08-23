@@ -305,12 +305,27 @@ button {
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ========== BANNER ========== */
-.banner {
-  width: 100%;
-  height: 600px;
+/* ========== HERO SECTION (SLIDE + SIDEBANNERS) ========== */
+.hero-section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 840px 1fr;
+  gap: 10px;
+  height: 550px;
+}
+
+/* Slide principal */
+.hero-slide {
+  width: 840px;
+  height: 550px;
   position: relative;
   overflow: hidden;
+  border-radius: var(--radius);
 }
 
 .banner-slides {
@@ -369,11 +384,11 @@ button {
   background: rgba(255,255,255,0.2);
   border: none;
   color: #fff;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   z-index: 10;
   transition: background 0.3s;
 }
@@ -383,26 +398,26 @@ button {
 }
 
 .banner-prev {
-  left: 20px;
+  left: 15px;
 }
 
 .banner-next {
-  right: 20px;
+  right: 15px;
 }
 
 .banner-dots {
   position: absolute;
-  bottom: 20px;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 8px;
   z-index: 10;
 }
 
 .banner-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: rgba(255,255,255,0.4);
   cursor: pointer;
@@ -417,47 +432,46 @@ button {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
+  text-align: left;
 }
 
 .banner-tag {
   display: inline-block;
   background: rgba(255,255,255,0.2);
-  padding: 6px 20px;
+  padding: 5px 16px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #1a1a1a;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   backdrop-filter: blur(4px);
 }
 
 .banner-title {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: #302727;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   line-height: 1.1;
-  width: 400px;
+  width: 350px;
 }
 
 .banner-subtitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 0.9;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .banner-btn {
   display: inline-block;
   background: #cb354e;
   color: #ffffff;
-  padding: 14px 40px;
+  padding: 12px 30px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
   border-radius: var(--radius);
   transition: transform var(--transition), box-shadow var(--transition);
 }
@@ -467,74 +481,68 @@ button {
   box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
-/* ========== SPLIT BANNERS ========== */
-.split-banners {
-  padding: 30px 20px;
-  max-width: var(--max-width);
-  margin: 0 auto;
+/* Banners laterales */
+.hero-side-banners {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.split-banners-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.split-banner-item {
+.side-banner {
   position: relative;
-  height: 300px;
-  border-radius: 12px;
+  height: 270px;
+  border-radius: var(--radius);
   overflow: hidden;
   cursor: pointer;
 }
 
-.split-banner-item img {
+.side-banner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.split-banner-item:hover img {
+.side-banner:hover img {
   transform: scale(1.05);
 }
 
-.split-banner-content {
+.side-banner-content {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 30px;
+  padding: 20px;
   background: linear-gradient(transparent, rgba(0,0,0,0.7));
   color: #fff;
 }
 
-.split-banner-content.right {
-  text-align: right;
-}
-
-.split-banner-content h2 {
-  font-size: 1.8rem;
+.side-banner-content h2 {
+  font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-.split-banner-content p {
-  font-size: 0.95rem;
-  margin-bottom: 15px;
+.side-banner-content p {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
   opacity: 0.9;
 }
 
-.split-banner-btn {
+.side-banner-btn {
   display: inline-block;
   background: var(--primary);
   color: #fff;
-  padding: 10px 24px;
+  padding: 8px 18px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   transition: background 0.3s;
+}
+
+.side-banner-btn:hover {
+  background: #b32e42;
 }
 
 .split-banner-btn:hover {
@@ -2992,8 +3000,34 @@ button {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .hero-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .hero-slide {
+    width: 100%;
+    height: 350px;
+  }
+
+  .banner-slides {
+    height: 350px;
+  }
+
+  .banner-slide {
+    height: 350px;
+  }
+
   .banner-title {
     font-size: 2.5rem;
+  }
+
+  .hero-side-banners {
+    flex-direction: row;
+  }
+
+  .side-banner {
+    height: 220px;
   }
 
   .footer-inner {
@@ -3135,23 +3169,22 @@ button {
     padding: 0;
   }
 
-  .banner {
-    height: 180px;
-    width: 360px;
-    margin: 0 auto;
+  .hero-layout {
+    grid-template-columns: 1fr;
+    height: auto;
   }
 
-  .banner-slides.loaded {
-    width: 360px;
-    height: 180px;
+  .hero-slide {
+    width: 100%;
+    height: 300px;
+  }
+
+  .banner-slides {
+    height: 300px;
   }
 
   .banner-slide {
-    width: 360px;
-    height: 180px;
-    background-size: cover;
-    background-position: 0% center;
-    background-repeat: no-repeat;
+    height: 300px;
   }
 
   .banner-arrow {
@@ -3168,44 +3201,21 @@ button {
     right: 10px;
   }
 
-  .banner-content {
-    width: 360px;
-    height: 180px;
-  }
-
-  .banner-tag {
-    font-size: 0.68rem;
-    color: #1f1b1b;
-  }
-
   .banner-title {
     font-size: 1.8rem;
-    width: 180px;
+    width: 200px;
   }
 
-  .banner-subtitle {
-    font-size: 1rem;
+  .hero-side-banners {
+    flex-direction: row;
   }
 
-  .banner-btn {
-    width: 80px;
-    height: 40px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .side-banner {
+    height: 200px;
   }
 
-  .split-banners-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .split-banner-item {
-    height: 250px;
-  }
-
-  .split-banner-content h2 {
-    font-size: 1.4rem;
+  .side-banner-content h2 {
+    font-size: 1.1rem;
   }
 
   .products-grid {
@@ -3395,41 +3405,30 @@ button {
     font-size: 1.3rem;
   }
 
-  .banner {
-    height: 180px;
-    width: 360px;
+  .hero-slide {
+    height: 250px;
+  }
+
+  .banner-slides {
+    height: 250px;
   }
 
   .banner-slide {
-    width: 360px;
-    height: 180px;
-    background-size: cover;
+    height: 250px;
     background-position: 40% center;
-    background-repeat: no-repeat;
-  }
-
-  .banner-tag {
-    font-size: 0.68rem;
-    color: #1f1b1b;
-    margin-top: 20px;
-    margin-bottom: 15px;
-  }
-
-  .banner-content {
-    width: 360px;
-    height: 180px;
   }
 
   .banner-title {
     font-size: 1.125rem;
+    width: 150px;
   }
 
-  .banner-btn {
-    width: 82px;
-    height: 25px;
-    font-size: 0.75rem;
-    color: #ffffff;
-    background: #cb354e;
+  .hero-side-banners {
+    flex-direction: column;
+  }
+
+  .side-banner {
+    height: 180px;
   }
 
   .products-grid {

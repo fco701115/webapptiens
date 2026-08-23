@@ -995,19 +995,43 @@
   <!-- ===== HOME VIEW ===== -->
   <div id="homeView" style="display:none">
 
-    <!-- BANNER -->
-    <section class="banner" id="bannerSection">
-      <div class="banner-slides" id="bannerSlides">
-        <div class="banner-content">
-          <span class="banner-tag">Nueva Colección</span>
-          <h1 class="banner-title">Hasta 50% de descuento</h1>
-          <p class="banner-subtitle">Descubre las últimas tendencias en moda</p>
-          <a href="#catalogo" class="banner-btn">Ver Catálogo</a>
+    <!-- BANNER + SIDEBANNERS -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-layout">
+        <!-- SLIDE PRINCIPAL -->
+        <div class="hero-slide" id="heroSlide">
+          <div class="banner-slides" id="bannerSlides">
+            <div class="banner-content">
+              <span class="banner-tag">Nueva Colección</span>
+              <h1 class="banner-title">Hasta 50% de descuento</h1>
+              <p class="banner-subtitle">Descubre las últimas tendencias en moda</p>
+              <a href="#catalogo" class="banner-btn">Ver Catálogo</a>
+            </div>
+          </div>
+          <button class="banner-arrow banner-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+          <button class="banner-arrow banner-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+          <div class="banner-dots" id="bannerDots"></div>
+        </div>
+        <!-- BANNERS LATERALES -->
+        <div class="hero-side-banners">
+          <div class="side-banner" id="sideBanner1">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=860&h=540&fit=crop" alt="Banner 1">
+            <div class="side-banner-content">
+              <h2>The Art of Writing</h2>
+              <p>Accesorios premium</p>
+              <a href="#catalogo" class="side-banner-btn">Descubrir →</a>
+            </div>
+          </div>
+          <div class="side-banner" id="sideBanner2">
+            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=860&h=540&fit=crop" alt="Banner 2">
+            <div class="side-banner-content">
+              <h2>Iconic Shades</h2>
+              <p>Estilo atemporal</p>
+              <a href="#catalogo" class="side-banner-btn">Ver Colección →</a>
+            </div>
+          </div>
         </div>
       </div>
-      <button class="banner-arrow banner-prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-      <button class="banner-arrow banner-next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
-      <div class="banner-dots" id="bannerDots"></div>
     </section>
 
     <!-- BENEFICIOS -->
@@ -1068,28 +1092,6 @@
         </div>
       </div>
       <div class="products-grid" id="productsGrid"></div>
-    </section>
-
-    <!-- SPLIT BANNERS -->
-    <section class="split-banners" id="splitBannersSection">
-      <div class="split-banners-inner">
-        <div class="split-banner-item" id="splitBanner1">
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=400&fit=crop" alt="Banner 1">
-          <div class="split-banner-content">
-            <h2>The Art of Writing</h2>
-            <p>Descubre nuestra nueva colección de accesorios premium</p>
-            <a href="#catalogo" class="split-banner-btn">Descubrir →</a>
-          </div>
-        </div>
-        <div class="split-banner-item" id="splitBanner2">
-          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&h=400&fit=crop" alt="Banner 2">
-          <div class="split-banner-content right">
-            <h2>Iconic Shades</h2>
-            <p>Estilo atemporal que combina con cualquier look</p>
-            <a href="#catalogo" class="split-banner-btn">Ver Colección →</a>
-          </div>
-        </div>
-      </div>
     </section>
 
   </div>

@@ -2801,39 +2801,42 @@ async function loadBannerSlides() {
 const defaultSplitBanners = [
   {
     title: 'The Art of Writing',
-    subtitle: 'Descubre nuestra nueva colección de accesorios premium',
+    subtitle: 'Accesorios premium',
     link: '#catalogo',
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=860&h=540&fit=crop',
     button_text: 'Descubrir →',
     position: 1
   },
   {
     title: 'Iconic Shades',
-    subtitle: 'Estilo atemporal que combina con cualquier look',
+    subtitle: 'Estilo atemporal',
     link: '#catalogo',
-    image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=860&h=540&fit=crop',
     button_text: 'Ver Colección →',
     position: 2
   }
 ];
 
 function renderSplitBanners(banners) {
-  const section = document.getElementById('splitBannersSection');
-  if (!section || !banners || banners.length === 0) return;
+  const banner1 = document.getElementById('sideBanner1');
+  const banner2 = document.getElementById('sideBanner2');
+  if (!banner1 || !banner2) return;
 
-  const inner = section.querySelector('.split-banners-inner');
-  if (!inner) return;
+  const items = banners.slice(0, 2);
+  const containers = [banner1, banner2];
 
-  inner.innerHTML = banners.slice(0, 2).map((b, i) => `
-    <div class="split-banner-item" id="splitBanner${i + 1}">
-      <img src="${b.image || 'https://placehold.co/800x400'}" alt="${b.title}">
-      <div class="split-banner-content ${i === 1 ? 'right' : ''}">
+  items.forEach((b, i) => {
+    const container = containers[i];
+    if (!container) return;
+    container.innerHTML = `
+      <img src="${b.image || 'https://placehold.co/860x540'}" alt="${b.title}">
+      <div class="side-banner-content">
         <h2>${b.title}</h2>
         <p>${b.subtitle || ''}</p>
-        <a href="${b.link || '#catalogo'}" class="split-banner-btn">${b.button_text || 'Ver más'} →</a>
+        <a href="${b.link || '#catalogo'}" class="side-banner-btn">${b.button_text || 'Ver más'} →</a>
       </div>
-    </div>
-  `).join('');
+    `;
+  });
 }
 
 async function loadSplitBanners() {

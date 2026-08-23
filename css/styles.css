@@ -3112,15 +3112,16 @@ button {
 
   .product-buy-btn {
     opacity: 1;
-    width: 100%;
-    position: relative;
-    bottom: auto;
-    left: auto;
+    width: calc(100% - 26px);
+    position: absolute;
+    bottom: 13px;
+    left: 13px;
+    right: 13px;
     border-radius: 6px;
     justify-content: center;
-    margin-top: 0px;
     padding: 4px 8px;
     transform: none;
+    font-size: 12px;
   }
 
   .product-info {

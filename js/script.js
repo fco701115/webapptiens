@@ -473,6 +473,7 @@ function productCardHtml(p) {
       <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
         <img src="${mainImage}" alt="${p.name}" loading="lazy">
         ${discountHtml}
+        <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
       </div>
       <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
         <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
@@ -489,7 +490,6 @@ function productCardHtml(p) {
             ${originalPriceHtml}
           </div>
         </div>
-        <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Agregar al carrito</button>
       </div>
     </div>`;
 }
@@ -1038,10 +1038,11 @@ function showDetail(id) {
         <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${mainImage}" alt="${p.name}" loading="lazy">
           ${discHtml}
-          <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
-            <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
-          </button>
+          <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
         </div>
+        <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
+          <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
+        </button>
         <div class="product-info">
           <div class="product-info-content">
             <h3 class="product-name">${p.name}</h3>
@@ -1054,7 +1055,6 @@ function showDetail(id) {
               ${origPriceHtml}
             </div>
           </div>
-          <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Agregar al carrito</button>
         </div>
       </div>
     `;
@@ -2605,6 +2605,7 @@ function initSearch() {
         <div class="product-img-wrapper" onclick="navigateToProductId(${p.id})">
           <img src="${p.image}" alt="${p.name}" loading="lazy">
           ${discountHtml}
+          <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Comprar Ahora</button>
         </div>
         <button class="wishlist-icon ${isInWishlist(p.id) ? 'active' : ''}" onclick="event.stopPropagation(); addToWishlist(${p.id})">
           <i class="${isInWishlist(p.id) ? 'fas' : 'far'} fa-heart"></i>
@@ -2621,7 +2622,6 @@ function initSearch() {
               ${originalPriceHtml}
             </div>
           </div>
-          <button class="product-buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Agregar al carrito</button>
         </div>
       </div>
     `;

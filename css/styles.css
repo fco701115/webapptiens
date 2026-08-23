@@ -785,29 +785,37 @@ button {
 
 /* ========== PRODUCT CARD ========== */
 .product-card {
-  width: 100%;
+  width: 223.2px;
+  max-width: 100%;
+  height: 385px;
   background: var(--card-bg);
-  overflow: visible;
+  overflow: hidden;
   position: relative;
-  transition: transform var(--transition);
+  margin: 6px 0 30px 0;
+  border: 1px solid var(--border);
+  padding: 13px;
+  box-sizing: border-box;
 }
 
 .product-card:hover {
-  transform: translateY(-3px);
+  transform: none;
 }
 
 .product-img-wrapper {
   width: 100%;
-  height: 384px;
+  max-width: 195.188px;
+  height: 200px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  padding: 0;
 }
 
 .product-img-wrapper img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
+  display: block;
   transition: transform 400ms ease;
 }
 
@@ -841,7 +849,7 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 2;
+  z-index: 5;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   transition: all 0.2s;
 }
@@ -857,20 +865,47 @@ button {
   color: #cb354e;
 }
 
+/* Buy button (hidden by default, inside image wrapper) */
+.product-buy-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 0 0 0 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
 /* Product info area */
 .product-info {
   width: 100%;
-  height: 111px;
-  background: var(--card-bg);
+  max-width: 195.188px;
+  height: 104px;
+  background: #ffffff;
   position: relative;
+  margin-top: 5px;
+  overflow: hidden;
 }
 
 .product-info-content {
-  padding: 10px 0px 10px 0px;
-  height: 111px;
+  padding: 0;
+  height: 104px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   transition: transform 200ms ease;
   position: relative;
   z-index: 4;
@@ -878,7 +913,7 @@ button {
 }
 
 .product-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.3;
   color: var(--text);
@@ -886,15 +921,17 @@ button {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 40px;
+  height: 55px;
+  margin-top: 0;
 }
 
 .product-rating {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
-  height: 15px;
+  font-size: 13px;
+  height: 27px;
+  margin-top: 5px;
 }
 
 .stars {
@@ -912,11 +949,12 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 24px;
+  height: 27px;
+  margin-top: 5px;
 }
 
 .price-current {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--primary);
 }
@@ -927,30 +965,6 @@ button {
   text-decoration: line-through;
 }
 
-/* Buy button (hidden by default) */
-.product-buy-btn {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 140px;
-  height: 35px;
-  overflow: hidden;
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding-left: 12px;
-  z-index: 3;
-  opacity: 0;
-  transition: opacity 100ms ease 150ms;
-}
-
 /* Hover parallax effect */
 .product-card:hover .product-info-content {
   transform: translateY(-35px);
@@ -958,6 +972,7 @@ button {
 
 .product-card:hover .product-buy-btn {
   opacity: 1;
+  transform: translateY(0);
 }
 
 /* ========== FILTERS ========== */
@@ -2977,10 +2992,28 @@ button {
     border-radius: 6px;
     justify-content: center;
     margin-top: 0px;
-    padding-left: 0px;
+    padding: 4px 8px;
+    transform: none;
   }
 
   .product-info {
+    height: auto;
+    width: 100%;
+  }
+
+  .product-card {
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .product-img-wrapper {
+    width: 100%;
+    height: auto;
+  }
+
+  .product-img-wrapper img {
+    width: 100%;
     height: auto;
   }
 
@@ -3088,7 +3121,13 @@ button {
   }
 
   .product-img-wrapper {
-    height: 280px;
+    width: 100%;
+    height: auto;
+  }
+
+  .product-img-wrapper img {
+    width: 100%;
+    height: auto;
   }
 
   .footer-inner {
@@ -3306,7 +3345,13 @@ button {
   }
 
   .product-img-wrapper {
-    height: 220px;
+    width: 100%;
+    height: auto;
+  }
+
+  .product-img-wrapper img {
+    width: 100%;
+    height: auto;
   }
 
   .section-title {

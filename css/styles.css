@@ -3219,6 +3219,10 @@ button {
     font-size: 1.1rem;
   }
 
+  .catalog-section {
+    padding: 0 15px;
+  }
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
@@ -3435,6 +3439,10 @@ button {
 
   .side-banner-btn {
     font-size: 11px;
+  }
+
+  .catalog-section {
+    padding: 0 10px;
   }
 
   .products-grid {

@@ -3432,6 +3432,10 @@ button {
     height: 140px;
   }
 
+  .side-banner-btn {
+    font-size: 11px;
+  }
+
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;

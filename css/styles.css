@@ -3075,7 +3075,7 @@ button {
 @media (max-width: 768px) {
   .header-inner {
     flex-wrap: wrap;
-    height: auto;
+    height: 60px;
     padding: 8px 10px;
     gap: 8px;
   }
@@ -3377,6 +3377,7 @@ button {
   }
 
   .header-inner {
+    height: 60px;
     padding: 6px 8px;
   }
 

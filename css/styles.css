@@ -2282,10 +2282,7 @@ button {
 }
 
 .detail-related .product-card {
-  width: 248px;
-  height: 413px;
   max-width: 100%;
-  padding: 13px;
 }
 
 /* ========== CHECKOUT ========== */

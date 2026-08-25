@@ -3259,7 +3259,7 @@ button {
   }
 
   .banner-content {
-    padding: 0 15px;
+    padding: 0 15px 0 40px;
   }
 
   .banner-subtitle {
@@ -3514,7 +3514,7 @@ button {
   }
 
   .banner-content {
-    padding: 0 10px;
+    padding: 0 10px 0 40px;
   }
 
   .banner-tag {

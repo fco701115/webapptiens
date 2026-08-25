@@ -315,14 +315,14 @@ button {
 
 .hero-layout {
   display: grid;
-  grid-template-columns: 870px 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 10px;
   height: 550px;
 }
 
 /* Slide principal */
 .hero-slide {
-  width: 870px;
+  width: 100%;
   height: 550px;
   position: relative;
   overflow: hidden;
@@ -457,7 +457,7 @@ button {
   color: #302727;
   margin-bottom: 12px;
   line-height: 1.1;
-  width: 350px;
+  max-width: 400px;
 }
 
 .banner-subtitle {
@@ -3024,6 +3024,10 @@ button {
     font-size: 2.5rem;
   }
 
+  .banner-content {
+    padding: 0 20px;
+  }
+
   .hero-side-banners {
     flex-direction: row;
   }
@@ -3199,7 +3203,7 @@ button {
   }
 
   .hero-slide {
-    width: 360px;
+    width: 100%;
     height: 210px;
   }
 
@@ -3227,7 +3231,21 @@ button {
 
   .banner-title {
     font-size: 1.8rem;
-    width: 200px;
+    max-width: 200px;
+  }
+
+  .banner-content {
+    padding: 0 15px;
+  }
+
+  .banner-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+
+  .banner-btn {
+    padding: 10px 24px;
+    font-size: 0.85rem;
   }
 
   .hero-side-banners {
@@ -3448,7 +3466,7 @@ button {
   }
 
   .hero-slide {
-    width: 360px;
+    width: 100%;
     height: 210px;
   }
 
@@ -3463,7 +3481,32 @@ button {
 
   .banner-title {
     font-size: 1.125rem;
-    width: 150px;
+    max-width: 150px;
+  }
+
+  .banner-content {
+    padding: 0 10px;
+  }
+
+  .banner-tag {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+
+  .banner-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+
+  .banner-btn {
+    padding: 8px 20px;
+    font-size: 0.8rem;
+  }
+
+  .banner-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
   }
 
   .hero-side-banners {

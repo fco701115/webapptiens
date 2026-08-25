@@ -653,13 +653,24 @@ function addToCart(id) {
   updateCartUI();
   renderCartPanel();
 
-  const btn = event.target;
-  btn.textContent = '¡Agregado!';
-  btn.style.background = '#27ae60';
-  setTimeout(() => {
-    btn.textContent = 'Agregar al carrito';
-    btn.style.background = '';
-  }, 1200);
+  const btn = event.target.closest('.product-buy-btn') || event.target.closest('.detail-add-cart') || event.target.closest('.cmp-cart');
+  if (btn) {
+    const originalText = btn.querySelector('.buy-btn-text');
+    if (originalText) {
+      originalText.textContent = '¡Agregado!';
+    } else {
+      btn.textContent = '¡Agregado!';
+    }
+    btn.style.background = '#27ae60';
+    setTimeout(() => {
+      if (originalText) {
+        originalText.textContent = 'Agregar al carrito';
+      } else {
+        btn.textContent = 'Agregar al carrito';
+      }
+      btn.style.background = '';
+    }, 1200);
+  }
 }
 
 function removeFromCart(id) {

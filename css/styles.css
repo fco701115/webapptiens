@@ -678,7 +678,7 @@ button {
 }
 
 .category-card:hover .category-img-wrapper {
-  border-color: var(--primary);
+  border-color: #075ec0;
 }
 
 .category-img-wrapper img {

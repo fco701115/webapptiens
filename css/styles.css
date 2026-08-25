@@ -1072,7 +1072,7 @@ button {
 .price-current {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--primary);
+  color: #075ec0;
 }
 
 .price-original {
@@ -2972,7 +2972,7 @@ button {
 
 .footer-col ul li i {
   margin-right: 8px;
-  color: var(--primary);
+  color: #075ec0;
   width: 16px;
 }
 

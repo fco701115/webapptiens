@@ -3099,6 +3099,10 @@ button {
     color: #ffffff;
   }
 
+  .header-inner .login-btn {
+    display: none;
+  }
+
   .header {
     position: fixed;
     top: 0;

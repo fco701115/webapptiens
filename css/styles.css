@@ -3391,6 +3391,10 @@ button {
     padding: 0 8px;
   }
 
+  .detail-section {
+    padding: 0 10px;
+  }
+
   .detail-gallery {
     flex-direction: column-reverse;
     position: static;

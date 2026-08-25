@@ -594,7 +594,7 @@ button {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #fdf0f2;
+  background: #eaf5fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -603,7 +603,7 @@ button {
 
 .benefit-icon i {
   font-size: 1.3rem;
-  color: var(--primary);
+  color: #075ec0;
 }
 
 .benefit-text h3 {

@@ -3092,6 +3092,11 @@ button {
     height: 60px;
     padding: 8px 10px;
     gap: 8px;
+    background: #075ec0;
+  }
+
+  .header-inner .icon-btn {
+    color: #ffffff;
   }
 
   .header {

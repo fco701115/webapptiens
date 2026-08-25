@@ -267,6 +267,7 @@ button {
   display: flex;
   justify-content: center;
   gap: 0;
+  background-color: #075ec0;
 }
 
 .nav-link {

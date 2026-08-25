@@ -3587,7 +3587,7 @@ button {
 
   .related-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+    gap: 10px;
   }
 
   /* ===== CHECKOUT MOBILE ===== */

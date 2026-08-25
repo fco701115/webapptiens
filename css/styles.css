@@ -429,7 +429,7 @@ button {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #555;
+  background: #ccc;
   cursor: pointer;
   transition: background 0.3s;
 }

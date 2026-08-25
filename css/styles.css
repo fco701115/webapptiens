@@ -2023,8 +2023,8 @@ button {
 }
 
 .tab-btn.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
+  color: #075ec0;
+  border-bottom-color: #075ec0;
 }
 
 .tab-content {

@@ -429,13 +429,13 @@ button {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.4);
+  background: #555;
   cursor: pointer;
   transition: background 0.3s;
 }
 
 .banner-dot.active {
-  background: #fff;
+  background: #333;
 }
 
 .banner-content {

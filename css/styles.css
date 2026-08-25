@@ -2523,8 +2523,8 @@ button {
   margin-bottom: -1px;
 }
 .checkout-payment-option:has(input:checked) {
-  border-color: var(--primary);
-  border-bottom-color: var(--primary);
+  border-color: #075ec0;
+  border-bottom-color: #075ec0;
   z-index: 1;
 }
 .checkout-payment-option input[type="radio"] { accent-color: var(--primary); }

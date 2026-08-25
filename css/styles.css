@@ -1409,7 +1409,7 @@ button {
 
 .wishlist-item-price {
   font-size: 0.9rem;
-  color: #cb354e;
+  color: #075ec0;
   font-weight: 700;
 }
 
@@ -1892,7 +1892,7 @@ button {
 .detail-add-cart {
   width: 100%;
   padding: 12px;
-  background: var(--primary);
+  background: #075ec0;
   color: #fff;
   border: none;
   border-radius: var(--radius);
@@ -1904,7 +1904,7 @@ button {
 }
 
 .detail-add-cart:hover {
-  background: var(--primary-dark);
+  background: #0650aa;
 }
 
 .detail-buy-now {
@@ -1988,7 +1988,7 @@ button {
 }
 
 .info-item i {
-  color: var(--primary);
+  color: #075ec0;
   width: 16px;
   text-align: center;
 }

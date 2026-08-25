@@ -2685,7 +2685,7 @@ button {
   letter-spacing: 0.5px;
   margin-bottom: 20px;
   padding-bottom: 14px;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid #075ec0;
 }
 
 .checkout-items {

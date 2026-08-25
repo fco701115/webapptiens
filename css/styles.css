@@ -2393,7 +2393,7 @@ button {
 .checkout-step-save {
   align-self: flex-start;
   padding: 10px 20px;
-  background: var(--primary);
+  background: #075ec0;
   color: #fff;
   border: none;
   border-radius: var(--radius);
@@ -2402,7 +2402,7 @@ button {
   cursor: pointer;
   transition: background var(--transition);
 }
-.checkout-step-save:hover { background: var(--primary-dark); }
+.checkout-step-save:hover { background: #0650aa; }
 
 .checkout-empty-text {
   color: var(--text-light);
@@ -2417,7 +2417,7 @@ button {
   justify-content: center;
   gap: 6px;
   padding: 10px 20px;
-  background: var(--primary);
+  background: #075ec0;
   color: #fff;
   border: none;
   border-radius: var(--radius);
@@ -2427,7 +2427,7 @@ button {
   margin: 0 auto;
   transition: background var(--transition);
 }
-.checkout-add-btn:hover { background: var(--primary-dark); }
+.checkout-add-btn:hover { background: #0650aa; }
 
 .checkout-address-card {
   display: flex;
@@ -2842,7 +2842,7 @@ button {
   width: 100%;
   margin-top: 20px;
   padding: 16px;
-  background: var(--primary);
+  background: #075ec0;
   color: #fff;
   border: none;
   border-radius: var(--radius);
@@ -2852,7 +2852,7 @@ button {
   transition: background var(--transition);
 }
 .checkout-submit-btn:hover {
-  background: var(--primary-dark);
+  background: #0650aa;
 }
 
 /* ========== EMPTY / LOADING / ERROR STATES ========== */

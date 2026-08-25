@@ -223,24 +223,27 @@ button {
 }
 
 .icon-btn {
-  color: #fff;
+  color: #555;
   font-size: 1.15rem;
   padding: 8px;
   border-radius: 50%;
-  transition: background var(--transition);
+  border: 2px solid #555;
+  background: transparent;
+  transition: all var(--transition);
   position: relative;
 }
 
 .icon-btn:hover {
-  background: rgba(255,255,255,0.15);
+  background: #555;
+  color: #fff;
 }
 
 .cart-count {
   position: absolute;
   top: -4px;
   right: -4px;
-  background: #fff;
-  color: var(--primary);
+  background: #555;
+  color: #fff;
   font-size: 0.65rem;
   font-weight: 700;
   width: 20px;
@@ -249,7 +252,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--primary);
+  border: 2px solid #fff;
 }
 
 .mobile-menu-btn {
@@ -1306,8 +1309,8 @@ button {
   position: absolute;
   top: -4px;
   right: -4px;
-  background: #fff;
-  color: #cb354e;
+  background: #555;
+  color: #fff;
   font-size: 0.65rem;
   width: 20px;
   height: 20px;
@@ -1316,7 +1319,7 @@ button {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  border: 2px solid #cb354e;
+  border: 2px solid #fff;
 }
 
 .wishlist-panel {

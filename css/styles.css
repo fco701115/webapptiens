@@ -917,7 +917,7 @@ button {
 }
 
 .product-action-btn:hover {
-  background: var(--primary);
+  background: #075ec0;
   color: #fff;
 }
 

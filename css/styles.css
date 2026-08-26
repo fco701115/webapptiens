@@ -5477,7 +5477,7 @@ button {
 .address-type-btn:hover { border-color: #999; }
 .address-type-btn.active {
   border-color: #075ec0;
-  background: #a9d1df;
+  background: #c8e1ea;
   color: #075ec0;
 }
 

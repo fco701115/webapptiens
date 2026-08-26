@@ -5707,6 +5707,10 @@ button {
   .address-modal-body {
     padding: 12px;
   }
+
+  .address-type-btn {
+    padding: 10px;
+  }
 }
 
 /* User panel addresses list */

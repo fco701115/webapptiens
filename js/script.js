@@ -1856,6 +1856,7 @@ function saveCheckoutAddress() {
   document.getElementById('addressModal').style.display = 'none';
   document.getElementById('checkoutAddressSaved').style.display = 'block';
   document.getElementById('checkoutAddressEmpty').style.display = 'none';
+  document.getElementById('checkoutAddressChangeBtn').style.display = 'inline-flex';
 
   // Clear form
   document.getElementById('checkoutAddress').value = '';

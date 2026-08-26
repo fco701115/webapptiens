@@ -1973,8 +1973,9 @@ button {
   transition: background var(--transition), color var(--transition);
 }
 
-.detail-share a:hover {
-  background: var(--primary);
+.detail-share a:hover,
+.detail-share a.active {
+  background: #075ec0;
   color: #fff;
 }
 

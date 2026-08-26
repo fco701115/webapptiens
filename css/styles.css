@@ -3150,6 +3150,28 @@ button {
     display: none;
   }
 
+  .product-actions {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .product-card.show-actions .product-actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .product-card.show-actions .product-action-btn:nth-child(1) {
+    transform: translateX(0);
+  }
+
+  .product-card.show-actions .product-action-btn:nth-child(2) {
+    transform: translateX(0);
+  }
+
+  .product-card.show-actions .product-action-btn:nth-child(3) {
+    transform: translateX(0);
+  }
+
   .product-buy-btn {
     opacity: 1;
     width: 35px;

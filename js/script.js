@@ -3898,4 +3898,19 @@ async function deleteSplitBanner(id) {
   loadAdminSplitBanners();
 }
 
+(function() {
+  document.addEventListener('click', function(e) {
+    const buyBtn = e.target.closest('.product-buy-btn');
+    if (!buyBtn) return;
+    if (window.innerWidth > 768) return;
+    const card = buyBtn.closest('.product-card');
+    if (!card) return;
+    card.classList.add('show-actions');
+    clearTimeout(card._hideActionsTimer);
+    card._hideActionsTimer = setTimeout(function() {
+      card.classList.remove('show-actions');
+    }, 3000);
+  });
+})();
+
 document.addEventListener('DOMContentLoaded', initApp);

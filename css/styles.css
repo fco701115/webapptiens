@@ -4706,7 +4706,7 @@ button {
 
 .admin-login-header i {
   font-size: 40px;
-  color: var(--primary);
+  color: #075ec0;
   margin-bottom: 15px;
 }
 
@@ -4749,7 +4749,7 @@ button {
 .admin-login-btn {
   width: 100%;
   padding: 12px;
-  background: var(--primary);
+  background: #075ec0;
   color: #fff;
   border: none;
   border-radius: 6px;

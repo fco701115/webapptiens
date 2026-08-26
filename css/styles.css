@@ -3942,7 +3942,7 @@ button {
   }
 
   .address-modal-body {
-    padding: 0 16px 16px;
+    padding: 12px;
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS orders (
   payment_method VARCHAR(50),
   items JSONB,
   total DECIMAL(10,2),
-  status VARCHAR(50) DEFAULT 'pending',
+  status VARCHAR(50) DEFAULT 'Pendiente',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

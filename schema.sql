@@ -32,12 +32,19 @@ CREATE TABLE orders (
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(50),
   address TEXT,
+  address_type VARCHAR(50) DEFAULT 'Casa',
+  address_street TEXT,
+  address_locality TEXT,
+  address_instructions TEXT,
+  address_neighborhood TEXT,
+  address_city TEXT,
+  address_zip TEXT,
   city VARCHAR(100),
   zip_code VARCHAR(20),
   payment_method VARCHAR(50),
   items JSONB,
   total DECIMAL(10,2),
-  status VARCHAR(50) DEFAULT 'pending',
+  status VARCHAR(50) DEFAULT 'Pendiente',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

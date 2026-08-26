@@ -111,3 +111,12 @@ CREATE TABLE IF NOT EXISTS users (
   password VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ========== ORDERS: corregir status default ==========
+DO $$ BEGIN
+  ALTER TABLE orders ALTER COLUMN status SET DEFAULT 'Pendiente';
+EXCEPTION WHEN others THEN null;
+END $$;
+
+-- Actualizar existentes que tengan 'pending' a 'Pendiente'
+UPDATE orders SET status = 'Pendiente' WHERE status = 'pending';

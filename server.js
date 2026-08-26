@@ -398,9 +398,9 @@ app.post('/api/orders', async (req, res) => {
   try {
     const { customer_name, email, phone, address, address_type, address_street, address_locality, address_instructions, address_neighborhood, address_city, address_zip, city, zip_code, payment_method, items, total } = req.body;
     const result = await pool.query(
-      `INSERT INTO orders (customer_name, email, phone, address, address_type, address_street, address_locality, address_instructions, address_neighborhood, address_city, address_zip, city, zip_code, payment_method, items, total)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING *`,
-      [customer_name, email, phone, address, address_type || 'Casa', address_street || '', address_locality || '', address_instructions || '', address_neighborhood || '', address_city || '', address_zip || '', city || '', zip_code || '', payment_method, JSON.stringify(items), total]
+      `INSERT INTO orders (customer_name, email, phone, address, address_type, address_street, address_locality, address_instructions, address_neighborhood, address_city, address_zip, city, zip_code, payment_method, items, total, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING *`,
+      [customer_name, email, phone, address, address_type || 'Casa', address_street || '', address_locality || '', address_instructions || '', address_neighborhood || '', address_city || '', address_zip || '', city || '', zip_code || '', payment_method, JSON.stringify(items), total, 'Pendiente']
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {

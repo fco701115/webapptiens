@@ -2336,12 +2336,13 @@ function updateUserPanel() {
   }
 }
 
-function updateUserPanelStats() {
+async function updateUserPanelStats() {
   if (!currentUser) return;
   const userId = currentUser.id || currentUser.email;
 
-  // Orders from localStorage
-  const orders = JSON.parse(localStorage.getItem('userOrders_' + userId) || '[]');
+  // Orders from API
+  const allOrders = await apiGet('/orders');
+  const orders = (allOrders || []).filter(o => o.email === currentUser.email);
   const ordersEl = document.getElementById('userStatOrders');
   if (ordersEl) ordersEl.textContent = orders.length;
 
@@ -2396,11 +2397,12 @@ function updateUserPanelStats() {
   }
 }
 
-function renderUserOrders() {
+async function renderUserOrders() {
   if (!currentUser) return;
-  const userId = currentUser.id || currentUser.email;
-  const orders = JSON.parse(localStorage.getItem('userOrders_' + userId) || '[]');
   const container = document.getElementById('userOrdersList');
+  const allOrders = await apiGet('/orders');
+  const orders = (allOrders || []).filter(o => o.email === currentUser.email);
+  const userId = currentUser.id || currentUser.email;
 
   if (orders.length === 0) {
     container.innerHTML = '<div class="empty-state"><i class="fas fa-box"></i><p>No realizaste pedidos aún.</p></div>';
@@ -2448,10 +2450,10 @@ function renderUserOrders() {
   }).join('');
 }
 
-function showUserOrderDetail(orderId) {
+async function showUserOrderDetail(orderId) {
   if (!currentUser) return;
-  const userId = currentUser.id || currentUser.email;
-  const orders = JSON.parse(localStorage.getItem('userOrders_' + userId) || '[]');
+  const allOrders = await apiGet('/orders');
+  const orders = (allOrders || []).filter(o => o.email === currentUser.email);
   const order = orders.find(o => o.id === orderId);
   if (!order) return;
 

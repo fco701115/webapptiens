@@ -1563,7 +1563,12 @@ function showCheckout() {
   renderCheckoutSummary();
   loadFirstCheckoutAddress();
   showView('checkout');
-  if (!currentUser) {
+  if (currentUser) {
+    document.getElementById('checkoutUserData').style.display = 'block';
+    document.getElementById('checkoutEditForm').style.display = 'none';
+    const changeBtn = document.getElementById('checkoutChangeBtn');
+    if (changeBtn) changeBtn.style.display = 'inline-flex';
+  } else {
     document.getElementById('checkoutUserData').style.display = 'none';
     document.getElementById('checkoutEditForm').style.display = 'block';
     const changeBtn = document.getElementById('checkoutChangeBtn');

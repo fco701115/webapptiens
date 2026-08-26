@@ -2533,11 +2533,9 @@ button {
 .checkout-payment-option:has(input:checked) {
   border-color: #075ec0;
   border-bottom-color: #075ec0;
-  background: #075ec0;
-  color: #fff;
   z-index: 1;
 }
-.checkout-payment-option input[type="radio"] { accent-color: #075ec0; }
+.checkout-payment-option input[type="radio"] { accent-color: var(--primary); }
 
 .checkout-payment-label {
   font-weight: 600;

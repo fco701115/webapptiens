@@ -3150,6 +3150,10 @@ button {
     display: none;
   }
 
+  .product-actions {
+    display: none;
+  }
+
   .product-buy-btn {
     opacity: 1;
     width: 35px;

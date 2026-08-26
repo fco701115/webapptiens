@@ -158,6 +158,31 @@ const pool = new Pool(
 const cache = {};
 const CACHE_TTL = 15000; // 15 seconds
 
+// Auto-migrate: add missing columns to orders table
+async function autoMigrate() {
+  const columns = [
+    ['address_type', "VARCHAR(50) DEFAULT 'Casa'"],
+    ['address_street', "TEXT DEFAULT ''"],
+    ['address_locality', "TEXT DEFAULT ''"],
+    ['address_instructions', "TEXT DEFAULT ''"],
+    ['address_neighborhood', "TEXT DEFAULT ''"],
+    ['address_city', "TEXT DEFAULT ''"],
+    ['address_zip', "TEXT DEFAULT ''"]
+  ];
+  try {
+    for (const [col, type] of columns) {
+      await pool.query(`ALTER TABLE orders ADD COLUMN IF NOT EXISTS ${col} ${type}`);
+    }
+    // Fix status default
+    await pool.query("ALTER TABLE orders ALTER COLUMN status SET DEFAULT 'Pendiente'");
+    await pool.query("UPDATE orders SET status = 'Pendiente' WHERE status = 'pending'");
+    console.log('Auto-migración de orders completada');
+  } catch (err) {
+    console.error('Error en auto-migración:', err.message);
+  }
+}
+autoMigrate();
+
 function cacheMiddleware(req, res, next) {
   if (req.method === 'GET') {
     const key = req.originalUrl;

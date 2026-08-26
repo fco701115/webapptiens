@@ -4064,7 +4064,7 @@ button {
 .auth-submit-btn {
   width: 100%;
   padding: 14px;
-  background: #cb354e;
+  background: #075ec0;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -4076,7 +4076,7 @@ button {
 }
 
 .auth-submit-btn:hover {
-  background: #b02e42;
+  background: #054da0;
 }
 
 .auth-links {
@@ -4086,7 +4086,7 @@ button {
 }
 
 .auth-links a {
-  color: #cb354e;
+  color: #075ec0;
   font-size: 0.9rem;
   text-decoration: none;
 }

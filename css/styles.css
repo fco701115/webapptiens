@@ -2590,7 +2590,7 @@ button {
   color: var(--text-light);
   cursor: pointer;
 }
-.checkout-checkbox-row input[type="checkbox"] { accent-color: var(--primary); }
+.checkout-checkbox-row input[type="checkbox"] { accent-color: #075ec0; }
 
 .checkout-transfer-info {
   padding: 16px 20px;

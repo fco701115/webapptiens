@@ -2059,22 +2059,20 @@ async function submitOrder(e) {
 
   const result = await apiPost('/orders', orderData);
 
-  cart = [];
-  updateCartUI();
-  renderCartPanel();
-
-  if (result) {
+  if (result && !result.error) {
+    cart = [];
+    updateCartUI();
+    renderCartPanel();
     const userId = currentUser.id || currentUser.email;
     const key = 'userOrders_' + userId;
     const userOrders = JSON.parse(localStorage.getItem(key) || '[]');
     userOrders.unshift(result);
     localStorage.setItem(key, JSON.stringify(userOrders));
     alert('¡Pedido realizado con éxito! ID: ' + result.id);
+    showView('home');
   } else {
-    alert('¡Pedido realizado con éxito!');
+    alert('Error al realizar el pedido. Intentalo de nuevo.');
   }
-
-  showView('home');
 }
 
 // ========== CAROUSEL ==========

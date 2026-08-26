@@ -2526,7 +2526,6 @@ button {
   padding: 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  cursor: pointer;
   transition: border-color var(--transition), background var(--transition);
   margin-bottom: 8px;
 }
@@ -2534,6 +2533,10 @@ button {
 .checkout-saved-address-item:hover {
   border-color: var(--primary);
   background: #fef2f2;
+}
+
+.checkout-saved-address-item .checkout-saved-address-left {
+  cursor: pointer;
 }
 
 .checkout-saved-address-left {
@@ -2545,6 +2548,25 @@ button {
 .checkout-saved-address-arrow {
   color: var(--text-light);
   font-size: 0.8rem;
+}
+
+.checkout-address-edit-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  transition: all var(--transition);
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.checkout-address-edit-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: #fef2f2;
 }
 
 .checkout-payment-options {

@@ -1699,20 +1699,25 @@ function showCheckoutAddressModal() {
       if (addr.city) cityParts.push(addr.city);
       if (addr.zip) cityParts.push('CP ' + addr.zip);
       return `
-        <div class="checkout-saved-address-item" onclick="selectCheckoutAddress(${addr.id}); document.getElementById('addressSelectModal').style.display='none'">
-          <div class="checkout-saved-address-left">
+        <div class="checkout-saved-address-item">
+          <div class="checkout-saved-address-left" onclick="selectCheckoutAddress(${addr.id}); document.getElementById('addressSelectModal').style.display='none'" style="cursor:pointer;flex:1">
             <span class="checkout-address-badge"><i class="fas ${icon}"></i> ${addr.type}</span>
             <p class="checkout-address-main">${addr.address}, ${addr.locality}</p>
             ${addr.instructions ? '<p class="checkout-address-extra">' + addr.instructions + '</p>' : ''}
             ${cityParts.length ? '<p class="checkout-address-city">' + cityParts.join(', ') + '</p>' : ''}
           </div>
-          <i class="fas fa-chevron-right checkout-saved-address-arrow"></i>
+          <button class="checkout-address-edit-btn" onclick="editCheckoutAddressFromModal(${addr.id})" title="Editar dirección"><i class="fas fa-pen"></i></button>
         </div>
       `;
     }).join('');
   }
 
   document.getElementById('addressSelectModal').style.display = 'flex';
+}
+
+function editCheckoutAddressFromModal(id) {
+  document.getElementById('addressSelectModal').style.display = 'none';
+  editUserAddress(id);
 }
 
 function selectCheckoutAddress(id) {

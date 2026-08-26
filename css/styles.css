@@ -2535,7 +2535,7 @@ button {
   border-bottom-color: #075ec0;
   z-index: 1;
 }
-.checkout-payment-option input[type="radio"] { accent-color: var(--primary); }
+.checkout-payment-option input[type="radio"] { accent-color: #075ec0; }
 
 .checkout-payment-label {
   font-weight: 600;

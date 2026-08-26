@@ -5958,6 +5958,55 @@ button {
   color: var(--text-light);
 }
 
+.user-order-detail-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.user-order-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.user-order-detail-table th {
+  background: var(--bg, #f5f5f5);
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border);
+}
+
+.user-order-detail-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.user-order-detail-table .product-name-cell {
+  font-weight: 600;
+  max-width: 200px;
+}
+
+@media (max-width: 480px) {
+  .user-order-detail-table {
+    font-size: 0.78rem;
+  }
+
+  .user-order-detail-table th,
+  .user-order-detail-table td {
+    padding: 8px 5px;
+  }
+
+  .user-order-detail-table .product-name-cell {
+    max-width: 140px;
+  }
+}
+
 /* ========== ORDER DETAIL MODAL ========== */
 .order-detail-grid {
   display: grid;

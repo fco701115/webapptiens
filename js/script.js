@@ -2501,13 +2501,22 @@ async function showUserOrderDetail(orderId) {
     '<h4 style="margin-bottom:8px">Dirección de envío</h4>' +
     '<div class="order-detail-address-box">' + addressHTML + '</div>' +
     '<h4 style="margin-bottom:8px">Productos</h4>' +
-    items.map(item => {
-      const img = item.image || (() => { const p = products.find(p => p.id === item.id); return p ? p.image : ''; })();
-      return '<div class="user-order-detail-item">' +
-        (img ? '<img src="' + img + '" alt="">' : '<div class="user-order-detail-item-img-placeholder"><i class="fas fa-box"></i></div>') +
-        '<div><p style="font-weight:600">' + item.name + '</p><p style="color:var(--text-light);font-size:0.85rem">x' + item.qty + ' - $' + parseFloat(item.price).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</p></div>' +
-      '</div>';
-    }).join('') +
+    '<div class="user-order-detail-table-wrapper">' +
+    '<table class="user-order-detail-table">' +
+      '<thead><tr><th>PRODUCTO</th><th>CANT.</th><th>PRECIO</th><th>SUBTOTAL</th></tr></thead>' +
+      '<tbody>' +
+      items.map(item => {
+        const subtotal = item.price * item.qty;
+        return '<tr>' +
+          '<td class="product-name-cell">' + item.name + '</td>' +
+          '<td>' + item.qty + '</td>' +
+          '<td>$' + parseFloat(item.price).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</td>' +
+          '<td>$' + parseFloat(subtotal).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</td>' +
+        '</tr>';
+      }).join('') +
+      '</tbody>' +
+    '</table>' +
+    '</div>' +
     '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px;display:flex;justify-content:space-between;font-weight:700">' +
       '<span>Total</span><span>$' + parseFloat(order.total).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</span>' +
     '</div>';

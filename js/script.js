@@ -2507,8 +2507,12 @@ async function showUserOrderDetail(orderId) {
       '<tbody>' +
       items.map(item => {
         const subtotal = item.price * item.qty;
+        const img = item.image || '';
         return '<tr>' +
-          '<td class="product-name-cell">' + item.name + '</td>' +
+          '<td class="product-name-cell">' +
+            (img ? '<img src="' + img + '" alt="" class="order-detail-product-img">' : '') +
+            '<span>' + item.name + '</span>' +
+          '</td>' +
           '<td>' + item.qty + '</td>' +
           '<td>$' + parseFloat(item.price).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</td>' +
           '<td>$' + parseFloat(subtotal).toLocaleString('es-AR', {minimumFractionDigits:2}) + '</td>' +

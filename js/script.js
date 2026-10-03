@@ -542,6 +542,10 @@ function showAllCategories() {
   }
   const title = document.getElementById('categoryTitle');
   if (title) title.textContent = 'Todas las Categorías';
+  const heroTitle = document.getElementById('categoryHeroTitle');
+  if (heroTitle) heroTitle.textContent = 'Todas las Categorías';
+  const heroCrumb = document.getElementById('categoryHeroCrumb');
+  if (heroCrumb) heroCrumb.textContent = 'Categorías';
   const grid = document.getElementById('allCategoriesGrid');
   const productsGrid = document.getElementById('categoryProductsGrid');
   if (grid) {
@@ -577,6 +581,10 @@ function showCategoryPage(category) {
   activeCategory = category;
   const title = document.getElementById('categoryTitle');
   if (title) title.textContent = category;
+  const heroTitle = document.getElementById('categoryHeroTitle');
+  if (heroTitle) heroTitle.textContent = category;
+  const heroCrumb = document.getElementById('categoryHeroCrumb');
+  if (heroCrumb) heroCrumb.textContent = category;
   const allGrid = document.getElementById('allCategoriesGrid');
   if (allGrid) allGrid.style.display = 'none';
   const productsGrid = document.getElementById('categoryProductsGrid');
